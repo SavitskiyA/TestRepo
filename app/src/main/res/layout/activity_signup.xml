@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:id="@+id/toolbar_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="@string/text_signup"
+      android:textColor="@android:color/darker_gray"
+      android:textSize="16sp"
+      android:textStyle="bold"/>
+  </android.support.v7.widget.Toolbar>
+
+  <Button
+    android:id="@+id/judge"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_signin_btn"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/margin_signin_left"
+    android:layout_marginRight="@dimen/margin_signin_right"
+    android:layout_marginTop="@dimen/margin_signin_vertical_big"
+    android:background="@drawable/selector_signup"
+    android:text="@string/text_im_judge"
+    android:textColor="@color/colorPrimary"/>
+
+  <Button
+    android:id="@+id/advocate"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_signin_btn"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/margin_signin_left"
+    android:layout_marginRight="@dimen/margin_signin_right"
+    android:layout_marginTop="@dimen/margin_signin_vertical_big"
+    android:background="@drawable/selector_signup"
+    android:text="@string/text_im_advocate"
+    android:textColor="@color/colorPrimary"/>
+
+  <Button
+    android:id="@+id/citizen"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_signin_btn"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/margin_signin_left"
+    android:layout_marginRight="@dimen/margin_signin_right"
+    android:layout_marginTop="@dimen/margin_signin_vertical_big"
+    android:background="@drawable/selector_signup"
+    android:text="@string/text_im_citizen"
+    android:textColor="@color/colorPrimary"/>
+
+</LinearLayout>

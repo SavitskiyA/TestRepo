@@ -105,9 +105,9 @@ public class JudgeSignUpActivity extends AppCompatActivity {
             if (isChecked) {
               if (!mUserItems.contains(which)) {
                 mUserItems.add(which);
-              } else {
-                mUserItems.remove(which);
               }
+            } else if (mUserItems.contains(which)) {
+              mUserItems.remove(mUserItems.indexOf(which));
             }
           }
         });

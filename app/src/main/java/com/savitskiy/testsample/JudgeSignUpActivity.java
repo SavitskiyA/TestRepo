@@ -1,8 +1,10 @@
 package com.savitskiy.testsample;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
@@ -14,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import butterknife.BindArray;
 import butterknife.BindString;
@@ -33,7 +37,7 @@ public class JudgeSignUpActivity extends AppCompatActivity {
   @BindView(R.id.categories)
   Spinner mCategory;
   @BindView(R.id.specialization)
-  Spinner mSpecialization;
+  EditText mSpecialization;
   @BindView(R.id.name)
   EditText mName;
   @BindView(R.id.surname)
@@ -45,7 +49,9 @@ public class JudgeSignUpActivity extends AppCompatActivity {
   @BindView(R.id.next)
   Button mNext;
   private boolean mCategorySelected;
-  private boolean mSpecializationSelected;
+
+  private boolean[] mCheckedItems;
+  private ArrayList<Integer> mUserItems = new ArrayList<>();
 
 
   public static void start(Context context) {
@@ -63,9 +69,7 @@ public class JudgeSignUpActivity extends AppCompatActivity {
     mTerms.setMovementMethod(LinkMovementMethod.getInstance());
     URLSpanNoUnderline.removeUnderlines((Spannable) mTerms.getText());
     CustomSpinnerAdapter categoryAdapter = new CustomSpinnerAdapter(mCategoriesArray, this);
-    CustomSpinnerAdapter specializationAdapter = new CustomSpinnerAdapter(mSpecializationsArray, this);
     mCategory.setAdapter(categoryAdapter);
-    mSpecialization.setAdapter(specializationAdapter);
     mCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
       public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -74,7 +78,7 @@ public class JudgeSignUpActivity extends AppCompatActivity {
           mNext.setEnabled(false);
         } else {
           mCategorySelected = true;
-          if (isAllEditTextFilledRight() && isSpecializationSelected()) {
+          if (isAllEditTextFilledRight()) {
             mNext.setEnabled(true);
           } else {
             mNext.setEnabled(false);
@@ -88,40 +92,67 @@ public class JudgeSignUpActivity extends AppCompatActivity {
         mNext.setEnabled(false);
       }
     });
-    mSpecialization.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-      @Override
-      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (position == 0) {
-          mSpecializationSelected = false;
-          mNext.setEnabled(false);
-        } else {
-          mSpecializationSelected = true;
-          if (isAllEditTextFilledRight() && isCategorySelected()) {
-            mNext.setEnabled(true);
-          } else {
-            mNext.setEnabled(false);
-          }
-        }
-      }
 
+    mCheckedItems = new boolean[mSpecializationsArray.length];
+    mSpecialization.setOnClickListener(new View.OnClickListener() {
       @Override
-      public void onNothingSelected(AdapterView<?> parent) {
-        mSpecializationSelected = false;
-        mNext.setEnabled(false);
+      public void onClick(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(JudgeSignUpActivity.this);
+        builder.setTitle("Choose specialization");
+        builder.setMultiChoiceItems(mSpecializationsArray, mCheckedItems, new DialogInterface.OnMultiChoiceClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+            if (isChecked) {
+              if (!mUserItems.contains(which)) {
+                mUserItems.add(which);
+              } else {
+                mUserItems.remove(which);
+              }
+            }
+          }
+        });
+        builder.setCancelable(false);
+        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < mUserItems.size(); i++) {
+              stringBuilder.append(mSpecializationsArray[mUserItems.get(i)]);
+              if (i != mUserItems.size() - 1) {
+                stringBuilder.append(", ");
+              }
+            }
+            mSpecialization.setText(stringBuilder.toString());
+          }
+        });
+        builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+          }
+        });
+        builder.setNeutralButton("Clear all", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            for (int i = 0; i < mCheckedItems.length; i++) {
+              mCheckedItems[i] = false;
+              mUserItems.clear();
+              mSpecialization.setText("");
+            }
+          }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
       }
     });
   }
 
-  @OnTextChanged({R.id.name, R.id.surname, R.id.phone, R.id.email})
+  @OnTextChanged({R.id.name, R.id.surname, R.id.phone, R.id.email, R.id.specialization})
   protected void handleTextChange(Editable editable) {
-    if (isAllEditTextFilledRight() && isCategorySelected() && isSpecializationSelected()) {
+    if (isAllEditTextFilledRight() && isCategorySelected()) {
       mNext.setEnabled(true);
     } else {
-      if (isAllEditTextFilledRight() && isCategorySelected()) {
-        mNext.setEnabled(true);
-      } else {
-        mNext.setEnabled(false);
-      }
+      mNext.setEnabled(false);
     }
   }
 
@@ -141,16 +172,16 @@ public class JudgeSignUpActivity extends AppCompatActivity {
     return FieldValidation.isValid(mEmail.getText().toString(), Constants.EMAIL_PATTERN_JUDGE);
   }
 
+  private boolean isSpecializationValid() {
+    return mSpecialization.length() > 0 ? true : false;
+  }
+
   private boolean isCategorySelected() {
     return mCategorySelected;
   }
 
-  private boolean isSpecializationSelected() {
-    return mSpecializationSelected;
-  }
-
   private boolean isAllEditTextFilledRight() {
-    return isNameValid() && isSurnameValid() && isPhoneValid() && isEmailValid();
+    return isNameValid() && isSurnameValid() && isPhoneValid() && isEmailValid() && isSpecializationValid();
   }
 
 }

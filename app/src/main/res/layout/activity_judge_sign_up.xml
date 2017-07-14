@@ -61,12 +61,18 @@
       android:paddingLeft="@dimen/padding_signin_hint"
       android:textSize="@dimen/size_signin_text_14sp"/>
 
-    <Spinner
+    <EditText
       android:id="@+id/specialization"
       android:layout_width="match_parent"
       android:layout_height="@dimen/height_signin_edt"
       android:layout_marginTop="@dimen/margin_signin_vertical_small"
-      android:background="@drawable/selector_spinner"/>
+      android:background="@drawable/edittext_bg"
+      android:focusable="false"
+      android:hint="@string/text_specialization"
+      android:inputType="text"
+      android:maxLines="1"
+      android:paddingLeft="@dimen/padding_signin_hint"
+      android:textSize="@dimen/size_signin_text_14sp"/>
 
     <Spinner
       android:id="@+id/categories"
@@ -104,8 +110,8 @@
     android:layout_gravity="bottom|center_horizontal"
     android:layout_marginBottom="120dp"
     android:background="@drawable/selector_signin"
-    android:text="@string/text_next"
     android:enabled="false"
+    android:text="@string/text_next"
     android:textColor="@android:color/background_light"/>
 
   <LinearLayout

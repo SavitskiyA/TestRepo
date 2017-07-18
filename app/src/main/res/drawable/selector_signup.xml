@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:state_pressed="false">
-  <shape xmlns:android="http://schemas.android.com/apk/res/android"
-         android:shape="rectangle" android:padding="10dp">
-    <solid android:color="@android:color/transparent"/>
-    <stroke android:color="@android:color/darker_gray" android:width="@dimen/width_signin_stroke_edt"/>
-    <corners
-      android:radius="90dp"/>
-  </shape>
-</item>
+  <item android:state_pressed="false">
+    <shape xmlns:android="http://schemas.android.com/apk/res/android"
+           android:padding="@dimen/padding_text" android:shape="rectangle">
+      <solid android:color="@android:color/transparent"/>
+      <stroke android:width="@dimen/width_sign_in_edt_stroke" android:color="@android:color/darker_gray"/>
+      <corners
+        android:radius="@dimen/radius_btn_corners"/>
+    </shape>
+  </item>
   <item android:state_pressed="true">
     <shape xmlns:android="http://schemas.android.com/apk/res/android"
-           android:shape="rectangle" android:padding="10dp">
+           android:padding="10dp" android:shape="rectangle">
       <solid android:color="@android:color/darker_gray"/>
-      <stroke android:color="@android:color/darker_gray" android:width="@dimen/width_signin_stroke_edt"/>
+      <stroke android:width="@dimen/width_sign_in_edt_stroke" android:color="@android:color/darker_gray"/>
       <corners
-        android:radius="90dp"/>
+        android:radius="@dimen/radius_btn_corners"/>
     </shape>
   </item>
 </selector>

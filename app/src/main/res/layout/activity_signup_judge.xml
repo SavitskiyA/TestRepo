@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="@string/text_sign_up_judge"
+      android:textColor="@android:color/black"
+      android:textSize="16sp"
+      android:textStyle="bold"/>
+  </android.support.v7.widget.Toolbar>
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/margin_sign_in_left"
+      android:layout_marginRight="@dimen/margin_sign_in_right"
+      android:orientation="vertical">
+
+      <TextView
+        android:id="@+id/useOfficialEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="center"
+        android:text="@string/text_use_judge_email"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+      <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_sign_in_edt"
+        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
+        android:background="@drawable/edittext_bg"
+        android:hint="@string/text_name"
+        android:paddingLeft="@dimen/padding_text"
+        android:textSize="@dimen/size_sign_in_text_14sp"/>
+
+      <EditText
+        android:id="@+id/surname"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_sign_in_edt"
+        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
+        android:background="@drawable/edittext_bg"
+        android:hint="@string/text_surname"
+        android:paddingLeft="@dimen/padding_text"
+        android:textSize="@dimen/size_sign_in_text_14sp"/>
+
+      <EditText
+        android:id="@+id/specialization"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_sign_in_edt"
+        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
+        android:background="@drawable/edittext_bg"
+        android:focusable="false"
+        android:hint="@string/text_specialization"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/padding_text"
+        android:textSize="@dimen/size_sign_in_text_14sp"/>
+
+      <Spinner
+        android:id="@+id/categories"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_sign_in_edt"
+        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
+        android:background="@drawable/selector_spinner"/>
+
+      <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_sign_in_edt"
+        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
+        android:background="@drawable/edittext_bg"
+        android:hint="@string/text_phone"
+        android:paddingLeft="@dimen/padding_text"
+        android:textSize="@dimen/size_sign_in_text_14sp"/>
+
+      <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_sign_in_edt"
+        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
+        android:background="@drawable/edittext_bg"
+        android:hint="@string/text_email"
+        android:paddingLeft="@dimen/padding_text"
+        android:textSize="@dimen/size_sign_in_text_14sp"/>
+
+
+      <Button
+        android:id="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_sign_in_btn"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
+        android:background="@drawable/selector_signin"
+        android:enabled="true"
+        android:text="@string/text_next"
+        android:textColor="@android:color/background_light"/>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_sign_in_vertical_small"
+        android:gravity="center"
+        android:text="@string/text_terms_cond_fst"/>
+
+      <TextView
+        android:id="@+id/terms_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center"
+        android:textStyle="bold"/>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/text_terms_cond_trd"/>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/text_terms_cond_fth"/>
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

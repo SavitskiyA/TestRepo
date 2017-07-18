@@ -3,6 +3,6 @@
           android:id="@+id/text"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:padding="10dp"
+          android:padding="@dimen/padding_text"
           android:textColor="@android:color/darker_gray"
-          android:textSize="14sp"/>
+          android:textSize="@dimen/size_sign_in_text_14sp"/>

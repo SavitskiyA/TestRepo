@@ -1,7 +1,7 @@
 <resources>
   <string name="app_name">ryj</string>
   <string name="text_tutorial">Tutorial</string>
-  <string name="text_signin">Sign in</string>
+  <string name="text_sign_in">Sign in</string>
   <string name="text_lorem_ipsum">lorem ipsum</string>
   <string-array name="strings">
     <item>My mind alters, Fiend to ang-el, Are there answers? Who can tell?</item>
@@ -10,18 +10,20 @@
   </string-array>
   <string name="text_skip">Skip</string>
   <string name="text_email">Email</string>
-  <string name="text_password_hint">Password</string>
-  <string name="text_forgotpassword">Forgot paswword?</string>
-  <string name="text_signup">Sign up</string>
+  <string name="text_password">Password</string>
+  <string name="text_forgot_password">Forgot password?</string>
+  <string name="text_sign_up">Sign up</string>
   <string name="text_judges">Judges</string>
   <string name="text_analytics">Analytics</string>
   <string name="text_news">News</string>
-
-  <string name="text_im_judge">I am judge</string>
-  <string name="text_im_advocate">I am advocate</string>
-  <string name="text_im_citizen">I am conscious citizen</string>
-
-  <string name="text_judge_signup">Judge sign up</string>
+  <string name="text_i_am_judge">I am judge</string>
+  <string name="text_i_am_advocate">I am advocate</string>
+  <string name="text_i_am_citizen">I am conscious citizen</string>
+  <string name="text_sign_up_judge">Judge sign up</string>
+  <string name="text_sign_up_advocate">Advocate sign up</string>
+  <string name="text_sign_up_citizen">Citizen sign up</string>
+  <string name="text_email_password_wrong">Error. Email or password wrong!</string>
+  <string name="text_error">Error!</string>
   <string name="text_use_judge_email">Use your official email of judge</string>
   <string name="text_name">Name</string>
   <string name="text_surname">Surname</string>
@@ -30,14 +32,13 @@
   <string name="text_phone">Phone</string>
   <string name="text_next">Next</string>
   <string name="text_terms_cond_fst">By registering you agree with</string>
-  <string name="text_terms_cond_link"><![CDATA[<a href="https://www.google.com.ua">The terms of use of the application</a>]]></string>
-  <string name="text_terms_cond_trd">and agree to the use of your</string>
-  <string name="text_terms_cond_fth">personal data</string>
-  <string name="html">
+  <string name="text_terms_cond_link">
     <![CDATA[
     <a href="https://www.google.com.ua">The terms of use of the application</a>
     ]]>
   </string>
+  <string name="text_terms_cond_trd">and agree to the use of your</string>
+  <string name="text_terms_cond_fth">personal data</string>
   <string-array name="array_categories">
     <item>Choose category of affair</item>
     <item>Administrative cases</item>
@@ -48,7 +49,6 @@
     <item>Civil cases</item>
   </string-array>
   <string-array name="array_specializations">
-    <item>Choose specialization</item>
     <item>Administrative</item>
     <item>Economic</item>
     <item>Criminal</item>
@@ -56,9 +56,12 @@
     <item>Administrative offenses</item>
     <item>Civil</item>
   </string-array>
-  <string name="text_password_recovery">Password recovery</string>
-  <string name="text_password_recovery_desc">Enter your email into field below. New password will be sent on your email</string>
+  <string name="text_specialization_hint">Choose specializations</string>
+  <string name="text_btn_clear_title">Clear all</string>
+  <string name="text_btn_cancel_title">Cancel</string>
+  <string name="text_btn_save_title">Save</string>
   <string name="text_send">Send</string>
+  <string name="text_forgot_password_desc">Enter your email into field below. New password will be sent on your email</string>
   <string name="text_sign_up_finish">Sign up finish</string>
   <string name="text_sign_up_finish_desc">We sent you a letter, check the email you specified.</string>
   <string name="text_ok">Ok</string>

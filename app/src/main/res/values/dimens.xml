@@ -9,23 +9,22 @@
   <dimen name="margin_left_tutorial_text">40dp</dimen>
   <dimen name="diameter_dot_indicator">8dp</dimen>
 
-  <dimen name="margin_signin_left">60dp</dimen>
-  <dimen name="margin_signin_right">60dp</dimen>
-  <dimen name="margin_signin_ft_left">20dp</dimen>
-  <dimen name="margin_signin_ft_right">20dp</dimen>
-  <dimen name="margin_signin_vertical_small">20dp</dimen>
-  <dimen name="margin_signin_vertical_big">20dp</dimen>
+  <dimen name="margin_sign_in_left">60dp</dimen>
+  <dimen name="margin_sign_in_right">60dp</dimen>
+  <dimen name="margin_sign_in_footer_left">20dp</dimen>
+  <dimen name="margin_sign_in_footer_right">20dp</dimen>
+  <dimen name="margin_sign_in_vertical_small">10dp</dimen>
+  <dimen name="margin_sign_in_vertical_medium">20dp</dimen>
 
-  <dimen name="margin_sign_up_vertical_small">20dp</dimen>
+  <dimen name="height_sign_in_edt">38dp</dimen>
+  <dimen name="height_sign_in_btn">44dp</dimen>
+  <dimen name="height_sign_in_footer_circle">30dp</dimen>
 
-  <dimen name="height_signin_edt">38dp</dimen>
-  <dimen name="height_signin_btn">44dp</dimen>
-  <dimen name="height_signin_ftcircle">30dp</dimen>
+  <dimen name="padding_text">10dp</dimen>
 
-  <dimen name="padding_signin_hint">10dp</dimen>
-
-  <dimen name="size_signin_text_14sp">14sp</dimen>
-  <dimen name="width_signin_stroke_edt">2dp</dimen>
-  <dimen name="radius_signin_edt">2dp</dimen>
+  <dimen name="size_sign_in_text_14sp">14sp</dimen>
+  <dimen name="width_sign_in_edt_stroke">2dp</dimen>
+  <dimen name="radius_sign_in_edt_corners">2dp</dimen>
+  <dimen name="radius_btn_corners">90dp</dimen>
   <dimen name="size_actionbar_title">18sp</dimen>
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@android:color/background_light">
+
+  <ImageView
+    android:id="@+id/image_tutorial"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top|center_horizontal"
+    android:layout_marginTop="@dimen/margin_top_image"/>
+
+  <TextView
+    android:id="@+id/text_tutorial"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center_horizontal"
+    android:layout_marginBottom="@dimen/margin_bottom_skip"
+    android:layout_marginLeft="@dimen/margin_left_tutorial_text"
+    android:layout_marginRight="@dimen/margin_left_tutorial_text"
+    android:gravity="center"
+    android:text="@string/text_lorem_ipsum"
+    android:textColor="@android:color/black"/>
+</FrameLayout>

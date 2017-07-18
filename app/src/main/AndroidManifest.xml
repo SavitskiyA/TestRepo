@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.savitskiy.testsample">
+          package="com.ryj">
 
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -9,6 +9,7 @@
   <uses-permission android:name="android.permission.CAMERA"/>
 
   <application
+    android:name=".App"
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
@@ -16,15 +17,7 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
     <activity
-      android:name=".MainActivity"
-      android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar"/>
-    <activity
-      android:name=".SignUpActivity"
-      android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar"/>
-    <activity
-      android:name=".JudgeSignUpActivity"
+      android:name=".activities.auth.SplashActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
@@ -34,11 +27,78 @@
       </intent-filter>
     </activity>
     <activity
-      android:name=".PasswordRecovery"
+      android:name=".activities.auth.MainActivity"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar">
-
-    </activity>
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.auth.TutorialActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.auth.signin.SignInActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.auth.ForgotPasswordActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.auth.signup.SignUpActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.judges.JudgesActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.analytics.AnalyticsActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.news.NewsActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.auth.signup.judge.JudgeSignUpActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.auth.signup.advocate.AdvocateSignUpActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.auth.signup.citizen.CitizenSignUpActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.profiles.citizen.CitizenActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.profiles.advocate.AdvocateActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.profiles.judge.JudgeActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
+    <activity
+      android:name=".activities.auth.signup.ThankYouActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar.WhiteActionBar"/>
   </application>
 
 </manifest>

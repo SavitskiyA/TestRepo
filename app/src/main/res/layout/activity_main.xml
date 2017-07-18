@@ -3,153 +3,21 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".MainActivity">
+             tools:context="com.ryj.activities.auth.MainActivity">
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="top"
-      android:layout_marginLeft="@dimen/margin_signin_left"
-      android:layout_marginRight="@dimen/margin_signin_right"
-      android:orientation="vertical">
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:text="@string/text_sign_in"
+    android:textSize="@dimen/size_center_text_30sp"/>
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_signin_vertical_small"/>
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_signin_edt"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_signin_vertical_small"
-        android:background="@drawable/edittext_bg"
-        android:hint="@string/text_email"
-        android:paddingLeft="10dp"
-        android:textSize="14sp"/>
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_signin_edt"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_signin_vertical_small"
-        android:background="@drawable/edittext_bg"
-        android:hint="@string/text_password_hint"
-        android:paddingLeft="10dp"
-        android:textSize="14sp"/>
-
-    <Button
-        android:id="@+id/signin"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_signin_btn"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_signin_vertical_big"
-        android:background="@drawable/selector_signin"
-        android:enabled="false"
-        android:text="@string/text_signin"
-        android:textColor="@android:color/background_light"/>
-
-    <TextView
-        android:id="@+id/forgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_signin_vertical_small"
-        android:text="@string/text_password_recovery_desc"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"/>
-
-    <Button
-        android:id="@+id/signup"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_signin_btn"
-        android:layout_below="@id/forgotPassword"
-        android:layout_marginTop="@dimen/margin_signin_vertical_big"
-        android:background="@drawable/btn_signup_bg"
-        android:text="@string/text_signup"
-        android:textColor="@color/colorPrimary"/>
-  </LinearLayout>
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom"
-      android:layout_marginBottom="@dimen/margin_signin_vertical_big"
-      android:layout_marginLeft="@dimen/margin_signin_ft_left"
-      android:layout_marginRight="@dimen/margin_signin_ft_left"
-      android:orientation="horizontal">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-      <ImageView
-          android:layout_width="@dimen/height_signin_ftcircle"
-          android:layout_height="@dimen/height_signin_ftcircle"
-          android:layout_gravity="center"
-          android:background="@drawable/circle_bg"/>
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginTop="@dimen/margin_signin_vertical_small"
-          android:text="@string/text_judges"
-          android:textColor="@color/colorPrimary"
-          android:textStyle="bold"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-      <ImageView
-          android:layout_width="@dimen/height_signin_ftcircle"
-          android:layout_height="@dimen/height_signin_ftcircle"
-          android:layout_gravity="center"
-          android:background="@drawable/circle_bg"/>
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginTop="@dimen/margin_signin_vertical_small"
-          android:text="@string/text_analytics"
-          android:textColor="@color/colorPrimary"
-          android:textStyle="bold"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-      <ImageView
-          android:layout_width="@dimen/height_signin_ftcircle"
-          android:layout_height="@dimen/height_signin_ftcircle"
-          android:layout_gravity="center"
-          android:background="@drawable/circle_bg"/>
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginTop="@dimen/margin_signin_vertical_small"
-          android:text="@string/text_news"
-          android:textColor="@color/colorPrimary"
-          android:textStyle="bold"/>
-    </LinearLayout>
-
-  </LinearLayout>
-
+  <TextView
+    android:id="@+id/helloTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center_horizontal"
+    android:layout_marginBottom="@dimen/margin_bottom_text_20dp"
+    android:textSize="@dimen/size_bottom_text_20sp"/>
 
 </FrameLayout>

@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@android:color/background_light">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/background_light">
 
   <ImageView
-    android:id="@+id/image_tutorial"
+    android:id="@+id/image"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="top|center_horizontal"
-    android:layout_marginTop="@dimen/margin_top_image"/>
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="27dp"
+    android:background="@drawable/tutorial_one_image"/>
 
   <TextView
-    android:id="@+id/text_tutorial"
+    android:id="@+id/text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom|center_horizontal"
-    android:layout_marginBottom="@dimen/margin_bottom_skip"
-    android:layout_marginLeft="@dimen/margin_left_tutorial_text"
-    android:layout_marginRight="@dimen/margin_left_tutorial_text"
+    android:layout_below="@+id/image"
+    android:layout_centerHorizontal="true"
+    android:layout_marginLeft="28dp"
+    android:layout_marginRight="28dp"
+    android:layout_marginTop="36dp"
     android:gravity="center"
+    android:lineSpacingMultiplier="1.5"
     android:text="@string/text_lorem_ipsum"
-    android:textColor="@android:color/black"/>
-</FrameLayout>
+    android:textColor="#292b2b"
+    android:textSize="16sp"/>
+</RelativeLayout>

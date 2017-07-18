@@ -27,4 +27,9 @@
   <dimen name="radius_sign_in_edt_corners">2dp</dimen>
   <dimen name="radius_btn_corners">90dp</dimen>
   <dimen name="size_actionbar_title">18sp</dimen>
+  <integer-array name="tutorial_images">
+    <item>@drawable/tutorial_one_image</item>
+    <item>@drawable/tutorial_two_image</item>
+    <item>@drawable/tutorial_three_image</item>
+  </integer-array>
 </resources>

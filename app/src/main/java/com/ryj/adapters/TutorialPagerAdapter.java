@@ -1,6 +1,7 @@
 package com.ryj.adapters;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +18,11 @@ import com.ryj.adapters.viewholders.TutorialViewHolder;
 public class TutorialPagerAdapter extends PagerAdapter {
   private String[] mStrings;
   private LayoutInflater mInflater;
+  private TypedArray mImages;
 
-  public TutorialPagerAdapter(String[] strings, Context context) {
+  public TutorialPagerAdapter(String[] strings, TypedArray images, Context context) {
     this.mStrings = strings;
+    this.mImages = images;
     mInflater = LayoutInflater.from(context);
   }
 
@@ -38,6 +41,7 @@ public class TutorialPagerAdapter extends PagerAdapter {
     View view = mInflater.inflate(R.layout.page_tutorial, null);
     TutorialViewHolder viewHolder = new TutorialViewHolder(view);
     viewHolder.setText(mStrings[position]);
+    viewHolder.setImage(mImages.getDrawable(position));
     container.addView(view);
     return view;
   }

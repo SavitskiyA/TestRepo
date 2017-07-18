@@ -1,5 +1,6 @@
 package com.ryj.adapters.viewholders;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,9 +15,9 @@ import butterknife.ButterKnife;
  */
 
 public class TutorialViewHolder {
-  @BindView(R.id.text_tutorial)
+  @BindView(R.id.text)
   TextView mText;
-  @BindView(R.id.image_tutorial)
+  @BindView(R.id.image)
   ImageView mImage;
 
   public TutorialViewHolder(View view) {
@@ -25,5 +26,9 @@ public class TutorialViewHolder {
 
   public void setText(String text) {
     mText.setText(text);
+  }
+
+  public void setImage(Drawable image) {
+    mImage.setImageDrawable(image);
   }
 }

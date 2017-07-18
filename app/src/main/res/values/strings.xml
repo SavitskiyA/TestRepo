@@ -3,12 +3,13 @@
   <string name="text_tutorial">Tutorial</string>
   <string name="text_sign_in">Sign in</string>
   <string name="text_lorem_ipsum">lorem ipsum</string>
-  <string-array name="strings">
-    <item>My mind alters, Fiend to ang-el, Are there answers? Who can tell?</item>
-    <item>I can have joy, I can have sorrow. From the grim reaper, Time I must borrow.</item>
-    <item>The cycle continues: Dragging in the valleys; Up the cliff edge, This brain of mine rallies.</item>
+  <string-array name="tutorial_descriptions">
+    <item>The app is a tool for evaluation and public oversight, designed to monitor
+work of the judicial system.</item>
+    <item>Advocates and representatives of the professional community can evaluate and review the results of judges work.</item>
+    <item>The community finally received a source of impartial information to ensure the fairness of the work of the judicial system.</item>
   </string-array>
-  <string name="text_skip">Skip</string>
+  <string name="text_tutorial_skip">SKIP</string>
   <string name="text_email">Email</string>
   <string name="text_password">Password</string>
   <string name="text_forgot_password">Forgot password?</string>

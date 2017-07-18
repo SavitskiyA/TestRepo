@@ -2,10 +2,12 @@ package com.ryj.activities.auth;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ryj.R;
@@ -27,8 +29,10 @@ public class TutorialActivity extends BaseActivity {
   CircleIndicator mIndicator;
   @BindView(R.id.skip)
   TextView mSkip;
-  @BindArray(R.array.strings)
+  @BindArray(R.array.tutorial_descriptions)
   String[] mStrings;
+  @BindArray(R.array.tutorial_images)
+  TypedArray mImages;
 
   public static void start(Context context) {
     Intent i = new Intent(context, TutorialActivity.class);
@@ -41,8 +45,9 @@ public class TutorialActivity extends BaseActivity {
     setContentView(R.layout.activity_tutorial);
     getComponent().inject(this);
     ButterKnife.bind(this);
-    mPager.setAdapter(new TutorialPagerAdapter(mStrings, this));
+    mPager.setAdapter(new TutorialPagerAdapter(mStrings, mImages, this));
     mIndicator.setViewPager(mPager);
+    mIndicator.setVisibility(View.VISIBLE);
   }
 
   @OnClick(R.id.skip)

@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.ryj.activities.auth.TutorialActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.ryj.activities.auth.TutorialActivity">
 
   <android.support.v4.view.ViewPager
     android:id="@+id/pager_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
 
+
   <me.relex.circleindicator.CircleIndicator
     android:id="@+id/indicator"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom|center_horizontal"
-    android:layout_marginBottom="@dimen/margin_bottom_indicator"
+    android:layout_height="10dp"
+    android:layout_above="@+id/skip"
+    android:layout_marginBottom="50dp"
     app:ci_animator="@animator/animator_indicator_tutorial"
     app:ci_drawable="@drawable/selector_dot_selected"
     app:ci_drawable_unselected="@drawable/selector_dot_default"
-    app:ci_height="@dimen/diameter_dot_indicator"
-    app:ci_width="@dimen/diameter_dot_indicator"
-    app:ci_margin="10dp"/>
+    app:ci_margin="14dp"/>
 
   <TextView
     android:id="@+id/skip"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom|center_horizontal"
-    android:layout_marginBottom="40dp"
+    android:layout_marginBottom="33dp"
     android:clickable="true"
-    android:text="@string/text_skip"
-    android:textColor="@color/colorPrimary"/>
-</FrameLayout>
+    android:letterSpacing="0.14"
+    android:text="@string/text_tutorial_skip"
+    android:textColor="@color/colorBlueLight"
+    android:textSize="@dimen/size_sign_in_text_14sp"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"/>
+</RelativeLayout>

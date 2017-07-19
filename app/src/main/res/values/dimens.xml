@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <item name="visible" type="id"/>
+  <item name="masked" type="id"/>
+
   <dimen name="size_center_text_30sp">30sp</dimen>
   <dimen name="size_bottom_text_20sp">20sp</dimen>
   <dimen name="margin_bottom_text_20dp">20dp</dimen>
@@ -31,5 +34,11 @@
     <item>@drawable/tutorial_one_image</item>
     <item>@drawable/tutorial_two_image</item>
     <item>@drawable/tutorial_three_image</item>
+  </integer-array>
+  <integer-array name="gradientColors">
+    <item>@color/colorDarkGradientStart</item>
+    <item>@color/colorDarkGradientMidOne</item>
+    <item>@color/colorDarkGradientMidTwo</item>
+    <item>@color/colorDarkGradientEnd</item>
   </integer-array>
 </resources>

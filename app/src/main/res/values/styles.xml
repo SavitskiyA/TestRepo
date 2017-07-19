@@ -27,7 +27,6 @@
   <style name="AppTheme.TranslucentedStatusBar">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
-    <item name="colorPrimaryDark">@color/colorBlackTranslucented</item>
-    <item name="android:colorBackground">@android:color/background_light</item>
+    <item name="android:windowTranslucentStatus">true</item>
   </style>
 </resources>

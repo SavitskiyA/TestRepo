@@ -4,5 +4,11 @@
   <color name="colorPrimaryDark">#303F9F</color>
   <color name="colorAccent">#FF4081</color>
   <color name="colorBlueLight">#5eccfc</color>
-  <color name="colorBlackTranslucented">#29000000</color>
+  <color name="colorBlueLightTransp">#7F5eccfc</color>
+  <color name="colorBlackTransp">#29000000</color>
+  <color name="colorWhiteTrans">#29ffffff</color>
+  <color name="colorDarkGradientStart">#8b94a3</color>
+  <color name="colorDarkGradientMidOne">#5d6571</color>
+  <color name="colorDarkGradientMidTwo">#4b525e</color>
+  <color name="colorDarkGradientEnd">#323842</color>
 </resources>

@@ -29,17 +29,13 @@
       android:name=".activities.auth.TutorialActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.TranslucentedStatusBar">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
     </activity>
     <activity
       android:name=".activities.auth.signin.SignInActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.NoActionBar.WhiteBackground">
+    </activity>
     <activity
       android:name=".activities.auth.ForgotPasswordActivity"
       android:launchMode="singleTop"
@@ -100,6 +96,17 @@
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+    <activity
+      android:name=".activities.TestActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.TranslucentedStatusBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
   </application>
 
 </manifest>

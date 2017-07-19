@@ -1,5 +1,10 @@
 package com.ryj.activities;
 
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
+import android.graphics.drawable.PaintDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -53,5 +58,22 @@ public abstract class BaseActivity extends RxAppCompatActivity {
       default:
         return super.onOptionsItemSelected(item);
     }
+  }
+
+  public PaintDrawable getBackgroundGradient(int[] colors, float[] points) {
+    ShapeDrawable.ShaderFactory shaderFactory = new ShapeDrawable.ShaderFactory() {
+      @Override
+      public Shader resize(int width, int height) {
+        LinearGradient linearGradient = new LinearGradient(0, 0, width, height,
+                colors, points,
+                Shader.TileMode.REPEAT);
+        return linearGradient;
+      }
+    };
+
+    PaintDrawable paint = new PaintDrawable();
+    paint.setShape(new RectShape());
+    paint.setShaderFactory(shaderFactory);
+    return paint;
   }
 }

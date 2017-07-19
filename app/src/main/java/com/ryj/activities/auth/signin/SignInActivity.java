@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,8 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
 
+import butterknife.BindArray;
+import butterknife.BindColor;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,6 +87,20 @@ public class SignInActivity extends BaseActivity {
   String mEmailPasswordError;
   @BindString(R.string.text_error)
   String mError;
+  @BindView(R.id.layout)
+  FrameLayout mLayout;
+  @BindColor(R.color.colorDarkGradientStart)
+  int mColorStart;
+  @BindColor(R.color.colorDarkGradientMidOne)
+  int mColorMidOne;
+  @BindColor(R.color.colorDarkGradientMidTwo)
+  int mColorMidTwo;
+  @BindColor(R.color.colorDarkGradientEnd)
+  int mColorEnd;
+  @BindArray(R.array.gradientColors)
+  int[] mColors;
+  private float[] mPoints = {0, 0.25f, 0.5f, 0.75f, 1};
+
 
   public static void start(Context context) {
     Intent i = new Intent(context, SignInActivity.class);
@@ -97,6 +114,7 @@ public class SignInActivity extends BaseActivity {
     getComponent().inject(this);
     ButterKnife.bind(this);
     mPrefs.setIsFirstTutorialLaunch(false);
+    mLayout.setBackground(getBackgroundGradient(mColors, mPoints));
   }
 
   @OnClick({R.id.signin, R.id.forgotPassword, R.id.signup, R.id.img_judges, R.id.img_analytics, R.id.img_news, R.id.txt_news, R.id.txt_analytics, R.id.txt_judges})

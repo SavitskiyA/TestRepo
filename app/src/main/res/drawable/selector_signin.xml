@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:state_enabled="false">
-    <shape xmlns:android="http://schemas.android.com/apk/res/android"
-           android:padding="10dp" android:shape="rectangle">
-      <solid android:color="@android:color/darker_gray"/>
-      <corners
-        android:radius="90dp"/>
+    <shape xmlns:android="http://schemas.android.com/apk/res/android">
+      <solid android:color="@color/colorBlueLightTransp"/>
     </shape>
   </item>
   <item android:state_enabled="true">
-    <shape xmlns:android="http://schemas.android.com/apk/res/android"
-           android:padding="10dp" android:shape="rectangle">
-      <solid android:color="@color/colorPrimary"/>
-      <corners
-        android:radius="90dp"/>
+    <shape xmlns:android="http://schemas.android.com/apk/res/android">
+      <solid android:color="@color/colorBlueLight"/>
     </shape>
   </item>
 </selector>

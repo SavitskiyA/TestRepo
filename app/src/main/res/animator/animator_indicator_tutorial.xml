@@ -18,5 +18,4 @@
     android:valueFrom="1.5"
     android:valueTo="2"
     android:valueType="floatType"/>
-
 </set>

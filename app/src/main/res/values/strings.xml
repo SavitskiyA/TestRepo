@@ -3,13 +3,13 @@
   <string name="text_tutorial">Tutorial</string>
   <string name="text_sign_in">Sign in</string>
   <string name="text_lorem_ipsum">lorem ipsum</string>
-  <string-array name="tutorial_descriptions">
-    <item>The app is a tool for evaluation and public oversight, designed to monitor
-work of the judicial system.</item>
-    <item>Advocates and representatives of the professional community can evaluate and review the results of judges work.</item>
-    <item>The community finally received a source of impartial information to ensure the fairness of the work of the judicial system.</item>
+  <string-array name="texts_tutorial">
+    <item>The app is a tool for evaluation\nand public oversight,\ndesigned to monitor\nwork of the
+      judicial system.</item>
+    <item>Advocates and representatives\nof the professional community can\nevaluate and review the results\nof judges work.</item>
+    <item>The community finally received\na source of impartial information\nto ensure the fairness\nof the work of the judicial system.</item>
   </string-array>
-  <string name="text_tutorial_skip">SKIP</string>
+  <string name="text_skip">Skip</string>
   <string name="text_email">Email</string>
   <string name="text_password">Password</string>
   <string name="text_forgot_password">Forgot password?</string>
@@ -18,19 +18,23 @@ work of the judicial system.</item>
   <string name="text_analytics">Analytics</string>
   <string name="text_news">News</string>
   <string name="text_i_am_judge">I am judge</string>
-  <string name="text_i_am_advocate">I am advocate</string>
+  <string name="text_i_am_lawyer">I am advocate</string>
   <string name="text_i_am_citizen">I am conscious citizen</string>
   <string name="text_sign_up_judge">Judge sign up</string>
-  <string name="text_sign_up_advocate">Advocate sign up</string>
+  <string name="text_sign_up_lawyer">Lawyer sign up</string>
   <string name="text_sign_up_citizen">Citizen sign up</string>
-  <string name="text_email_password_wrong">Error. Email or password wrong!</string>
+  <string name="text_email_format_wrong">Email format is wrong</string>
+  <string name="text_password_char_error">Password should containt at least 8 charachters</string>
+  <string name="text_sign_in_error">Sign in error!</string>
   <string name="text_error">Error!</string>
-  <string name="text_use_judge_email">Use your official email of judge</string>
+  <string name="text_sign_up_choose_role">Choose role</string>
+  <string name="text_sign_up_judge_use_email">Use your official \nemail of judge</string>
   <string name="text_name">Name</string>
   <string name="text_surname">Surname</string>
   <string name="text_specialization">Specialization</string>
   <string name="text_category">Category of case</string>
   <string name="text_phone">Phone</string>
+  <string name="text_phone_mask">+380</string>
   <string name="text_next">Next</string>
   <string name="text_terms_cond_fst">By registering you agree with</string>
   <string name="text_terms_cond_link">
@@ -40,8 +44,8 @@ work of the judicial system.</item>
   </string>
   <string name="text_terms_cond_trd">and agree to the use of your</string>
   <string name="text_terms_cond_fth">personal data</string>
-  <string-array name="array_categories">
-    <item>Choose category of affair</item>
+  <string name="text_category_of_cases">Category of cases</string>
+  <string-array name="categories">
     <item>Administrative cases</item>
     <item>Economic cases</item>
     <item>Criminal cases</item>
@@ -49,21 +53,28 @@ work of the judicial system.</item>
     <item>Administrative offenses</item>
     <item>Civil cases</item>
   </string-array>
-  <string-array name="array_specializations">
+  <string-array name="specializations">
     <item>Administrative</item>
     <item>Economic</item>
     <item>Criminal</item>
-    <item>Urgent lawsuits</item>
-    <item>Administrative offenses</item>
     <item>Civil</item>
   </string-array>
   <string name="text_specialization_hint">Choose specializations</string>
-  <string name="text_btn_clear_title">Clear all</string>
-  <string name="text_btn_cancel_title">Cancel</string>
-  <string name="text_btn_save_title">Save</string>
-  <string name="text_send">Send</string>
-  <string name="text_forgot_password_desc">Enter your email into field below. New password will be sent on your email</string>
+  <string name="text_name_must_contain_only_letters">Name must contain only letters without spaces</string>
+  <string name="text_surname_must_contain_only_letters">Surname must contain only letters</string>
+  <string name="text_category_must_be_selected">At least one category of case must be selected</string>
+  <string name="text_phone_must_start_380">Phone should start from +380 and contain 13 digits</string>
+  <string name="text_email_of_judge_must_end">Email of judge should contain @ and end with court.gov.ua</string>
+  <string name="text_forgot_password_desc">Enter your email,\nand we will send you a link\nfor password recovery</string>
+  <string name="text_send">text_send</string>
   <string name="text_sign_up_finish">Sign up finish</string>
-  <string name="text_sign_up_finish_desc">We sent you a letter, check the email you specified.</string>
+  <string name="text_sign_up_finish_desc">We sent you a letter,\ncheck the email you specified</string>
   <string name="text_ok">Ok</string>
+  <string name="text_password_recovery">Password recovery</string>
+  <string name="text_check_emil">Check email</string>
+  <string name="text_we_sent_email">We sent email with instructions\nfor password recovery to you</string>
+  <string name="text_certificate_number">Certificate number</string>
+  <string name="text_place_of_work">Place of work</string>
+  <string name="text_use_phone_you_provided">Use the phone number\nyou provided when registering the certificate</string>
+  <string name="text_certificate_number_must_contain">Certificate number must contain only digits</string>
 </resources>

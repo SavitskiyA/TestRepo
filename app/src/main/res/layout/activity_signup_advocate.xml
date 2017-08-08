@@ -14,7 +14,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:text="@string/text_sign_up_advocate"
+      android:text="@string/text_sign_up_lawyer"
       android:textColor="@android:color/black"
       android:textSize="@dimen/size_actionbar_title"/>
   </android.support.v7.widget.Toolbar>

@@ -1,38 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="com.ryj.activities.auth.TutorialActivity">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.ryj.activities.auth.TutorialActivity">
 
   <android.support.v4.view.ViewPager
     android:id="@+id/pager_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
 
-
-  <me.relex.circleindicator.CircleIndicator
-    android:id="@+id/indicator"
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="10dp"
-    android:layout_above="@+id/skip"
-    android:layout_marginBottom="50dp"
-    app:ci_animator="@animator/animator_indicator_tutorial"
-    app:ci_drawable="@drawable/selector_dot_selected"
-    app:ci_drawable_unselected="@drawable/selector_dot_default"
-    app:ci_margin="14dp"/>
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical">
 
-  <TextView
-    android:id="@+id/skip"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="33dp"
-    android:clickable="true"
-    android:letterSpacing="0.14"
-    android:text="@string/text_tutorial_skip"
-    android:textColor="@color/colorBlueLight"
-    android:textSize="@dimen/size_sign_in_text_14sp"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true"/>
-</RelativeLayout>
+    <ImageView
+      android:id="@+id/image"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginTop="54dp"
+      android:src="@drawable/tutorial_one_image"
+      android:visibility="invisible"/>
+
+    <TextView
+      android:id="@+id/text"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginLeft="28dp"
+      android:layout_marginRight="28dp"
+      android:layout_weight="0.6"
+      android:gravity="center"
+      android:lineSpacingMultiplier="1.4"
+      android:lines="4"
+      android:textColor="@color/colorBlackText"
+      android:textSize="@dimen/size_text_16sp"
+      android:visibility="invisible"/>
+
+    <me.relex.circleindicator.CircleIndicator
+      android:id="@+id/indicator"
+      android:layout_width="match_parent"
+      android:layout_height="24dp"
+      android:layout_gravity="center"
+      android:layout_marginTop="12dp"
+      android:visibility="visible"
+      app:ci_animator="@animator/animator_indicator_tutorial"
+      app:ci_drawable="@drawable/selector_dot_selected"
+      app:ci_drawable_unselected="@drawable/selector_dot_default"
+      app:ci_margin="10dp"/>
+
+    <TextView
+      android:id="@+id/skip"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginTop="16dp"
+      android:layout_weight="0.8"
+      android:clickable="true"
+      android:gravity="center"
+      android:letterSpacing="0.16"
+      android:text="@string/text_skip"
+      android:textAllCaps="true"
+      android:textColor="@color/colorBlueLight"
+      android:textSize="@dimen/size_text_14sp"
+      android:textStyle="bold"
+      android:visibility="visible"/>
+  </LinearLayout>
+</FrameLayout>

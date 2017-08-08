@@ -1,32 +1,39 @@
 package com.ryj.activities.auth.signup.judge;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.ryj.Constants;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
+import com.ryj.activities.auth.signup.SignUpListActivity;
 import com.ryj.activities.auth.signup.ThankYouActivity;
-import com.ryj.adapters.CategorySpinnerAdapter;
-import com.ryj.eventbus.CategoryEvent;
-import com.ryj.fragments.SpecializationsDialog;
+import com.ryj.models.Account;
+import com.ryj.models.Session;
+import com.ryj.models.User;
+import com.ryj.models.enums.Affairs;
+import com.ryj.models.enums.UserType;
+import com.ryj.models.request.SignUpQuery;
 import com.ryj.utils.FieldValidation;
+import com.ryj.utils.StringUtils;
 import com.ryj.utils.URLSpanNoUnderline;
+import com.ryj.utils.handlers.ErrorHandler;
+import com.ryj.web.Api;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -35,18 +42,23 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemSelected;
 import butterknife.OnTextChanged;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by andrey on 7/11/17.
  */
 
 public class JudgeSignUpActivity extends BaseActivity {
-
+  private static final String TAG = "SignUpJudgeActivity";
+  private static String EXTRA_LIST_STRING = "list_string";
+  private static String EXTRA_LIST_BOOLEANS = "list_booleans";
+  private static int REQUEST_CODE = 1;
   @Inject
-  EventBus mBus;
-
+  Api mApi;
+  @Inject
+  ErrorHandler mErrorHandler;
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
   @BindView(R.id.title)
@@ -55,14 +67,10 @@ public class JudgeSignUpActivity extends BaseActivity {
   TextView mTerms;
   @BindString(R.string.text_terms_cond_link)
   String mLink;
-  @BindArray(R.array.array_categories)
-  String[] mCategoriesArray;
-  @BindArray(R.array.array_specializations)
-  String[] mSpecializationsArray;
-  @BindView(R.id.categories)
-  Spinner mCategory;
-  @BindView(R.id.specialization)
-  EditText mSpecialization;
+  @BindArray(R.array.categories)
+  String[] mCategories;
+  @BindView(R.id.category)
+  EditText mCategory;
   @BindView(R.id.name)
   EditText mName;
   @BindView(R.id.surname)
@@ -73,21 +81,45 @@ public class JudgeSignUpActivity extends BaseActivity {
   EditText mEmail;
   @BindView(R.id.next)
   Button mNext;
-  @BindString(R.string.text_specialization_hint)
-  String mSpecializationHint;
-  @BindString(R.string.text_btn_cancel_title)
-  String mCancel;
-  @BindString(R.string.text_btn_clear_title)
-  String mClear;
-  @BindString(R.string.text_btn_save_title)
-  String mSave;
   @BindString(R.string.text_ok)
   String mOk;
-  private SpecializationsDialog mDialog;
+  @BindString(R.string.text_category_of_cases)
+  String mCategoriesListTitle;
+  @BindView(R.id.input_layout_name)
+  TextInputLayout mNameLayout;
+  @BindView(R.id.input_layout_surname)
+  TextInputLayout mSurnameLayout;
+  @BindView(R.id.input_layout_category)
+  TextInputLayout mCategoryLayout;
+  @BindView(R.id.input_layout_phone)
+  TextInputLayout mPhoneLayout;
+  @BindView(R.id.input_layout_email)
+  TextInputLayout mEmailLayout;
+  @BindString(R.string.text_name_must_contain_only_letters)
+  String mNameValidationError;
+  @BindString(R.string.text_surname_must_contain_only_letters)
+  String mSurnameValidationError;
+  @BindString(R.string.text_category_must_be_selected)
+  String mCategoryValidationError;
+  @BindString(R.string.text_phone_must_start_380)
+  String mPhoneValidationError;
+  @BindString(R.string.text_email_of_judge_must_end)
+  String mEmailValidationError;
+
+  private boolean[] mChoosenCategoriesBooleans;
+  private Affairs[] mAffairs = {Affairs.ADMIN, Affairs.ADMINISTRATIVE, Affairs.CIVIL, Affairs.CRIMINAL, Affairs.ECONOMIC, Affairs.URGENT};
 
   public static void start(Context context) {
     Intent i = new Intent(context, JudgeSignUpActivity.class);
     context.startActivity(i);
+  }
+
+  public static void sendActivityResult(Activity activity, String choosenCategories, boolean[] choosenCategoriesBooleans) {
+    Intent intent = new Intent();
+    intent.putExtra(EXTRA_LIST_STRING, choosenCategories);
+    intent.putExtra(EXTRA_LIST_BOOLEANS, choosenCategoriesBooleans);
+    activity.setResult(RESULT_OK, intent);
+    activity.onBackPressed();
   }
 
   @Override
@@ -96,27 +128,14 @@ public class JudgeSignUpActivity extends BaseActivity {
     setContentView(R.layout.activity_signup_judge);
     getComponent().inject(this);
     ButterKnife.bind(this);
-    mBus.register(this);
-    setSupportActionBar(mToolbar);
     setSupportActionBar(mToolbar);
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
+    setSoftInputMode();
     mTerms.setText(Html.fromHtml(mLink));
     mTerms.setMovementMethod(LinkMovementMethod.getInstance());
     URLSpanNoUnderline.removeUnderlines((Spannable) mTerms.getText());
-    CategorySpinnerAdapter categoryAdapter = new CategorySpinnerAdapter(mCategoriesArray, this);
-    mCategory.setAdapter(categoryAdapter);
-    mDialog = new SpecializationsDialog(this, mSpecializationHint, mSpecializationsArray);
-    mDialog.setCancelable(false);
-    mDialog.enableMultiChoiceItemsListener();
-    mDialog.enablePositiveButton(mSave);
-    mDialog.enableNegativeButton(mCancel);
-    mDialog.enableNeutralButton(mClear);
-  }
-
-  @OnItemSelected(R.id.categories)
-  public void onItemSelected() {
-    mNext.setEnabled(isAllFieldsValid() && isCategorySelected());
+    mChoosenCategoriesBooleans = new boolean[mCategories.length];
   }
 
   @Nullable
@@ -131,52 +150,133 @@ public class JudgeSignUpActivity extends BaseActivity {
     return mTitle;
   }
 
-  @OnClick({R.id.specialization, R.id.next})
+  @OnClick({R.id.category, R.id.next})
   public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.specialization:
-        mDialog.show();
+      case R.id.category:
+        SignUpListActivity.startForResult(this, mCategoriesListTitle, mCategories, mChoosenCategoriesBooleans, REQUEST_CODE);
         break;
       case R.id.next:
-        ThankYouActivity.start(this);
+        validateSignUpRequest();
     }
   }
 
-  @OnTextChanged({R.id.name, R.id.surname, R.id.phone, R.id.email, R.id.specialization})
-  protected void handleTextChange(Editable editable) {
-    mNext.setEnabled(isAllFieldsValid() && isCategorySelected());
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == REQUEST_CODE && data != null) {
+      mCategory.setText(data.getStringExtra(EXTRA_LIST_STRING));
+      mChoosenCategoriesBooleans = data.getBooleanArrayExtra(EXTRA_LIST_BOOLEANS);
+    }
+  }
+
+  @OnTextChanged({R.id.name, R.id.surname, R.id.phone, R.id.email, R.id.category})
+  protected void handleTextChange() {
+    mNext.setEnabled(isAllFieldsNotEmpty());
+  }
+
+  @OnTextChanged(R.id.name)
+  protected void handleNameChanged() {
+    mNameLayout.setErrorEnabled(false);
+  }
+
+  @OnTextChanged(R.id.surname)
+  protected void handleSurnameChanged() {
+    mSurnameLayout.setErrorEnabled(false);
+  }
+
+  @OnTextChanged(R.id.category)
+  protected void handleCategoryChanged() {
+    mCategoryLayout.setErrorEnabled(false);
+  }
+
+  @OnTextChanged(R.id.phone)
+  protected void handlePhoneChanged() {
+    mPhoneLayout.setErrorEnabled(false);
+  }
+
+  @OnTextChanged(R.id.email)
+  protected void handleEmailChanged() {
+    mEmailLayout.setErrorEnabled(false);
   }
 
   private boolean isNameValid() {
-    return FieldValidation.isValid(mName.getText().toString(), Constants.ONLY_LETTERS_PATTERN);
+    return FieldValidation.isValid(mName.getText().toString(), StringUtils.ONLY_LETTERS_PATTERN);
   }
 
   private boolean isSurnameValid() {
-    return FieldValidation.isValid(mSurname.getText().toString(), Constants.ONLY_LETTERS_PATTERN);
+    return FieldValidation.isValid(mSurname.getText().toString(), StringUtils.LETTERS_SPACE_PATTERN);
   }
 
   private boolean isPhoneValid() {
-    return FieldValidation.isValid(mPhone.getText().toString(), Constants.PHONE_PATTERN_UA);
+    return FieldValidation.isValid(mPhone.getText().toString(), StringUtils.PHONE_PATTERN_UA);
   }
 
   private boolean isEmailValid() {
-    return FieldValidation.isValid(mEmail.getText().toString(), Constants.EMAIL_PATTERN_JUDGE);
+    return FieldValidation.isValid(mEmail.getText().toString(), StringUtils.EMAIL_PATTERN_JUDGE);
   }
 
-  private boolean isSpecializationValid() {
-    return mSpecialization.length() > 0;
-  }
-
-  private boolean isCategorySelected() {
-    return mCategory.getSelectedItemPosition() > 0;
+  private boolean isCategoryValid() {
+    return mCategory.length() > 0;
   }
 
   private boolean isAllFieldsValid() {
-    return isNameValid() && isSurnameValid() && isPhoneValid() && isEmailValid() && isSpecializationValid();
+    return isNameValid() && isSurnameValid() && isEmailValid() && isCategoryValid() && isPhoneValid();
   }
 
-  @Subscribe
-  public void onEvent(CategoryEvent event) {
-    mSpecialization.setText(event.getString());
+  private boolean isAllFieldsNotEmpty() {
+    return mName.length() > 0 && mSurname.length() > 0 && mCategory.length() > 0 && mEmail.length() > 0;
+  }
+
+  public void validateSignUpRequest() {
+    if (!isNameValid()) {
+      mNameLayout.setError(mNameValidationError);
+    }
+    if (!isSurnameValid()) {
+      mSurnameLayout.setError(mSurnameValidationError);
+    }
+    if (!isCategoryValid()) {
+      mCategoryLayout.setError(mCategoryValidationError);
+    }
+    if (!isPhoneValid()) {
+      mPhoneLayout.setError(mPhoneValidationError);
+    }
+    if (!isEmailValid()) {
+      mEmailLayout.setError(mEmailValidationError);
+    }
+    if (isAllFieldsValid()) {
+      User user = new User(mName.getText(), mSurname.getText());
+      if (mPhone.length() > 0) {
+        user.setPhone(mPhone.getText());
+      }
+      user.setType(UserType.JUDGE);
+      user.setAffairs(getChoosenCategoriesServer());
+      Account account = new Account(mEmail.getText());
+      Session session = new Session();
+      executeSignUpRequest(user, account, session);
+    }
+  }
+
+  private void executeSignUpRequest(User user, Account account, Session session) {
+    mApi.signUp(new SignUpQuery(user, account, session))
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                    response -> {
+                      ThankYouActivity.start(this);
+                    },
+                    throwable -> {
+                      mErrorHandler.handleError(throwable);
+                    });
+  }
+
+  private List<Affairs> getChoosenCategoriesServer() {
+    List<Affairs> choosenCategoriesServerList = new ArrayList<>();
+    for (int i = 0; i < mChoosenCategoriesBooleans.length; i++) {
+      if (mChoosenCategoriesBooleans[i]) {
+        choosenCategoriesServerList.add(mAffairs[i]);
+      }
+    }
+    return choosenCategoriesServerList;
   }
 }

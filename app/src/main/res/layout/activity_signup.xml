@@ -2,57 +2,153 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@drawable/bg_dark"
               android:orientation="vertical">
 
   <android.support.v7.widget.Toolbar
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp">
 
     <TextView
       android:id="@+id/title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:text="@string/text_sign_up"
-      android:textColor="@android:color/black"
-      android:textSize="@dimen/size_actionbar_title"/>
+      android:fontFamily="sans-serif"
+      android:text="@string/text_sign_up_choose_role"
+      android:textColor="@android:color/background_light"
+      android:textSize="18sp"/>
   </android.support.v7.widget.Toolbar>
 
-  <Button
+  <FrameLayout
     android:id="@+id/judge"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_sign_in_btn"
-    android:layout_gravity="center"
-    android:layout_marginLeft="@dimen/margin_sign_in_left"
-    android:layout_marginRight="@dimen/margin_sign_in_right"
-    android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
-    android:background="@drawable/selector_signup"
-    android:text="@string/text_i_am_judge"
-    android:textColor="@color/colorPrimary"/>
+    android:layout_height="0dp"
+    android:layout_weight="1">
 
-  <Button
-    android:id="@+id/advocate"
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:orientation="vertical">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/img_judge"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_sign_up_vertical"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.05"
+        android:text="@string/text_i_am_judge"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"/>
+    </LinearLayout>
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="right|center_vertical"
+      android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+      android:background="@drawable/ic_right_arrow"/>
+  </FrameLayout>
+
+  <ImageView
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_sign_in_btn"
-    android:layout_gravity="center"
-    android:layout_marginLeft="@dimen/margin_sign_in_left"
-    android:layout_marginRight="@dimen/margin_sign_in_right"
-    android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
-    android:background="@drawable/selector_signup"
-    android:text="@string/text_i_am_advocate"
-    android:textColor="@color/colorPrimary"/>
+    android:layout_height="1dp"
+    android:layout_marginLeft="@dimen/margin_sign_up_horizontal"
+    android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+    android:alpha="0.1"
+    android:background="@android:color/background_light"/>
 
-  <Button
+  <FrameLayout
+    android:id="@+id/lawyer"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:orientation="vertical">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/img_lawyer"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_sign_up_vertical"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.05"
+        android:text="@string/text_i_am_lawyer"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"/>
+    </LinearLayout>
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="right|center_vertical"
+      android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+      android:background="@drawable/ic_right_arrow"/>
+  </FrameLayout>
+
+  <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginLeft="@dimen/margin_sign_up_horizontal"
+    android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+    android:alpha="0.1"
+    android:background="@android:color/background_light"/>
+
+  <FrameLayout
     android:id="@+id/citizen"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_sign_in_btn"
-    android:layout_gravity="center"
-    android:layout_marginLeft="@dimen/margin_sign_in_left"
-    android:layout_marginRight="@dimen/margin_sign_in_right"
-    android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
-    android:background="@drawable/selector_signup"
-    android:text="@string/text_i_am_citizen"
-    android:textColor="@color/colorPrimary"/>
+    android:layout_height="0dp"
+    android:layout_weight="1">
 
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:orientation="vertical">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/img_citizen"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_sign_up_vertical"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.05"
+        android:text="@string/text_i_am_citizen"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"/>
+    </LinearLayout>
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="right|center_vertical"
+      android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+      android:background="@drawable/ic_right_arrow"/>
+  </FrameLayout>
 </LinearLayout>

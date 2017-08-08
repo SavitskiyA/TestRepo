@@ -3,6 +3,7 @@ package com.ryj;
 import android.app.Application;
 import android.graphics.Bitmap;
 
+
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.ryj.di.ApplicationComponent;

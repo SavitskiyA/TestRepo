@@ -7,7 +7,22 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public enum UserType {
-  @SerializedName("Citizen")CITIZEN,
-  @SerializedName("Lawyer")LAWYER,
-  @SerializedName("Judge")JUDGE,
+  @SerializedName("сitizen")CITIZEN {
+    @Override
+    public String toString() {
+      return "citizen";
+    }
+  },
+  @SerializedName("lawyer")LAWYER {
+    @Override
+    public String toString() {
+      return "lawyer";
+    }
+  },
+  @SerializedName("judge")JUDGE {
+    @Override
+    public String toString() {
+      return "judge";
+    }
+  }
 }

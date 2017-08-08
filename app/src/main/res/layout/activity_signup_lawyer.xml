@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/bg_dark"
+             android:orientation="vertical">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp">
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:fontFamily="sans-serif"
+      android:text="@string/text_sign_up_lawyer"
+      android:textColor="@android:color/background_light"
+      android:textSize="18sp"/>
+  </android.support.v7.widget.Toolbar>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="80dp"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+
+    <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="40dp"
+          android:layout_marginRight="40dp"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_large"
+          android:fontFamily="sans-serif"
+          android:gravity="center"
+          android:letterSpacing="0.03"
+          android:lineSpacingMultiplier="1.5"
+          android:text="@string/text_use_phone_you_provided"
+          android:textColor="@android:color/black"
+          android:textSize="@dimen/size_text_16sp"/>
+
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_certificate_number"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
+
+          <EditText
+            android:id="@+id/certificate_number"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_certificate_number"
+            android:imeOptions="actionNext"
+            android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
+
+          <EditText
+            android:id="@+id/name"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_name"
+            android:imeOptions="actionNext"
+            android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_surname"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
+
+          <EditText
+            android:id="@+id/surname"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_surname"
+            android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_place_of_work"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
+
+          <EditText
+            android:id="@+id/company"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_place_of_work"
+            android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_specializations"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
+
+          <EditText
+            android:id="@+id/specializations"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_arrow_right_gray"
+            android:drawablePadding="50dp"
+            android:editable="false"
+            android:ellipsize="end"
+            android:focusable="false"
+            android:hint="@string/text_specialization"
+            android:singleLine="true"
+            android:textColor="@color/colorBlueLight"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_phone"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
+
+          <EditText
+            android:id="@+id/phone"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_phone"
+            android:inputType="phone"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_email"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
+
+          <EditText
+            android:id="@+id/email"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_email"
+            android:inputType="textEmailAddress"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+          android:id="@+id/next"
+          style="?android:borderlessButtonStyle"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_height_button_sign_up"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_large"
+          android:background="@drawable/selector_button"
+          android:enabled="false"
+          android:letterSpacing="0.5"
+          android:src="@drawable/ic_arrow"
+          android:text="@string/text_next"
+          android:textColor="@android:color/background_light"
+          android:textSize="@dimen/size_text_14sp"
+          />
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:fontFamily="sans-serif"
+          android:gravity="center"
+          android:text="@string/text_terms_cond_fst"
+          android:textColor="@color/colorBlackText"/>
+
+        <TextView
+          android:id="@+id/terms_link"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:clickable="true"
+          android:fontFamily="sans-serif"
+          android:gravity="center"
+          android:textStyle="bold"
+          android:theme="@style/AppTheme.LinkText"/>
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="sans-serif"
+          android:gravity="center"
+          android:text="@string/text_terms_cond_trd"
+          android:textColor="@color/colorBlackText"/>
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="16dp"
+          android:fontFamily="sans-serif"
+          android:gravity="center"
+          android:text="@string/text_terms_cond_fth"
+          android:textColor="@color/colorBlackText"/>
+      </LinearLayout>
+    </ScrollView>
+  </LinearLayout>
+</FrameLayout>

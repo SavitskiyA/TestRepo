@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/background_gradient_toolbar"
+             android:orientation="vertical">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp">
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:fontFamily="sans-serif"
+      android:text="@string/text_sign_up_judge"
+      android:textColor="@android:color/background_light"
+      android:textSize="18sp"/>
+  </android.support.v7.widget.Toolbar>
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="80dp"
+    android:background="@color/colorGrayLight">
+
+    <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerview"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"/>
+
+        <Button
+          android:id="@+id/ok"
+          style="?android:borderlessButtonStyle"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_height_button"
+          android:layout_gravity="center"
+          android:layout_marginLeft="16dp"
+          android:layout_marginRight="16dp"
+          android:layout_marginTop="20dp"
+          android:background="@drawable/selector_button"
+          android:enabled="false"
+          android:letterSpacing="0.5"
+          android:text="@string/text_ok"
+          android:textColor="@android:color/background_light"
+          android:textSize="@dimen/size_text_14sp"/>
+      </LinearLayout>
+    </ScrollView>
+  </FrameLayout>
+</FrameLayout>

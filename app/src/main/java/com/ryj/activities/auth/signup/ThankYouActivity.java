@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.ryj.R;
@@ -20,10 +21,8 @@ import butterknife.OnClick;
  */
 
 public class ThankYouActivity extends BaseActivity {
-  @BindView(R.id.toolbar)
-  Toolbar mToolbar;
-  @BindView(R.id.title)
-  TextView mTitle;
+  @BindView(R.id.ok)
+  Button mOk;
 
   public static void start(Context context) {
     Intent i = new Intent(context, ThankYouActivity.class);
@@ -35,21 +34,18 @@ public class ThankYouActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_thank_you);
     ButterKnife.bind(this);
-    setSupportActionBar(mToolbar);
-    setToolbarBackArrowEnabled(true);
-    setDefaultDisplayShowTitleEnabled(false);
   }
 
   @Nullable
   @Override
   protected Toolbar getToolbar() {
-    return mToolbar;
+    return null;
   }
 
   @Nullable
   @Override
   protected TextView getToolbarTitle() {
-    return mTitle;
+    return null;
   }
 
   @OnClick(R.id.ok)

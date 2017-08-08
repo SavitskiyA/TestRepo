@@ -7,6 +7,7 @@
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.CAMERA"/>
+  <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL"/>
 
   <application
     android:name=".App"
@@ -19,15 +20,6 @@
     <activity
       android:name=".activities.auth.SplashActivity"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar">
-    </activity>
-    <activity
-      android:name=".activities.auth.MainActivity"
-      android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
-    <activity
-      android:name=".activities.auth.TutorialActivity"
-      android:screenOrientation="portrait"
       android:theme="@style/AppTheme.TranslucentedStatusBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -36,70 +28,108 @@
       </intent-filter>
     </activity>
     <activity
+      android:name=".activities.auth.MainActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
+    <activity
+      android:name=".activities.auth.TutorialActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
+    <activity
       android:name=".activities.auth.signin.SignInActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
-      android:name=".activities.auth.ForgotPasswordActivity"
+      android:name=".activities.auth.PasswordRecoveryActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
       android:name=".activities.auth.signup.SignUpActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
       android:name=".activities.judges.JudgesActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
       android:name=".activities.analytics.AnalyticsActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
       android:name=".activities.news.NewsActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
       android:name=".activities.auth.signup.judge.JudgeSignUpActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
-      android:name=".activities.auth.signup.advocate.AdvocateSignUpActivity"
+      android:name=".activities.auth.signup.lawyer.SignUpLawyerActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
       android:name=".activities.auth.signup.citizen.CitizenSignUpActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
       android:name=".activities.profiles.citizen.CitizenActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
       android:name=".activities.profiles.advocate.AdvocateActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
       android:name=".activities.profiles.judge.JudgeActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
       android:name=".activities.auth.signup.ThankYouActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar.WhiteBackground"/>
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
+    <activity
+      android:name=".activities.auth.signup.SignUpListActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
+    <activity
+      android:name=".activities.auth.PasswordRecoveryFinishActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
+    <activity
+      android:name=".activities.auth.signup.lawyer.SignUpLawyerActivityPhoto"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
+    <activity
+      android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"/>
+
+    <meta-data
+      android:name="io.fabric.ApiKey"
+      android:value="5653b0083b152fb66214b78a87bbf83ee2c7826d"/>
   </application>
+
+  <uses-feature
+    android:name="android.hardware.camera.any"
+    android:required="true"/>
+  <uses-feature
+    android:name="android.hardware.camera.autofocus"
+    android:required="false"/>
 
 </manifest>

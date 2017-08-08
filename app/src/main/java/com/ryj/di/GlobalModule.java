@@ -5,6 +5,8 @@ import android.preference.PreferenceManager;
 import com.ryj.App;
 import com.ryj.storage.prefs.Prefs;
 import com.ryj.storage.prefs.PrefsImpl;
+import com.ryj.utils.handlers.ErrorHandler;
+import com.ryj.utils.handlers.ErrorHandlerImpl;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -30,5 +32,11 @@ public class GlobalModule {
   @PerApp
   EventBus provideEventBus() {
     return EventBus.getDefault();
+  }
+
+  @Provides
+  @PerApp
+  ErrorHandler provideErrorHandler() {
+    return new ErrorHandlerImpl();
   }
 }

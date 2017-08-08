@@ -3,6 +3,7 @@ package com.ryj.activities;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,16 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayShowTitleEnabled(enabled);
     }
+  }
+
+  public void setSoftInputMode() {
+    getWindow().setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+  }
+
+  public void hideStatusBar() {
+    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
   }
 
   public void showToast(String message) {

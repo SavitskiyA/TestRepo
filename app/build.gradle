@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
   compileSdkVersion 25
-  buildToolsVersion "26.0.0"
+  buildToolsVersion "26.0.1"
   defaultConfig {
     applicationId "com.ryj"
     minSdkVersion 15
@@ -20,9 +20,16 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+repositories {
+  maven {
+    url "https://jitpack.io"
   }
 }
 
@@ -35,6 +42,7 @@ dependencies {
   compile 'com.android.support:appcompat-v7:25.3.1'
   compile 'com.android.support.constraint:constraint-layout:1.0.2'
   compile 'com.android.support:design:25.3.1'
+  compile 'com.android.support:recyclerview-v7:25.3.1'
 
   compile 'com.google.dagger:dagger:2.11'
   annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
@@ -63,4 +71,11 @@ dependencies {
   testCompile 'junit:junit:4.12'
 
   compile 'org.greenrobot:eventbus:3.0.0'
+
+  compile 'com.github.jkwiecien:EasyImage:1.3.1'
+
+  compile 'de.hdodenhof:circleimageview:2.1.0'
+
+  compile 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
+
 }

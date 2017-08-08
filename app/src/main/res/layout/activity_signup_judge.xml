@@ -1,145 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/bg_dark"
+             android:orientation="vertical">
 
   <android.support.v7.widget.Toolbar
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp">
 
     <TextView
       android:id="@+id/title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
+      android:fontFamily="sans-serif"
       android:text="@string/text_sign_up_judge"
-      android:textColor="@android:color/black"
-      android:textSize="16sp"
-      android:textStyle="bold"/>
+      android:textColor="@android:color/background_light"
+      android:textSize="18sp"/>
   </android.support.v7.widget.Toolbar>
 
-  <ScrollView
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="80dp"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
 
-    <LinearLayout
+
+    <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/margin_sign_in_left"
-      android:layout_marginRight="@dimen/margin_sign_in_right"
-      android:orientation="vertical">
+      android:layout_height="wrap_content">
 
-      <TextView
-        android:id="@+id/useOfficialEmail"
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        android:gravity="center"
-        android:text="@string/text_use_judge_email"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="16sp"
-        android:textStyle="bold"/>
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_large"
+          android:fontFamily="sans-serif"
+          android:gravity="center"
+          android:letterSpacing="0.03"
+          android:lineSpacingMultiplier="1.2"
+          android:text="@string/text_sign_up_judge_use_email"
+          android:textColor="@android:color/black"
+          android:textSize="@dimen/size_text_16sp"/>
 
-      <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_sign_in_edt"
-        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
-        android:background="@drawable/edittext_bg"
-        android:hint="@string/text_name"
-        android:paddingLeft="@dimen/padding_text"
-        android:textSize="@dimen/size_sign_in_text_14sp"/>
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
 
-      <EditText
-        android:id="@+id/surname"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_sign_in_edt"
-        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
-        android:background="@drawable/edittext_bg"
-        android:hint="@string/text_surname"
-        android:paddingLeft="@dimen/padding_text"
-        android:textSize="@dimen/size_sign_in_text_14sp"/>
+          <EditText
+            android:id="@+id/name"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_name"
+            android:imeOptions="actionNext"
+            android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
 
-      <EditText
-        android:id="@+id/specialization"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_sign_in_edt"
-        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
-        android:background="@drawable/edittext_bg"
-        android:focusable="false"
-        android:hint="@string/text_specialization"
-        android:inputType="text"
-        android:maxLines="1"
-        android:paddingLeft="@dimen/padding_text"
-        android:textSize="@dimen/size_sign_in_text_14sp"/>
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_surname"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
 
-      <Spinner
-        android:id="@+id/categories"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_sign_in_edt"
-        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
-        android:background="@drawable/selector_spinner"/>
+          <EditText
+            android:id="@+id/surname"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_surname"
+            android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
 
-      <EditText
-        android:id="@+id/phone"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_sign_in_edt"
-        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
-        android:background="@drawable/edittext_bg"
-        android:hint="@string/text_phone"
-        android:paddingLeft="@dimen/padding_text"
-        android:textSize="@dimen/size_sign_in_text_14sp"/>
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_category"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
 
-      <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_sign_in_edt"
-        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
-        android:background="@drawable/edittext_bg"
-        android:hint="@string/text_email"
-        android:paddingLeft="@dimen/padding_text"
-        android:textSize="@dimen/size_sign_in_text_14sp"/>
+          <EditText
+            android:id="@+id/category"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_arrow_right_gray"
+            android:drawablePadding="50dp"
+            android:editable="false"
+            android:ellipsize="end"
+            android:focusable="false"
+            android:hint="@string/text_category"
+            android:singleLine="true"
+            android:textColor="@color/colorBlueLight"/>
+        </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_phone"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
 
-      <Button
-        android:id="@+id/next"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_sign_in_btn"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginTop="@dimen/margin_sign_in_vertical_medium"
-        android:background="@drawable/selector_signin"
-        android:enabled="true"
-        android:text="@string/text_next"
-        android:textColor="@android:color/background_light"/>
+          <EditText
+            android:id="@+id/phone"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_phone"
+            android:inputType="phone"
+            android:text="@string/text_phone_mask"/>
+        </android.support.design.widget.TextInputLayout>
 
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_sign_in_vertical_small"
-        android:gravity="center"
-        android:text="@string/text_terms_cond_fst"/>
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/input_layout_email"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:theme="@style/TextInputLayoutStyle">
 
-      <TextView
-        android:id="@+id/terms_link"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:gravity="center"
-        android:textStyle="bold"/>
+          <EditText
+            android:id="@+id/email"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_email"
+            android:inputType="textEmailAddress"/>
+        </android.support.design.widget.TextInputLayout>
 
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/text_terms_cond_trd"/>
+        <Button
+          android:id="@+id/next"
+          style="?android:borderlessButtonStyle"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_height_button_sign_up"
+          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_large"
+          android:background="@drawable/selector_button"
+          android:enabled="false"
+          android:letterSpacing="0.5"
+          android:src="@drawable/ic_arrow"
+          android:text="@string/text_next"
+          android:textColor="@android:color/background_light"
+          android:textSize="@dimen/size_text_14sp"
+          />
 
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/text_terms_cond_fth"/>
-    </LinearLayout>
-  </ScrollView>
-</LinearLayout>
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:fontFamily="sans-serif"
+          android:gravity="center"
+          android:text="@string/text_terms_cond_fst"
+          android:textColor="@color/colorBlackText"/>
+
+        <TextView
+          android:id="@+id/terms_link"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:clickable="true"
+          android:fontFamily="sans-serif"
+          android:gravity="center"
+          android:textStyle="bold"
+          android:theme="@style/AppTheme.LinkText"/>
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="sans-serif"
+          android:gravity="center"
+          android:text="@string/text_terms_cond_trd"
+          android:textColor="@color/colorBlackText"/>
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="16dp"
+          android:fontFamily="sans-serif"
+          android:gravity="center"
+          android:text="@string/text_terms_cond_fth"
+          android:textColor="@color/colorBlackText"/>
+      </LinearLayout>
+    </ScrollView>
+  </LinearLayout>
+</FrameLayout>

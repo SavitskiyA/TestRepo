@@ -2,19 +2,18 @@ package com.ryj.models.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.ryj.models.User;
 
 public class UserResponse {
 
-  @SerializedName("object")
+  @SerializedName("id")
   @Expose
-  private User mObject;
+  private Integer mId;
 
-  public User getObject() {
-    return mObject;
+  public Integer getId() {
+    return mId;
   }
 
-  public void setObject(User object) {
-    mObject = object;
+  public void setId(Integer id) {
+    this.mId = id;
   }
 }

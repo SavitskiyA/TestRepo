@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -38,7 +39,14 @@ public class NetworkModule {
     return applyLogLevel(
             new OkHttpClient.Builder()
                     .readTimeout(Constants.TIMEOUT_DURATION_MS, TimeUnit.SECONDS)
-                    .connectTimeout(Constants.TIMEOUT_DURATION_MS, TimeUnit.SECONDS))
+                    .connectTimeout(Constants.TIMEOUT_DURATION_MS, TimeUnit.SECONDS)
+                    .addNetworkInterceptor(chain -> {
+                      Request request = chain.request()
+                              .newBuilder()
+                              .addHeader(Constants.HEADER_ACCEPT, Constants.HEADER_CONTENT_TYPE)
+                              .build();
+                      return chain.proceed(request);
+                    }))
             .build();
   }
 

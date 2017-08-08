@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import com.ryj.R;
@@ -29,8 +28,8 @@ public class TutorialActivity extends BaseActivity {
   CircleIndicator mIndicator;
   @BindView(R.id.skip)
   TextView mSkip;
-  @BindArray(R.array.tutorial_descriptions)
-  String[] mStrings;
+  @BindArray(R.array.texts_tutorial)
+  String[] mTutorials;
   @BindArray(R.array.tutorial_images)
   TypedArray mImages;
 
@@ -45,20 +44,14 @@ public class TutorialActivity extends BaseActivity {
     setContentView(R.layout.activity_tutorial);
     getComponent().inject(this);
     ButterKnife.bind(this);
-    mPager.setAdapter(new TutorialPagerAdapter(mStrings, mImages, this));
+    mPager.setAdapter(new TutorialPagerAdapter(mTutorials, mImages, this));
     mIndicator.setViewPager(mPager);
-    mIndicator.setVisibility(View.VISIBLE);
   }
 
   @OnClick(R.id.skip)
   public void onSkipClick() {
-    int currentItemPosition = mPager.getCurrentItem();
-    if (currentItemPosition == mPager.getChildCount()) {
-      SignInActivity.start(this);
-      finish();
-    } else {
-      mPager.setCurrentItem(currentItemPosition + 1);
-    }
+    SignInActivity.start(this);
+    finish();
   }
 
   @Nullable

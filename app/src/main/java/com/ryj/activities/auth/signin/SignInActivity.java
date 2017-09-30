@@ -23,7 +23,6 @@ import com.ryj.activities.analytics.AnalyticsActivity;
 import com.ryj.activities.auth.PasswordRecoveryActivity;
 import com.ryj.activities.auth.signup.SignUpActivity;
 import com.ryj.activities.judges.JudgesActivity;
-import com.ryj.activities.news.NewsActivity;
 import com.ryj.dialogs.SpinnerDialog;
 import com.ryj.storage.prefs.Prefs;
 import com.ryj.utils.FieldValidation;
@@ -165,7 +164,7 @@ public class SignInActivity extends BaseActivity {
         AnalyticsActivity.start(this);
         break;
       case R.id.img_news:
-        NewsActivity.start(this);
+
         break;
       case R.id.txt_judges:
         JudgesActivity.start(this);
@@ -174,7 +173,7 @@ public class SignInActivity extends BaseActivity {
         AnalyticsActivity.start(this);
         break;
       case R.id.txt_news:
-        NewsActivity.start(this);
+
         break;
       default:
         showToast(TAG);
@@ -271,25 +270,5 @@ public class SignInActivity extends BaseActivity {
   @Override
   protected TextView getToolbarTitle() {
     return null;
-  }
-
-  @Override
-  public void switchTab(int position, boolean isSelected) {
-
-  }
-
-  @Override
-  public void setToolBarTitle(String title) {
-
-  }
-
-  @Override
-  public void setToolbarVisibility(int visible) {
-
-  }
-
-  @Override
-  public void setOptionsMenuVisibility(boolean isVisible) {
-
   }
 }

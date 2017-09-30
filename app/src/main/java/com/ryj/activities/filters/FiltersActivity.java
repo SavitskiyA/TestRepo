@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
-import com.ryj.models.JudgesQuery;
+import com.ryj.models.Filters;
 
 import javax.inject.Inject;
 
@@ -22,9 +22,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/** Created by andrey on 9/6/17. */
+/**
+ * Created by andrey on 9/6/17.
+ */
 public class FiltersActivity extends BaseActivity {
-  @Inject JudgesQuery mJudgesQuery;
+  public static final String EXTRA_PARENT = "parent";
+  public static final int PARENT_JUDGES = 0;
+  public static final int PARENT_COURTS = 1;
+  @Inject
+  Filters mFilters;
 
   @BindView(R.id.toolbar)
   Toolbar mToolBar;
@@ -47,6 +53,9 @@ public class FiltersActivity extends BaseActivity {
   @BindView(R.id.frame_cases_selected)
   FrameLayout mFrameCasesSelected;
 
+  @BindView(R.id.frame_cases_title)
+  FrameLayout mFrameCasesTitle;
+
   @BindView(R.id.court)
   TextView mCourt;
 
@@ -65,8 +74,9 @@ public class FiltersActivity extends BaseActivity {
   @BindString(R.string.text_not_selected)
   String mNotSelected;
 
-  public static void start(Context context) {
+  public static void start(Context context, int parent) {
     Intent i = new Intent(context, FiltersActivity.class);
+    i.putExtra(EXTRA_PARENT, parent);
     context.startActivity(i);
   }
 
@@ -98,13 +108,24 @@ public class FiltersActivity extends BaseActivity {
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
+    if (getIntent().getExtras().getInt(EXTRA_PARENT) == PARENT_COURTS) {
+      setCasesVisible(View.INVISIBLE);
+    } else {
+      setCasesVisible(View.VISIBLE);
+    }
   }
+
+  private void setCasesVisible(int visible) {
+    mFrameCases.setVisibility(visible);
+    mFrameCasesTitle.setVisibility(visible);
+  }
+
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
-        mJudgesQuery.clear();
+        mFilters.clear();
         onBackPressed();
         return true;
       case R.id.action_check:
@@ -140,43 +161,31 @@ public class FiltersActivity extends BaseActivity {
   }
 
   private void setFilterValues() {
-    if (mJudgesQuery.getCourtType() != null) {
-      mCourt.setText(mJudgesQuery.getCourtTypeClient());
+    if (mFilters.getCourtType() != null) {
+      mCourt.setText(mFilters.getCourtTypeClient());
     } else {
       mCourt.setText(mNotSelected);
     }
 
-    if (mJudgesQuery.getRegionId() != null) {
-      mRegion.setText(mJudgesQuery.getRegion());
+    if (mFilters.getRegionId() != null) {
+      mRegion.setText(mFilters.getRegion());
     } else {
       mRegion.setText(mNotSelected);
     }
 
-    if (mJudgesQuery.getCityId() != null) {
-      mCity.setText(mJudgesQuery.getCity());
+    if (mFilters.getCityId() != null) {
+      mCity.setText(mFilters.getCity());
     } else {
       mCity.setText(mNotSelected);
     }
 
-    if (mJudgesQuery.getAffairs() != null && mJudgesQuery.getAffairs().size() > 0) {
+    if (mFilters.getAffairs() != null && mFilters.getAffairs().size() > 0) {
       mCasesNotSelected.setVisibility(View.INVISIBLE);
       mFrameCasesSelected.setVisibility(View.VISIBLE);
-      mCasesSelected.setText(String.valueOf(mJudgesQuery.getAffairs().size()));
+      mCasesSelected.setText(String.valueOf(mFilters.getAffairs().size()));
     } else {
       mCasesNotSelected.setVisibility(View.VISIBLE);
       mFrameCasesSelected.setVisibility(View.INVISIBLE);
     }
   }
-
-  @Override
-  public void switchTab(int position, boolean isSelected) {}
-
-  @Override
-  public void setToolBarTitle(String title) {}
-
-  @Override
-  public void setToolbarVisibility(int visible) {}
-
-  @Override
-  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

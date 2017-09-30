@@ -61,11 +61,6 @@
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
-      android:name=".activities.news.NewsActivity"
-      android:launchMode="singleTop"
-      android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
-    <activity
       android:name=".activities.auth.signup.judge.SignUpJudgeActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
@@ -86,22 +81,7 @@
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
-      android:name=".activities.profiles.citizen.CitizenActivity"
-      android:launchMode="singleTop"
-      android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
-    <activity
       android:name=".activities.BottomBarContainerActivity"
-      android:launchMode="singleTop"
-      android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
-    <activity
-      android:name=".activities.profiles.advocate.AdvocateActivity"
-      android:launchMode="singleTop"
-      android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
-    <activity
-      android:name=".activities.profiles.judge.JudgeActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.TranslucentedStatusBar"/>

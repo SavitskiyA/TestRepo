@@ -32,7 +32,7 @@ import javax.inject.Inject;
 import butterknife.BindString;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public abstract class BaseActivity extends RxAppCompatActivity implements Switchable{
+public abstract class BaseActivity extends RxAppCompatActivity{
   @Inject Api mApi;
   @Inject Prefs mPrefs;
   @Inject ErrorHandler mErrorHandler;

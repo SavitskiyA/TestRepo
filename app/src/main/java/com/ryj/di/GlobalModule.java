@@ -3,7 +3,7 @@ package com.ryj.di;
 import android.preference.PreferenceManager;
 
 import com.ryj.App;
-import com.ryj.models.JudgesQuery;
+import com.ryj.models.Filters;
 import com.ryj.models.request.SignUpQuery;
 import com.ryj.storage.prefs.Prefs;
 import com.ryj.storage.prefs.PrefsImpl;
@@ -50,7 +50,7 @@ public class GlobalModule {
 
   @Provides
   @PerApp
-  JudgesQuery provideJudgeQuery() {
-    return new JudgesQuery();
+  Filters provideFilters() {
+    return new Filters();
   }
 }

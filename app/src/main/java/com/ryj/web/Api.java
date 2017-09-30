@@ -2,6 +2,7 @@ package com.ryj.web;
 
 import com.ryj.models.request.SignUpQuery;
 import com.ryj.models.response.Cities;
+import com.ryj.models.response.Courts;
 import com.ryj.models.response.Judges;
 import com.ryj.models.response.Message;
 import com.ryj.models.response.Regions;
@@ -28,10 +29,10 @@ public interface Api {
   @FormUrlEncoded
   @POST("sign_in")
   Observable<UserResponse> signIn(
-      @Field("account[email]") String email,
-      @Field("account[password]") String password,
-      @Field("session[device_platform]") String devicePlatform,
-      @Field("session[device_token]") String deviceToken);
+          @Field("account[email]") String email,
+          @Field("account[password]") String password,
+          @Field("session[device_platform]") String devicePlatform,
+          @Field("session[device_token]") String deviceToken);
 
   @POST("sign_up")
   Observable<UserResponse> signUp(@Body SignUpQuery query);
@@ -43,39 +44,49 @@ public interface Api {
   @Multipart
   @POST("sign_up")
   Observable<UserResponse> signUpLawyer(
-      @PartMap() Map<String, RequestBody> userMap,
-      @PartMap() Map<String, RequestBody> accountMap,
-      @PartMap() Map<String, RequestBody> sessionMap,
-      @Part MultipartBody.Part avatar,
-      @Part MultipartBody.Part doc);
+          @PartMap() Map<String, RequestBody> userMap,
+          @PartMap() Map<String, RequestBody> accountMap,
+          @PartMap() Map<String, RequestBody> sessionMap,
+          @Part MultipartBody.Part avatar,
+          @Part MultipartBody.Part doc);
 
   @GET("judges")
   Observable<Judges> getJudgesByName(@Query("filter[search_by_full_name]") String fullName,
-                               @Query("page") Integer page);
+                                     @Query("page") Integer page);
 
   @GET("judges")
   Observable<Judges> getJudges(
-      @Query("filter[search_by_full_name]") String fullName,
-      @Query("filter[by_court_kind]") String courtType,
-      @Query("filter[by_city_id]") Integer cityId,
-      @Query("filter[by_region_id]") Integer regionId,
-      @Query("filter[by_affairs]") List<String> affairs,
-      @Query("sort") String sort,
-      @Query("direction") String direction,
-      @Query("page") Integer page);
+          @Query("filter[search_by_full_name]") String fullName,
+          @Query("filter[by_court_kind]") String courtType,
+          @Query("filter[by_city_id]") Integer cityId,
+          @Query("filter[by_region_id]") Integer regionId,
+          @Query("filter[by_affairs]") List<String> affairs,
+          @Query("sort") String sort,
+          @Query("direction") String direction,
+          @Query("page") Integer page);
+
+  @GET("courts")
+  Observable<Courts> getCourts(
+          @Query("filter[name]") String fullName,
+          @Query("filter[kind]") String courtType,
+          @Query("filter[city_id]") Integer cityId,
+          @Query("filter[by_region_id]") Integer regionId,
+          @Query("sort") String sort,
+          @Query("direction") String direction,
+          @Query("page") Integer page);
 
   @GET("regions")
   Observable<Regions> getRegions(
-      @Query("filter[name]") String name,
-      @Query("sort") String sort,
-      @Query("direction") String direction,
-      @Query("page") Integer page);
+          @Query("filter[name]") String name,
+          @Query("sort") String sort,
+          @Query("direction") String direction,
+          @Query("page") Integer page);
 
   @GET("cities")
   Observable<Cities> getCities(
-      @Query("filter[name]") String name,
-      @Query("filter[by_region_id]") Integer regionId,
-      @Query("sort") String sort,
-      @Query("direction") String direction,
-      @Query("page") Integer page);
+          @Query("filter[name]") String name,
+          @Query("filter[by_region_id]") Integer regionId,
+          @Query("sort") String sort,
+          @Query("direction") String direction,
+          @Query("page") Integer page);
 }

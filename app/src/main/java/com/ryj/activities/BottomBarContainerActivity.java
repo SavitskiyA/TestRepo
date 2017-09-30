@@ -14,25 +14,24 @@ import com.roughike.bottombar.BottomBar;
 import com.ryj.R;
 import com.ryj.activities.filters.FiltersActivity;
 import com.ryj.fragments.AnalyticsFragment;
+import com.ryj.fragments.CourtsFragment;
 import com.ryj.fragments.JudgesChooseSectionFragment;
 import com.ryj.fragments.JudgesFragment;
 import com.ryj.fragments.NewsFragment;
 import com.ryj.fragments.ProfileFragment;
 import com.ryj.listeners.Switchable;
-import com.ryj.models.JudgesQuery;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/** Created by andrey on 8/24/17. */
-public class BottomBarContainerActivity extends BaseActivity implements Switchable {
+/**
+ * Created by andrey on 8/24/17.
+ */
+public class BottomBarContainerActivity extends SwitchActivity implements Switchable {
   public static final Map<String, Integer> mBottomBarTabsMap = new HashMap<>();
-  @Inject JudgesQuery mJudgesQuery;
 
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
@@ -46,6 +45,8 @@ public class BottomBarContainerActivity extends BaseActivity implements Switchab
   @BindView(R.id.container)
   FrameLayout mContainer;
 
+  private String mCurrentFragmentTag;
+
   public static void start(Context context) {
     Intent i = new Intent(context, BottomBarContainerActivity.class);
     context.startActivity(i);
@@ -57,6 +58,7 @@ public class BottomBarContainerActivity extends BaseActivity implements Switchab
     mBottomBarTabsMap.put(AnalyticsFragment.TAG, 1);
     mBottomBarTabsMap.put(NewsFragment.TAG, 2);
     mBottomBarTabsMap.put(ProfileFragment.TAG, 3);
+    mBottomBarTabsMap.put(CourtsFragment.TAG, 0);
   }
 
   public static int getTabPosition(String tag) {
@@ -91,34 +93,34 @@ public class BottomBarContainerActivity extends BaseActivity implements Switchab
 
   private void setBottomBarSwitcher() {
     mBorromBar.setOnTabSelectListener(
-        tabId -> {
-          switch (tabId) {
-            case R.id.tab_judges:
-              replaceFragment(
-                  JudgesChooseSectionFragment.newInstance(),
-                  R.id.container,
-                  true,
-                  false,
-                  JudgesChooseSectionFragment.TAG);
-              return;
-            case R.id.tab_analytics:
-              replaceFragment(
-                  AnalyticsFragment.newInstance(),
-                  R.id.container,
-                  true,
-                  false,
-                  AnalyticsFragment.TAG);
-              return;
-            case R.id.tab_news:
-              replaceFragment(
-                  NewsFragment.newInstance(), R.id.container, true, false, NewsFragment.TAG);
-              return;
-            case R.id.tab_profile:
-              replaceFragment(
-                  ProfileFragment.newInstance(), R.id.container, true, false, ProfileFragment.TAG);
-              return;
-          }
-        });
+            tabId -> {
+              switch (tabId) {
+                case R.id.tab_judges:
+                  replaceFragment(
+                          JudgesChooseSectionFragment.newInstance(),
+                          R.id.container,
+                          true,
+                          false,
+                          JudgesChooseSectionFragment.TAG);
+                  return;
+                case R.id.tab_analytics:
+                  replaceFragment(
+                          AnalyticsFragment.newInstance(),
+                          R.id.container,
+                          true,
+                          false,
+                          AnalyticsFragment.TAG);
+                  return;
+                case R.id.tab_news:
+                  replaceFragment(
+                          NewsFragment.newInstance(), R.id.container, true, false, NewsFragment.TAG);
+                  return;
+                case R.id.tab_profile:
+                  replaceFragment(
+                          ProfileFragment.newInstance(), R.id.container, true, false, ProfileFragment.TAG);
+                  return;
+              }
+            });
   }
 
   @Override
@@ -129,6 +131,11 @@ public class BottomBarContainerActivity extends BaseActivity implements Switchab
   @Override
   public void setOptionsMenuVisibility(boolean isVisible) {
     mToolbar.getMenu().findItem(R.id.action_filters).setVisible(isVisible);
+  }
+
+  @Override
+  public void setCurrentFragmentTag(String tag) {
+    mCurrentFragmentTag = tag;
   }
 
   @Override
@@ -144,8 +151,13 @@ public class BottomBarContainerActivity extends BaseActivity implements Switchab
         onBackPressed();
         return true;
       case R.id.action_filters:
-        FiltersActivity.start(this);
-        return true;
+        if (mCurrentFragmentTag.equals(CourtsFragment.TAG)) {
+          FiltersActivity.start(this, FiltersActivity.PARENT_COURTS);
+          return true;
+        } else if (mCurrentFragmentTag.equals(JudgesFragment.TAG)) {
+          FiltersActivity.start(this, FiltersActivity.PARENT_JUDGES);
+          return true;
+        }
       default:
         return super.onOptionsItemSelected(item);
     }

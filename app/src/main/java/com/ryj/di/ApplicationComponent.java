@@ -17,6 +17,7 @@ import com.ryj.activities.filters.FiltersCategoryActivity;
 import com.ryj.activities.filters.FiltersCityActivity;
 import com.ryj.activities.filters.FiltersCourtTypeActivity;
 import com.ryj.activities.filters.FiltersRegionActivity;
+import com.ryj.fragments.CourtsFragment;
 import com.ryj.fragments.JudgesFragment;
 
 import dagger.Component;
@@ -59,4 +60,6 @@ public interface ApplicationComponent {
   void inject(FiltersCourtTypeActivity activity);
 
   void inject(JudgesFragment fragment);
+
+  void inject(CourtsFragment fragment);
 }

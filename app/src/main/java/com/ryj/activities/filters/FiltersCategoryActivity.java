@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.adapters.CategoryAdapter;
-import com.ryj.models.JudgesQuery;
+import com.ryj.models.Filters;
 import com.ryj.models.enums.Affairs;
 
 import java.util.ArrayList;
@@ -27,7 +27,8 @@ import butterknife.ButterKnife;
 
 /** Created by andrey on 9/20/17. */
 public class FiltersCategoryActivity extends BaseActivity {
-  @Inject JudgesQuery mJudgeQuery;
+  @Inject
+  Filters mFilters;
 
   @BindView(R.id.categories)
   RecyclerView mCategories;
@@ -79,7 +80,7 @@ public class FiltersCategoryActivity extends BaseActivity {
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
-    mAdapter = new CategoryAdapter(this, mCategoriesClient, mJudgeQuery.getAffairsBooleans());
+    mAdapter = new CategoryAdapter(this, mCategoriesClient, mFilters.getAffairsBooleans());
     mCategories.setLayoutManager(new LinearLayoutManager(this));
     mCategories.setAdapter(mAdapter);
   }
@@ -88,8 +89,8 @@ public class FiltersCategoryActivity extends BaseActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
-        mJudgeQuery.setAffairs(getChoosenCategories(mAdapter.getSelectedCategoriesBoolean()));
-        mJudgeQuery.setAffairsBooleans(mAdapter.getSelectedCategoriesBoolean());
+        mFilters.setAffairs(getChoosenCategories(mAdapter.getSelectedCategoriesBoolean()));
+        mFilters.setAffairsBooleans(mAdapter.getSelectedCategoriesBoolean());
         onBackPressed();
         return true;
       default:
@@ -106,16 +107,4 @@ public class FiltersCategoryActivity extends BaseActivity {
     }
     return choosenCategories;
   }
-
-  @Override
-  public void switchTab(int position, boolean isSelected) {}
-
-  @Override
-  public void setToolBarTitle(String title) {}
-
-  @Override
-  public void setToolbarVisibility(int visible) {}
-
-  @Override
-  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

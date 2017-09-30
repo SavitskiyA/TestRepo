@@ -1,0 +1,43 @@
+package com.ryj.adapters.viewholders;
+
+import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.github.ornolfr.ratingview.RatingView;
+import com.ryj.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+/** Created by andrey on 9/5/17. */
+public class CourtHolder extends RecyclerView.ViewHolder {
+
+  @BindView(R.id.court)
+  TextView mCourt;
+
+  @BindView(R.id.ratingbar)
+  RatingView mRatingBar;
+
+  @BindView(R.id.marks_count)
+  TextView mMarksCount;
+
+  public CourtHolder(View itemView) {
+    super(itemView);
+    ButterKnife.bind(this, itemView);
+  }
+
+  public void setCourt(String court) {
+    mCourt.setText(court);
+  }
+
+  public void setRating(Float rating) {
+    mRatingBar.setRating(rating);
+  }
+
+  public void setMarksCount(String count) {
+    mMarksCount.setText(count);
+  }
+}

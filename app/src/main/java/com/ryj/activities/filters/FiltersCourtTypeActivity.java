@@ -13,7 +13,7 @@ import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.adapters.CourtTypeAdapter;
 import com.ryj.listeners.OnCourtTypeAdapterListener;
-import com.ryj.models.JudgesQuery;
+import com.ryj.models.Filters;
 
 import javax.inject.Inject;
 
@@ -32,9 +32,12 @@ import static com.ryj.models.enums.Courts.LOCAL_ADMINISTRATIVE;
 import static com.ryj.models.enums.Courts.LOCAL_ECONOMIC;
 import static com.ryj.models.enums.Courts.SUPREME;
 
-/** Created by andrey on 9/29/17. */
+/**
+ * Created by andrey on 9/29/17.
+ */
 public class FiltersCourtTypeActivity extends BaseActivity implements OnCourtTypeAdapterListener {
-  @Inject JudgesQuery mJudgeQuery;
+  @Inject
+  Filters mFilters;
 
   @BindView(R.id.recycler_view_list)
   RecyclerView mCourtTypes;
@@ -49,16 +52,16 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnCourtTyp
   String[] mCourtTypesClient;
 
   private String[] mCourtTypesServer = {
-    SUPREME.toString(),
-    HIGHEST_CIVIL_CRIMINAL.toString(),
-    HIGHEST_ECONOMIC.toString(),
-    HIGHEST_ADMINISTRATIVE.toString(),
-    APPELLATE.toString(),
-    APPELLATE_ECONOMIC.toString(),
-    APPELLATE_ADMIN.toString(),
-    LOCAL.toString(),
-    LOCAL_ECONOMIC.toString(),
-    LOCAL_ADMINISTRATIVE.toString()
+          SUPREME.toString(),
+          HIGHEST_CIVIL_CRIMINAL.toString(),
+          HIGHEST_ECONOMIC.toString(),
+          HIGHEST_ADMINISTRATIVE.toString(),
+          APPELLATE.toString(),
+          APPELLATE_ECONOMIC.toString(),
+          APPELLATE_ADMIN.toString(),
+          LOCAL.toString(),
+          LOCAL_ECONOMIC.toString(),
+          LOCAL_ADMINISTRATIVE.toString()
   };
 
   private CourtTypeAdapter mAdapter;
@@ -83,18 +86,6 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnCourtTyp
     mCourtTypes.setAdapter(mAdapter);
   }
 
-  @Override
-  public void switchTab(int position, boolean isSelected) {}
-
-  @Override
-  public void setToolBarTitle(String title) {}
-
-  @Override
-  public void setToolbarVisibility(int visible) {}
-
-  @Override
-  public void setOptionsMenuVisibility(boolean isVisible) {}
-
   @Nullable
   @Override
   protected Toolbar getToolbar() {
@@ -109,13 +100,13 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnCourtTyp
 
   @Override
   public void onHolderCheckedChange(int position) {
-    mJudgeQuery.setCourtType(mCourtTypesServer[position]);
-    mJudgeQuery.setCourtTypeClient(mCourtTypesClient[position]);
+    mFilters.setCourtType(mCourtTypesServer[position]);
+    mFilters.setCourtTypeClient(mCourtTypesClient[position]);
   }
 
   private int getLastPosition() {
     for (int i = 0; i < mCourtTypesServer.length; i++) {
-      if (mCourtTypesServer[i].equals(mJudgeQuery.getCourtType())) {
+      if (mCourtTypesServer[i].equals(mFilters.getCourtType())) {
         return i;
       }
     }

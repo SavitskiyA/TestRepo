@@ -13,7 +13,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/** Created by andrey on 9/5/17. */
+/**
+ * Created by andrey on 9/5/17.
+ */
 public class JudgesChooseSectionFragment extends BaseFragment {
   public static final String TAG = "JudgesChooseSectionFragment";
 
@@ -33,7 +35,7 @@ public class JudgesChooseSectionFragment extends BaseFragment {
   @Nullable
   @Override
   public View onCreateView(
-      LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+          LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_judges_choose_section, container, false);
     ButterKnife.bind(this, view);
     setActivityToolbarVisibility(View.GONE);
@@ -45,19 +47,27 @@ public class JudgesChooseSectionFragment extends BaseFragment {
     switch (v.getId()) {
       case R.id.judges:
         replaceFragment(
-            JudgesFragment.newInstance(JudgesFragment.PARENT_JUDGES),
-            R.id.container,
-            true,
-            false,
-            JudgesFragment.TAG);
+                JudgesFragment.newInstance(JudgesFragment.PARENT_JUDGES),
+                R.id.container,
+                true,
+                false,
+                JudgesFragment.TAG);
         return;
       case R.id.most_discussed:
         replaceFragment(
-            JudgesFragment.newInstance(JudgesFragment.PARENT_MOST_DISCUSSED),
-            R.id.container,
-            true,
-            false,
-            JudgesFragment.TAG);
+                JudgesFragment.newInstance(JudgesFragment.PARENT_MOST_DISCUSSED),
+                R.id.container,
+                true,
+                false,
+                JudgesFragment.TAG);
+        return;
+      case R.id.courts:
+        replaceFragment(
+                CourtsFragment.newInstance(),
+                R.id.container,
+                true,
+                false,
+                CourtsFragment.TAG);
         return;
     }
   }

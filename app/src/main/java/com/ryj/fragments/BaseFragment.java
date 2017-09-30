@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.ryj.App;
 import com.ryj.activities.BaseActivity;
+import com.ryj.activities.SwitchActivity;
 import com.ryj.di.ApplicationComponent;
 import com.ryj.listeners.Switchable;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -29,9 +30,9 @@ public abstract class BaseFragment extends RxFragment {
     mButterKnifeUnbinder.unbind();
   }
 
-  private Switchable getSwitchable() {
-    if (this.getActivity() != null && this.getActivity() instanceof Switchable) {
-      return ((Switchable) this.getActivity());
+  private Switchable getSwitchActivity() {
+    if (this.getActivity() != null && this.getActivity() instanceof SwitchActivity) {
+      return ((SwitchActivity) this.getActivity());
     } else {
       throw new RuntimeException("Activity instance is null or it is not instance of Switchable");
     }
@@ -46,27 +47,31 @@ public abstract class BaseFragment extends RxFragment {
   }
 
   protected void setActivityToolBarTitle(String title) {
-    getSwitchable().setToolBarTitle(title);
+    getSwitchActivity().setToolBarTitle(title);
   }
 
   protected void switchActivityTab(int tagId, boolean isChecked) {
-    getSwitchable().switchTab(tagId, isChecked);
+    getSwitchActivity().switchTab(tagId, isChecked);
   }
 
   protected void setActivityToolbarVisibility(int visible) {
-    getSwitchable().setToolbarVisibility(visible);
+    getSwitchActivity().setToolbarVisibility(visible);
   }
 
   protected void setActivityOptionsMenuVisibility(boolean isVisible) {
-    getSwitchable().setOptionsMenuVisibility(isVisible);
+    getSwitchActivity().setOptionsMenuVisibility(isVisible);
   }
 
   protected void replaceFragment(
-      Fragment fragment, int resContainer, boolean stack, boolean animate, String tag) {
+          Fragment fragment, int resContainer, boolean stack, boolean animate, String tag) {
     getBaseActivity().replaceFragment(fragment, resContainer, stack, animate, tag);
   }
 
   protected ApplicationComponent getComponent() {
     return App.get().getComponent();
+  }
+
+  protected void setCurrentFragmentTag(String tag) {
+    getSwitchActivity().setCurrentFragmentTag(tag);
   }
 }

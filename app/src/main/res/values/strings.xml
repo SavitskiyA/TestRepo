@@ -113,6 +113,7 @@
   <string name="text_regions">Regions</string>
   <string name="text_cities">Cities</string>
   <string name="text_most_discussed">The most\ndiscussed</string>
+  <string name="text_most_discussed_in_one_line">The most discussed</string>
   <string name="text_best_rated">Best rated</string>
   <string name="text_found">Found</string>
   <string name="text_settings">Settings</string>

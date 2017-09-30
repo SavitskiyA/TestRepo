@@ -12,7 +12,9 @@ import com.ryj.activities.BottomBarContainerActivity;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 
-/** Created by andrey on 8/24/17. */
+/**
+ * Created by andrey on 8/24/17.
+ */
 public class ProfileFragment extends BaseFragment {
   public static final String TAG = "ProfileFragment";
 
@@ -26,7 +28,7 @@ public class ProfileFragment extends BaseFragment {
   @Nullable
   @Override
   public View onCreateView(
-      LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+          LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_profile, container, false);
     ButterKnife.bind(this, view);
     return view;
@@ -35,15 +37,15 @@ public class ProfileFragment extends BaseFragment {
   @Override
   public void onResume() {
     super.onResume();
-    if (this.getActivity() != null) {
-      setActivityToolBarTitle(mTitle);
-      switchActivityTab(BottomBarContainerActivity.getTabPosition(TAG), true);
-    }
+    setActivityToolBarTitle(mTitle);
+    switchActivityTab(BottomBarContainerActivity.getTabPosition(TAG), true);
+    setActivityOptionsMenuVisibility(false);
   }
 
   @Override
   public void onPause() {
     super.onPause();
     switchActivityTab(BottomBarContainerActivity.getTabPosition(TAG), false);
+    setActivityOptionsMenuVisibility(true);
   }
 }

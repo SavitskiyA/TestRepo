@@ -15,7 +15,7 @@ import com.ryj.adapters.AreaAdapter;
 import com.ryj.dialogs.SpinnerDialog;
 import com.ryj.listeners.Loadable;
 import com.ryj.listeners.OnAreaAdapterListener;
-import com.ryj.models.JudgesQuery;
+import com.ryj.models.Filters;
 import com.ryj.models.response.Area;
 import com.ryj.models.response.City;
 import com.ryj.utils.StringUtils;
@@ -33,12 +33,17 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-/** Created by andrey on 9/19/17. */
+/**
+ * Created by andrey on 9/19/17.
+ */
 public class FiltersCityActivity extends BaseActivity
-    implements Loadable, OnAreaAdapterListener {
-  @Inject Api mApi;
-  @Inject ErrorHandler mErrorHandler;
-  @Inject JudgesQuery mJudgeQuery;
+        implements Loadable, OnAreaAdapterListener {
+  @Inject
+  Api mApi;
+  @Inject
+  ErrorHandler mErrorHandler;
+  @Inject
+  Filters mFilters;
 
   @BindView(R.id.cities)
   RecyclerView mCities;
@@ -98,7 +103,8 @@ public class FiltersCityActivity extends BaseActivity
   }
 
   @Override
-  public void setItemCount(int count) {}
+  public void setItemCount(int count) {
+  }
 
   @Override
   public void load(int page) {
@@ -106,30 +112,30 @@ public class FiltersCityActivity extends BaseActivity
     mApi.getCities(
             null,
             getRegionId(),
-            mJudgeQuery.getSort().toString(),
-            mJudgeQuery.getDirection().toString(),
+            null,
+            null,
             page)
-        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-            response -> {
-              mSpinnerDialog.dismiss();
-              if (page == 1) {
-                mAdapter.reloadItems(getAreas(response.getCities()));
-              } else {
-                mAdapter.addItems(getAreas(response.getCities()));
-              }
-              mAreas.addAll(getAreas(response.getCities()));
-              mAdapter.setLastCheckedItem(getLastCityIdPosition());
-              if (response.getNextPage() == null) {
-                mAdapter.setIsLoadable(false);
-              }
-            },
-            throwable -> {
-              mSpinnerDialog.dismiss();
-              mErrorHandler.handleError(throwable, this);
-            });
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                    response -> {
+                      mSpinnerDialog.dismiss();
+                      if (page == 1) {
+                        mAdapter.reloadItems(getAreas(response.getCities()));
+                      } else {
+                        mAdapter.addItems(getAreas(response.getCities()));
+                      }
+                      mAreas.addAll(getAreas(response.getCities()));
+                      mAdapter.setLastCheckedItem(getLastCityIdPosition());
+                      if (response.getNextPage() == null) {
+                        mAdapter.setIsLoadable(false);
+                      }
+                    },
+                    throwable -> {
+                      mSpinnerDialog.dismiss();
+                      mErrorHandler.handleError(throwable, this);
+                    });
   }
 
   @Override
@@ -146,32 +152,20 @@ public class FiltersCityActivity extends BaseActivity
 
   @Override
   public void onHolderCheckedChange(Integer itemId, Integer itemIdPosition) {
-    mJudgeQuery.setCityId(itemId);
-    mJudgeQuery.setCity(mAreas.get(itemIdPosition).getName());
+    mFilters.setCityId(itemId);
+    mFilters.setCity(mAreas.get(itemIdPosition).getName());
   }
 
   private Integer getRegionId() {
-    return mJudgeQuery.getRegionId() == null ? null : mJudgeQuery.getRegionId();
+    return mFilters.getRegionId() == null ? null : mFilters.getRegionId();
   }
 
   private int getLastCityIdPosition() {
     for (int i = 0; i < mAreas.size(); i++) {
-      if (mJudgeQuery.getCityId() != null && mJudgeQuery.getCityId() == mAreas.get(i).getId()) {
+      if (mFilters.getCityId() != null && mFilters.getCityId() == mAreas.get(i).getId()) {
         return i;
       }
     }
     return -1;
   }
-
-  @Override
-  public void switchTab(int position, boolean isSelected) {}
-
-  @Override
-  public void setToolBarTitle(String title) {}
-
-  @Override
-  public void setToolbarVisibility(int visible) {}
-
-  @Override
-  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

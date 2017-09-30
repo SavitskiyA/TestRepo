@@ -23,7 +23,7 @@ public class Judge {
 
   @SerializedName("court")
   @Expose
-  private Court mCourt;
+  private CourtJ mCourt;
 
   @SerializedName("avg_rating")
   @Expose
@@ -73,11 +73,11 @@ public class Judge {
     this.mAvatar = avatar;
   }
 
-  public Court getCourt() {
+  public CourtJ getCourt() {
     return mCourt;
   }
 
-  public void setCourt(Court court) {
+  public void setCourt(CourtJ court) {
     this.mCourt = court;
   }
 

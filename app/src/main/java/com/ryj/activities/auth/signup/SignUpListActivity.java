@@ -101,16 +101,4 @@ public class SignUpListActivity extends BaseActivity implements OnButtonEnableLi
       mOk.setEnabled(enable);
     }
   }
-
-  @Override
-  public void switchTab(int position, boolean isSelected) {}
-
-  @Override
-  public void setToolBarTitle(String title) {}
-
-  @Override
-  public void setToolbarVisibility(int visible) {}
-
-  @Override
-  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

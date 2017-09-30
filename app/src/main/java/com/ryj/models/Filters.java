@@ -5,15 +5,16 @@ import com.ryj.models.enums.Sort;
 
 import java.util.List;
 
-/** Created by andrey on 9/13/17. */
-public class JudgesQuery {
+/**
+ * Created by andrey on 9/30/17.
+ */
+
+public class Filters {
   private String mCourtType;
   private String mCourtTypeClient;
   private Integer mCityId;
   private Integer mRegionId;
   private List<String> mAffairs;
-  private Sort mSort = Sort.LAST_NAME;
-  private Direction mDirection = Direction.ASC;
   private String mRegion;
   private String mCity;
   private boolean[] mAffairsBooleans;
@@ -48,22 +49,6 @@ public class JudgesQuery {
 
   public void setAffairs(List<String> affairs) {
     this.mAffairs = affairs;
-  }
-
-  public Sort getSort() {
-    return mSort;
-  }
-
-  public void setSort(Sort sort) {
-    this.mSort = sort;
-  }
-
-  public Direction getDirection() {
-    return mDirection;
-  }
-
-  public void setDirection(Direction direction) {
-    this.mDirection = direction;
   }
 
   public String getRegion() {

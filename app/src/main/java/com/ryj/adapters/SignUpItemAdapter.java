@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.ryj.R;
 import com.ryj.adapters.viewholders.SignUpItemHolder;
 import com.ryj.listeners.OnButtonEnableListener;
-import com.ryj.listeners.OnHolderCheckedListener;
+import com.ryj.listeners.OnHolderListener;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by andrey on 7/22/17.
  */
 
-public class SignUpItemAdapter extends RecyclerView.Adapter<SignUpItemHolder> implements OnHolderCheckedListener {
+public class SignUpItemAdapter extends RecyclerView.Adapter<SignUpItemHolder> implements OnHolderListener {
   private String[] mCategories;
   private ArrayList<String> mChoosenCategoriesList = new ArrayList<>();
   private boolean[] mChoosenCategoriesBooleans;

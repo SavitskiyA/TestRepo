@@ -1,6 +1,10 @@
 package com.ryj.utils.handlers;
 
 
+import android.content.Context;
+
+import com.ryj.models.enums.RequestType;
+
 import java.io.IOException;
 
 /**
@@ -8,6 +12,7 @@ import java.io.IOException;
  */
 public interface ErrorHandler {
 
-  void handleError(Throwable throwable) throws IOException;
+  void handleError(Throwable throwable, Context context) throws IOException;
 
+  void handleErrorByRequestType(Throwable throwable, Context context, RequestType requestType) throws IOException;
 }

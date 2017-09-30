@@ -1,9 +1,3 @@
-/**
- * Copyright (c) 2014 CoderKiss
- * <p>
- * CoderKiss[AT]gmail.com
- */
-
 package com.ryj.utils;
 
 import android.annotation.SuppressLint;
@@ -53,6 +47,6 @@ public class ToastUtil {
     if (context == null) {
       return;
     }
-    mToast = Toast.makeText(context, "", longTime ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
+    mToast = Toast.makeText(context, StringUtils.EMPTY_STRING, longTime ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
   }
 }

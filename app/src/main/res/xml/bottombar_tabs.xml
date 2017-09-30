@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+  <tab
+    icon="@drawable/selector_judges_tab"
+    id="@+id/tab_judges"
+    title="@string/text_judges"/>
+  <tab
+    icon="@drawable/selector_analytics_tab"
+    id="@+id/tab_analytics"
+    title="@string/text_analytics"/>
+  <tab
+    icon="@drawable/selector_news_tab"
+    id="@+id/tab_news"
+    title="@string/text_news"/>
+  <tab
+    icon="@drawable/selector_profile_tab"
+    id="@+id/tab_profile"
+    title="@string/text_profile"/>
+</tabs>

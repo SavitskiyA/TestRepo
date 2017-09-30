@@ -2,33 +2,41 @@ package com.ryj.models.enums;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by andrey on 7/28/17.
- */
-
+/** Created by andrey on 7/28/17. */
 public enum Specializations {
-  @SerializedName("administrative_process")ADMINISTRATIVE {
+  @SerializedName("administrative")
+  ADMINISTRATIVE {
     @Override
     public String toString() {
-      return "administrative_process";
+      return "administrative";
     }
   },
-  @SerializedName("economic_process")ECONOMIC {
+  @SerializedName("civil")
+  CIVIL {
     @Override
     public String toString() {
-      return "economic_process";
+      return "civil";
     }
   },
-  @SerializedName("criminal_process")CRIMINAL {
+  @SerializedName("criminal")
+  CRIMINAL {
     @Override
     public String toString() {
-      return "criminal_process";
+      return "criminal";
     }
   },
-  @SerializedName("civil_process")CIVIL {
+  @SerializedName("economic")
+  ECONOMIC {
     @Override
     public String toString() {
-      return "civil_process";
+      return "economic";
+    }
+  },
+  @SerializedName("legal")
+  LEGAL {
+    @Override
+    public String toString() {
+      return "legal";
     }
   }
 }

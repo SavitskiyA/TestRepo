@@ -1,5 +1,8 @@
 package com.ryj.models;
 
+import android.net.Uri;
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.ryj.models.enums.Affairs;
@@ -8,7 +11,12 @@ import com.ryj.models.enums.UserType;
 
 import java.util.List;
 
-public class User {
+public class User implements Reflectable {
+  private static final String MAP_PREFIX = "user[";
+
+  @SerializedName("id")
+  @Expose
+  private Integer mId;
 
   @SerializedName("first_name")
   @Expose
@@ -42,9 +50,29 @@ public class User {
   @Expose
   private String mCompany;
 
+  @SerializedName("avatar")
+  @Expose
+  private String mAvatar;
+
+  @SerializedName("person_doc_photo_attributes")
+  @Expose
+  private Document mDoc;
+
+  private Uri mAvatarUri;
+
+  public User() {}
+
   public User(CharSequence firstName, CharSequence lastName) {
     this.mFirstName = firstName.toString().trim();
     this.mLastName = lastName.toString().trim();
+  }
+
+  public Integer getId() {
+    return mId;
+  }
+
+  public void setId(Integer id) {
+    this.mId = id;
   }
 
   public String getFirstName() {
@@ -110,5 +138,34 @@ public class User {
   public void setCompany(CharSequence company) {
     this.mCompany = company.toString().trim();
   }
-}
 
+  public String getAvatar() {
+    return mAvatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.mAvatar = avatar;
+  }
+
+  public Document getDoc() {
+    return mDoc;
+  }
+
+  public void setDoc(Document docPhoto) {
+    this.mDoc = docPhoto;
+  }
+
+  public Uri getAvatarUri() {
+    return mAvatarUri;
+  }
+
+  public void setAvatarUri(Uri avatarUri) {
+    this.mAvatarUri = avatarUri;
+  }
+
+  @NonNull
+  @Override
+  public String getFieldMapPrefix() {
+    return MAP_PREFIX;
+  }
+}

@@ -1,6 +1,10 @@
 package com.ryj.activities;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -8,13 +12,74 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ryj.App;
+import com.ryj.R;
+import com.ryj.activities.auth.signin.SignInActivity;
 import com.ryj.di.ApplicationComponent;
+import com.ryj.dialogs.SpinnerDialog;
+import com.ryj.listeners.Switchable;
+import com.ryj.models.events.SignOutEvent;
+import com.ryj.models.events.UnauthorizedEvent;
+import com.ryj.rx.RxBus;
+import com.ryj.storage.prefs.Prefs;
+import com.ryj.utils.ToastUtil;
+import com.ryj.utils.handlers.ErrorHandler;
+import com.ryj.web.Api;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
-public abstract class BaseActivity extends RxAppCompatActivity {
+import javax.inject.Inject;
+
+import butterknife.BindString;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
+public abstract class BaseActivity extends RxAppCompatActivity implements Switchable{
+  @Inject Api mApi;
+  @Inject Prefs mPrefs;
+  @Inject ErrorHandler mErrorHandler;
+
+  @BindString(R.string.text_not_authorized)
+  String mUnauthorized;
+
+  @BindString(R.string.text_ok)
+  String mOk;
+
+  @BindString(R.string.text_cancel)
+  String mCancel;
 
   public ApplicationComponent getComponent() {
     return App.get().getComponent();
+  }
+
+  public AlertDialog getDialog(CharSequence neutralButtonTitle) {
+    AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+    alertDialog.setButton(
+        AlertDialog.BUTTON_NEUTRAL,
+        neutralButtonTitle,
+        (dialog, which) -> {
+          dialog.dismiss();
+        });
+    return alertDialog;
+  }
+
+  public SpinnerDialog getSpinnerDialog() {
+    return new SpinnerDialog();
+  }
+
+  public AlertDialog getDialog(CharSequence negativeButtonTitle, CharSequence positiveButtonTitle) {
+    AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+    alertDialog.setButton(
+        AlertDialog.BUTTON_NEUTRAL,
+        negativeButtonTitle,
+        (dialog, which) -> {
+          alertDialog.dismiss();
+        });
+    alertDialog.setButton(
+        AlertDialog.BUTTON_POSITIVE,
+        positiveButtonTitle,
+        (dialog, which) -> {
+          logout();
+        });
+    return alertDialog;
   }
 
   @Nullable
@@ -37,13 +102,13 @@ public abstract class BaseActivity extends RxAppCompatActivity {
   }
 
   public void setSoftInputMode() {
-    getWindow().setSoftInputMode(
-            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
   }
 
   public void hideStatusBar() {
-    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    getWindow()
+        .setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
   }
 
   public void showToast(String message) {
@@ -64,5 +129,69 @@ public abstract class BaseActivity extends RxAppCompatActivity {
       default:
         return super.onOptionsItemSelected(item);
     }
+  }
+
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    getComponent().inject(this);
+    subscribeOnEvent();
+  }
+
+  protected void subscribeOnEvent() {
+    RxBus.receiveEvent()
+        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+        .observeOn(AndroidSchedulers.mainThread())
+        .filter(event -> event instanceof UnauthorizedEvent)
+        .subscribe(
+            event -> {
+              AlertDialog dialog = getDialog(mCancel, mOk);
+              dialog.setMessage(mUnauthorized);
+              dialog.show();
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this);
+              ToastUtil.show(throwable.getMessage(), false);
+            });
+    RxBus.receiveEvent()
+        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+        .observeOn(AndroidSchedulers.mainThread())
+        .filter(event -> event instanceof SignOutEvent)
+        .subscribe(
+            event -> {
+              logout();
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this);
+              ToastUtil.show(throwable.getMessage(), false);
+            });
+  }
+
+  protected void logout() {
+    mPrefs.clear();
+    SignInActivity.startWithEmptyStack(this);
+  }
+
+  public void replaceFragment(
+      Fragment fragment, int resContainer, boolean stack, boolean animate, String tag) {
+
+    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    if (animate) {
+      transaction.setCustomAnimations(
+          R.anim.slide_in_right,
+          R.anim.slide_out_left,
+          R.anim.slide_in_left,
+          R.anim.slide_out_right);
+    }
+
+    transaction.replace(resContainer, fragment, tag);
+    if (stack) {
+      transaction.addToBackStack(fragment.getClass().getSimpleName());
+    }
+    transaction.commitAllowingStateLoss();
+  }
+
+  public int getFragmentsBackStackSize() {
+    return getSupportFragmentManager().getBackStackEntryCount();
   }
 }

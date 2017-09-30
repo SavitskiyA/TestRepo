@@ -10,10 +10,7 @@ import android.widget.TextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 
-/**
- * Created by andrey on 7/10/17.
- */
-
+/** Created by andrey on 7/10/17. */
 public class JudgesActivity extends BaseActivity {
   public static void start(Context context) {
     Intent i = new Intent(context, JudgesActivity.class);
@@ -37,4 +34,16 @@ public class JudgesActivity extends BaseActivity {
   protected TextView getToolbarTitle() {
     return null;
   }
+
+  @Override
+  public void switchTab(int position, boolean isSelected) {}
+
+  @Override
+  public void setToolBarTitle(String title) {}
+
+  @Override
+  public void setToolbarVisibility(int visible) {}
+
+  @Override
+  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

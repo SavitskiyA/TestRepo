@@ -3,6 +3,8 @@ package com.ryj.di;
 import android.preference.PreferenceManager;
 
 import com.ryj.App;
+import com.ryj.models.JudgesQuery;
+import com.ryj.models.request.SignUpQuery;
 import com.ryj.storage.prefs.Prefs;
 import com.ryj.storage.prefs.PrefsImpl;
 import com.ryj.utils.handlers.ErrorHandler;
@@ -38,5 +40,17 @@ public class GlobalModule {
   @PerApp
   ErrorHandler provideErrorHandler() {
     return new ErrorHandlerImpl();
+  }
+
+  @Provides
+  @PerApp
+  SignUpQuery provideSignUpQuery() {
+    return new SignUpQuery();
+  }
+
+  @Provides
+  @PerApp
+  JudgesQuery provideJudgeQuery() {
+    return new JudgesQuery();
   }
 }

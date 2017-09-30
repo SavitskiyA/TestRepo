@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/bg_dark"
+             android:orientation="vertical">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp">
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:fontFamily="sans-serif"
+      android:text="@string/text_sign_up_judge"
+      android:textColor="@android:color/background_light"
+      android:textSize="18sp"/>
+  </android.support.v7.widget.Toolbar>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="80dp"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="36dp"
+      android:layout_marginRight="36dp"
+      android:layout_marginTop="44dp">
+
+      <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_fullname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/TextInputLayoutStyle">
+
+        <AutoCompleteTextView
+          android:id="@+id/fullname"
+          style="@style/EditTextStyle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:hint="@string/text_full_name"
+          android:imeOptions="actionDone"
+          android:inputType="textCapSentences"/>
+      </android.support.design.widget.TextInputLayout>
+    </FrameLayout>
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="56dp"
+      android:layout_marginRight="56dp"
+      android:layout_marginTop="24dp"
+      android:fontFamily="sans-serif"
+      android:gravity="center"
+      android:letterSpacing="0.03"
+      android:lineSpacingMultiplier="1.2"
+      android:text="@string/text_choose_name_from_drop_down"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/size_text_16sp"/>
+  </LinearLayout>
+</FrameLayout>

@@ -22,6 +22,11 @@
     <item name="colorPrimaryDark">@color/colorBlack</item>
     <item name="android:windowTranslucentStatus">true</item>
     <item name="android:homeAsUpIndicator">@drawable/ic_arrow_backspace</item>
+    <item name="colorAccent">@color/colorBlueLight</item>
+  </style>
+
+  <style name="AppTheme.TranslucentedStatusBar.FiltersTheme">
+    <item name="android:homeAsUpIndicator">@drawable/ic_cancel</item>
   </style>
 
   <style name="TextInputLayoutStyle">
@@ -38,6 +43,12 @@
   </style>
 
   <style name="AppTheme.LinkText">
+    <item name="colorAccent">@color/colorBlueLight</item>
+  </style>
+
+  <style name="AppTheme.CropActivityTheme">
+    <item name="colorPrimary">@color/colorDarkToolBar</item>
+    <item name="colorPrimaryDark">@color/colorDarkStatusBar</item>
     <item name="colorAccent">@color/colorBlueLight</item>
   </style>
 </resources>

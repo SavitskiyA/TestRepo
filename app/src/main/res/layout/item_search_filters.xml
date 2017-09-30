@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             app:layout_scrollFlags="scroll|enterAlways">
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginBottom="20dp"
+    android:layout_marginTop="20dp">
+
+    <EditText
+      android:id="@+id/search"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:background="@drawable/background_search"
+      android:drawableLeft="@drawable/ic_search_gray"
+      android:drawablePadding="8dp"
+      android:fontFamily="sans-serif"
+      android:hint="@string/text_judge_search"
+      android:imeOptions="actionDone"
+      android:inputType="text"
+      android:paddingLeft="8dp"
+      android:textColor="@color/colorGrayHintLable"
+      android:textSize="16sp"/>
+
+    <ImageView
+      android:id="@+id/search_cancel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical|end"
+      android:layout_marginEnd="12dp"
+      android:src="@drawable/ic_search_cancel"
+      android:visibility="invisible"/>
+  </FrameLayout>
+
+  <TextView
+    android:id="@+id/best_rated"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="86dp"
+    android:fontFamily="sans-serif"
+    android:text="@string/text_best_rated"
+    android:textColor="@color/colorBlackText"
+    android:textSize="14sp"
+    android:textStyle="normal"/>
+
+  <ImageView
+    android:id="@+id/sort"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginRight="4dp"
+    android:layout_marginTop="84dp"
+    android:src="@drawable/ic_sort"/>
+
+  <FrameLayout
+    android:id="@+id/frame_found_count"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="84dp"
+    android:background="@color/colorGrayJudgesSeparatorUnderline"
+    android:visibility="gone">
+
+    <TextView
+      android:id="@+id/found_count"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="3dp"
+      android:layout_marginLeft="5dp"
+      android:layout_marginRight="5dp"
+      android:layout_marginTop="3dp"
+      android:fontFamily="sans-serif"
+      android:text="26"
+      android:textColor="@color/colorBlackText"
+      android:textSize="@dimen/size_text_14sp"
+      android:textStyle="normal"/>
+  </FrameLayout>
+
+  <TextView
+    android:id="@+id/found"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end"
+    android:layout_marginRight="52dp"
+    android:layout_marginTop="87dp"
+    android:fontFamily="sans-serif"
+    android:text="@string/text_found"
+    android:textColor="@color/colorBlackTextTranspGray"
+    android:textSize="@dimen/size_text_14sp"
+    android:textStyle="normal"
+    android:visibility="gone"/>
+</FrameLayout>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_dark"
+              android:orientation="vertical">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:visibility="gone">
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:fontFamily="sans-serif"
+      android:text="@string/text_sign_up_judge"
+      android:textColor="@android:color/background_light"
+      android:textSize="18sp"/>
+  </android.support.v7.widget.Toolbar>
+
+  <FrameLayout
+    android:id="@+id/judges"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical|left"
+      android:layout_marginLeft="40dp"
+      android:background="@drawable/ic_judges_auth"/>
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical|left"
+      android:layout_marginLeft="140dp"
+      android:fontFamily="sans-serif"
+      android:text="@string/text_judges"
+      android:textColor="@android:color/background_light"
+      android:textSize="18sp"/>
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="right|center_vertical"
+      android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+      android:background="@drawable/ic_right_arrow"/>
+  </FrameLayout>
+
+  <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginLeft="@dimen/margin_sign_up_horizontal"
+    android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+    android:alpha="0.1"
+    android:background="@android:color/background_light"/>
+
+  <FrameLayout
+    android:id="@+id/most_discussed"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical|left"
+      android:layout_marginLeft="40dp"
+      android:background="@drawable/ic_most_discussed_auth"/>
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical|left"
+      android:layout_marginLeft="140dp"
+      android:fontFamily="sans-serif"
+      android:text="@string/text_most_discussed"
+      android:textColor="@android:color/background_light"
+      android:textSize="18sp"/>
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="right|center_vertical"
+      android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+      android:background="@drawable/ic_right_arrow"/>
+  </FrameLayout>
+
+  <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginLeft="@dimen/margin_sign_up_horizontal"
+    android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+    android:alpha="0.1"
+    android:background="@android:color/background_light"/>
+
+  <FrameLayout
+    android:id="@+id/courts"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical|left"
+      android:layout_marginLeft="40dp"
+      android:background="@drawable/ic_courts_auth"/>
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical|left"
+      android:layout_marginLeft="140dp"
+      android:fontFamily="sans-serif"
+      android:text="@string/text_courts"
+      android:textColor="@android:color/background_light"
+      android:textSize="18sp"/>
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="right|center_vertical"
+      android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+      android:background="@drawable/ic_right_arrow"/>
+  </FrameLayout>
+
+</LinearLayout>

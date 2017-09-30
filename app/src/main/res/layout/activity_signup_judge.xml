@@ -52,40 +52,24 @@
           android:textSize="@dimen/size_text_16sp"/>
 
         <android.support.design.widget.TextInputLayout
-          android:id="@+id/input_layout_name"
+          android:id="@+id/input_layout_fullname"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
           android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
-          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
+          android:layout_marginTop="@dimen/margin_sign_in_large"
           android:theme="@style/TextInputLayoutStyle">
 
           <EditText
-            android:id="@+id/name"
+            android:id="@+id/fullname"
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_name"
+            android:enabled="false"
+            android:focusable="false"
+            android:hint="@string/text_full_name"
             android:imeOptions="actionNext"
-            android:inputType="text"/>
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-          android:id="@+id/input_layout_surname"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
-          android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
-          android:layout_marginTop="@dimen/margin_sign_up_judge_small"
-          android:theme="@style/TextInputLayoutStyle">
-
-          <EditText
-            android:id="@+id/surname"
-            style="@style/EditTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/text_surname"
-            android:inputType="text"/>
+            android:inputType="textCapSentences"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -106,6 +90,7 @@
             android:drawablePadding="50dp"
             android:editable="false"
             android:ellipsize="end"
+            android:enabled="true"
             android:focusable="false"
             android:hint="@string/text_category"
             android:singleLine="true"
@@ -128,7 +113,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/text_phone"
             android:inputType="phone"
-            android:text="@string/text_phone_mask"/>
+            android:text="+380"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -153,12 +138,13 @@
           android:id="@+id/next"
           style="?android:borderlessButtonStyle"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/size_height_button_sign_up"
+          android:layout_height="@dimen/size_height_button"
           android:layout_marginLeft="@dimen/margin_sign_up_judge_horizontal"
           android:layout_marginRight="@dimen/margin_sign_up_judge_horizontal"
           android:layout_marginTop="@dimen/margin_sign_up_judge_large"
           android:background="@drawable/selector_button"
-          android:enabled="false"
+          android:enabled="true"
+          android:focusable="true"
           android:letterSpacing="0.5"
           android:src="@drawable/ic_arrow"
           android:text="@string/text_next"
@@ -180,6 +166,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:clickable="true"
+          android:focusable="false"
           android:fontFamily="sans-serif"
           android:gravity="center"
           android:textStyle="bold"

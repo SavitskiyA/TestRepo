@@ -1,11 +1,11 @@
 package com.ryj.activities.auth.signup.lawyer;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spannable;
@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.activities.auth.signup.SignUpListActivity;
-import com.ryj.activities.auth.signup.ThankYouActivity;
 import com.ryj.models.Account;
 import com.ryj.models.Session;
 import com.ryj.models.User;
@@ -28,9 +27,6 @@ import com.ryj.models.request.SignUpQuery;
 import com.ryj.utils.FieldValidation;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.URLSpanNoUnderline;
-import com.ryj.utils.handlers.ErrorHandler;
-import com.ryj.web.Api;
-import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,94 +38,138 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by andrey on 7/11/17.
- */
-
+/** Created by andrey on 8/10/17. */
 public class SignUpLawyerActivity extends BaseActivity {
   private static final String TAG = "SignUpLawyerActivity";
   private static String EXTRA_LIST_STRING = "list_string";
   private static String EXTRA_LIST_BOOLEANS = "list_booleans";
   private static int REQUEST_CODE = 1;
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
-  @BindView(R.id.toolbar)
+  @Inject SignUpQuery mQuery;
 
+  @BindView(R.id.toolbar)
   Toolbar mToolbar;
+
   @BindView(R.id.title)
   TextView mTitle;
+
   @BindView(R.id.terms_link)
   TextView mTerms;
 
   @BindString(R.string.text_terms_cond_link)
   String mLink;
 
-  @BindArray(R.array.specializations)
+  @BindArray(R.array.text_specializations_client)
   String[] mSpecializations;
 
   @BindView(R.id.certificate_number)
   EditText mCertificateNumber;
-  @BindView(R.id.name)
+
+  @BindView(R.id.fullname)
   EditText mName;
+
   @BindView(R.id.surname)
   EditText mSurname;
+
   @BindView(R.id.specializations)
   EditText mSpecialization;
+
   @BindView(R.id.company)
   EditText mCompany;
+
   @BindView(R.id.phone)
   EditText mPhone;
+
   @BindView(R.id.email)
   EditText mEmail;
 
   @BindView(R.id.input_layout_certificate_number)
   TextInputLayout mCertificateNumberLayout;
-  @BindView(R.id.input_layout_name)
+
+  @BindView(R.id.input_layout_fullname)
   TextInputLayout mNameLayout;
+
   @BindView(R.id.input_layout_surname)
   TextInputLayout mSurnameLayout;
+
   @BindView(R.id.input_layout_phone)
   TextInputLayout mPhoneLayout;
+
   @BindView(R.id.input_layout_email)
   TextInputLayout mEmailLayout;
+
+  @BindView(R.id.input_layout_company)
+  TextInputLayout mCompanyLayout;
+
+  @BindView(R.id.input_layout_specializations)
+  TextInputLayout mSpecializationLayout;
 
   @BindString(R.string.text_specialization)
   String mSpecializationsListTitle;
 
   @BindString(R.string.text_name_must_contain_only_letters)
   String mNameValidationError;
+
   @BindString(R.string.text_surname_must_contain_only_letters)
   String mSurnameValidationError;
-  @BindString(R.string.text_category_must_be_selected)
+
+  @BindString(R.string.text_phone_must_start_380)
   String mPhoneValidationError;
-  @BindString(R.string.text_email_of_judge_must_end)
+
+  @BindString(R.string.text_email_format_wrong)
   String mEmailValidationError;
+
   @BindString(R.string.text_certificate_number_must_contain)
   String mCertificationNumberValidationError;
+
+  @BindString(R.string.text_company_must_contain_only_letters)
+  String mCompanyValidationError;
+
+  @BindString(R.string.text_specialization_must_be_selected)
+  String mSpecializationValidationError;
+
+  @BindString(R.string.text_ok)
+  String mOk;
+
+  @BindString(R.string.text_certificate_number_must_not_be_empty)
+  String mCertificateNumberEmpty;
+
+  @BindString(R.string.text_name_must_not_be_empty)
+  String mNameEmpty;
+
+  @BindString(R.string.text_surname_must_not_be_empty)
+  String mSurnameEmpty;
+
+  @BindString(R.string.text_specialization_must_not_be_empty)
+  String mSpecializationEmpty;
+
+  @BindString(R.string.text_phone_must_not_be_empty)
+  String mPhoneEmpty;
+
+  @BindString(R.string.text_email_must_not_be_empty)
+  String mEmailEmpty;
+
+  @BindString(R.string.text_error)
+  String mError;
 
   @BindView(R.id.next)
   Button mNext;
 
+  private AlertDialog mDialog;
   private boolean[] mChoosenSpecializationsBooleans;
-  private Specializations[] mSpecializationsServer = {Specializations.ADMINISTRATIVE, Specializations.ECONOMIC, Specializations.CRIMINAL, Specializations.CIVIL};
+  private Specializations[] mSpecializationsBackEnd = {
+    Specializations.ADMINISTRATIVE,
+    Specializations.CIVIL,
+    Specializations.CRIMINAL,
+    Specializations.ECONOMIC,
+    Specializations.LEGAL
+  };
 
   public static void start(Context context) {
     Intent i = new Intent(context, SignUpLawyerActivity.class);
     context.startActivity(i);
-  }
-
-  public static void sendActivityResult(Activity activity, String choosenSpecializations, boolean[] choosenSpecializationsBooleans) {
-    Intent intent = new Intent();
-    intent.putExtra(EXTRA_LIST_STRING, choosenSpecializations);
-    intent.putExtra(EXTRA_LIST_BOOLEANS, choosenSpecializationsBooleans);
-    activity.setResult(RESULT_OK, intent);
-    activity.onBackPressed();
   }
 
   @Override
@@ -146,6 +186,7 @@ public class SignUpLawyerActivity extends BaseActivity {
     mTerms.setMovementMethod(LinkMovementMethod.getInstance());
     URLSpanNoUnderline.removeUnderlines((Spannable) mTerms.getText());
     mChoosenSpecializationsBooleans = new boolean[mSpecializations.length];
+    mDialog = getDialog(mOk);
   }
 
   @Nullable
@@ -164,7 +205,12 @@ public class SignUpLawyerActivity extends BaseActivity {
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.specializations:
-        SignUpListActivity.startForResult(this, mSpecializationsListTitle, mSpecializations, mChoosenSpecializationsBooleans, REQUEST_CODE);
+        SignUpListActivity.startForResult(
+            this,
+            mSpecializationsListTitle,
+            mSpecializations,
+            mChoosenSpecializationsBooleans,
+            REQUEST_CODE);
         break;
       case R.id.next:
         validateSignUpRequest();
@@ -179,12 +225,12 @@ public class SignUpLawyerActivity extends BaseActivity {
     }
   }
 
-  @OnTextChanged({R.id.name, R.id.surname, R.id.phone, R.id.email})
-  protected void handleTextChange() {
-    mNext.setEnabled(isAllFieldsNotEmpty());
+  @OnTextChanged(R.id.certificate_number)
+  protected void handleCertificationNumberChanged() {
+    mCertificateNumberLayout.setErrorEnabled(false);
   }
 
-  @OnTextChanged(R.id.name)
+  @OnTextChanged(R.id.fullname)
   protected void handleNameChanged() {
     mNameLayout.setErrorEnabled(false);
   }
@@ -199,6 +245,11 @@ public class SignUpLawyerActivity extends BaseActivity {
     mPhoneLayout.setErrorEnabled(false);
   }
 
+  @OnTextChanged(R.id.company)
+  protected void handleCompanyChanged() {
+    mCompanyLayout.setErrorEnabled(false);
+  }
+
   @OnTextChanged(R.id.email)
   protected void handleEmailChanged() {
     mEmailLayout.setErrorEnabled(false);
@@ -209,7 +260,8 @@ public class SignUpLawyerActivity extends BaseActivity {
   }
 
   private boolean isSurnameValid() {
-    return FieldValidation.isValid(mSurname.getText().toString(), StringUtils.LETTERS_SPACE_PATTERN);
+    return FieldValidation.isValid(
+        mSurname.getText().toString(), StringUtils.LETTERS_SPACE_PATTERN);
   }
 
   private boolean isPhoneValid() {
@@ -221,33 +273,124 @@ public class SignUpLawyerActivity extends BaseActivity {
   }
 
   private boolean isCertificateNumberValid() {
-    return FieldValidation.isValid(mCertificateNumber.getText().toString(), StringUtils.ONLY_DIGITS_PATTERN);
+    return FieldValidation.isValid(
+        mCertificateNumber.getText().toString(), StringUtils.ONLY_DIGITS_PATTERN);
+  }
+
+  private boolean isCompanyValid() {
+    return FieldValidation.isValid(
+        mCompany.getText().toString(), StringUtils.LETTERS_DIGITS_PATTERN);
+  }
+
+  private boolean isSpecializationValid() {
+    return mSpecialization.length() > 0;
   }
 
   private boolean isAllFieldsValid() {
-    return isNameValid() && isSurnameValid() && isPhoneValid() && isEmailValid() && isCertificateNumberValid();
+    return isNameValid()
+        && isSurnameValid()
+        && isPhoneValid()
+        && isEmailValid()
+        && isCertificateNumberValid()
+        && isCompanyValid();
   }
 
-  private boolean isAllFieldsNotEmpty() {
-    return mName.length() > 0 && mSurname.length() > 0 && mPhone.length() > 0 && mEmail.length() > 0 && mCertificateNumber.length() > 0;
+  @OnFocusChange({
+    R.id.certificate_number,
+    R.id.fullname,
+    R.id.surname,
+    R.id.email,
+    R.id.phone,
+    R.id.company,
+    R.id.specializations
+  })
+  public void onFocusChanged(View v, boolean isFocused) {
+    switch (v.getId()) {
+      case R.id.certificate_number:
+        if (!isFocused && mCertificateNumber.length() > 0 && !isCertificateNumberValid()) {
+          mCertificateNumberLayout.setError(mCertificationNumberValidationError);
+        }
+        break;
+      case R.id.fullname:
+        if (!isFocused && mName.length() > 0 && !isNameValid()) {
+          mNameLayout.setError(mNameValidationError);
+        }
+        break;
+      case R.id.surname:
+        if (!isFocused && mSurname.length() > 0 && !isSurnameValid()) {
+          mSurnameLayout.setError(mSurnameValidationError);
+        }
+        break;
+      case R.id.email:
+        if (!isFocused && mEmail.length() > 0 && !isEmailValid()) {
+          mEmailLayout.setError(mEmailValidationError);
+        }
+        break;
+      case R.id.phone:
+        if (!isFocused && mPhone.length() > 0 && !isPhoneValid()) {
+          mPhoneLayout.setError(mPhoneValidationError);
+        }
+        break;
+      case R.id.company:
+        if (!isFocused && mCompany.length() > 0 && !isCompanyValid()) {
+          mCompanyLayout.setError(mCompanyValidationError);
+        }
+        break;
+      case R.id.specializations:
+        if (!isFocused && mSpecialization.length() > 0 && !isSpecializationValid()) {
+          mSpecializationLayout.setError(mSpecializationValidationError);
+        }
+        break;
+    }
+  }
+
+  private void validateFields() {
+    if (mCertificateNumber.length() > 0 && !isCertificateNumberValid()) {
+      mCertificateNumberLayout.setError(mCertificationNumberValidationError);
+    } else if (mCertificateNumber.length() == 0) {
+      mDialog.setMessage(mCertificateNumberEmpty);
+      mDialog.show();
+      return;
+    }
+    if (mName.length() > 0 && !isNameValid()) {
+      mNameLayout.setError(mNameValidationError);
+    } else if (mName.length() == 0) {
+      mDialog.setMessage(mNameEmpty);
+      mDialog.show();
+      return;
+    }
+
+    if (mSurname.length() > 0 && !isSurnameValid()) {
+      mSurnameLayout.setError(mSurnameValidationError);
+    } else if (mSurname.length() == 0) {
+      mDialog.setMessage(mSurnameEmpty);
+      mDialog.show();
+      return;
+    }
+
+    if (mPhone.length() > 0 && !isPhoneValid()) {
+      mPhoneLayout.setError(mPhoneValidationError);
+    } else if (mPhone.length() == 0) {
+      mDialog.setMessage(mPhoneEmpty);
+      mDialog.show();
+      return;
+    }
+
+    if (!isCompanyValid()) {
+      mCompanyLayout.setError(mCompanyValidationError);
+    }
+
+    if (mEmail.length() > 0 && !isEmailValid()) {
+      mEmailLayout.setError(mEmailValidationError);
+    } else if (mEmail.length() == 0) {
+      mDialog.setMessage(mEmailEmpty);
+      mDialog.show();
+      return;
+    }
   }
 
   public void validateSignUpRequest() {
-    if (!isNameValid()) {
-      mNameLayout.setError(mNameValidationError);
-    }
-    if (!isSurnameValid()) {
-      mSurnameLayout.setError(mSurnameValidationError);
-    }
-    if (!isPhoneValid()) {
-      mPhoneLayout.setError(mPhoneValidationError);
-    }
-    if (!isEmailValid()) {
-      mEmailLayout.setError(mEmailValidationError);
-    }
-    if (!isCertificateNumberValid()) {
-      mCertificateNumberLayout.setError(mCertificationNumberValidationError);
-    }
+    validateFields();
     if (isAllFieldsValid()) {
       User user = new User(mName.getText(), mSurname.getText());
       user.setPhone(mPhone.getText());
@@ -259,31 +402,40 @@ public class SignUpLawyerActivity extends BaseActivity {
       }
       Account account = new Account(mEmail.getText());
       Session session = new Session();
-      executeSignUpRequest(user, account, session);
+      mQuery.setUser(user);
+      mQuery.setAccount(account);
+      mQuery.setSession(session);
+      SignUpLawyerAvatarActivity.start(this);
     }
-  }
-
-  private void executeSignUpRequest(User user, Account account, Session session) {
-    mApi.signUp(new SignUpQuery(user, account, session))
-            .compose(bindUntilEvent(ActivityEvent.DESTROY))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                    response -> {
-                      ThankYouActivity.start(this);
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable);
-                    });
   }
 
   private List<Specializations> getChoosenSpecializationsServer() {
     List<Specializations> choosenSpecializationServerList = new ArrayList<>();
     for (int i = 0; i < mChoosenSpecializationsBooleans.length; i++) {
       if (mChoosenSpecializationsBooleans[i]) {
-        choosenSpecializationServerList.add(mSpecializationsServer[i]);
+        choosenSpecializationServerList.add(mSpecializationsBackEnd[i]);
       }
     }
     return choosenSpecializationServerList;
+  }
+
+  @Override
+  public void switchTab(int position, boolean isSelected) {
+
+  }
+
+  @Override
+  public void setToolBarTitle(String title) {
+
+  }
+
+  @Override
+  public void setToolbarVisibility(int visible) {
+
+  }
+
+  @Override
+  public void setOptionsMenuVisibility(boolean isVisible) {
+
   }
 }

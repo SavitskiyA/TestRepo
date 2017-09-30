@@ -16,16 +16,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by andrey on 7/14/17.
- */
-
+/** Created by andrey on 7/14/17. */
 public class ThankYouActivity extends BaseActivity {
   @BindView(R.id.ok)
   Button mOk;
 
   public static void start(Context context) {
     Intent i = new Intent(context, ThankYouActivity.class);
+    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     context.startActivity(i);
   }
 
@@ -50,6 +48,19 @@ public class ThankYouActivity extends BaseActivity {
 
   @OnClick(R.id.ok)
   public void onClick() {
-    SignInActivity.start(this);
+    SignInActivity.startWithEmptyStack(this);
+    finish();
   }
+
+  @Override
+  public void switchTab(int position, boolean isSelected) {}
+
+  @Override
+  public void setToolBarTitle(String title) {}
+
+  @Override
+  public void setToolbarVisibility(int visible) {}
+
+  @Override
+  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

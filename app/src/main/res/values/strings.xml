@@ -1,8 +1,6 @@
 <resources>
   <string name="app_name">ryj</string>
-  <string name="text_tutorial">Tutorial</string>
   <string name="text_sign_in">Sign in</string>
-  <string name="text_lorem_ipsum">lorem ipsum</string>
   <string-array name="texts_tutorial">
     <item>The app is a tool for evaluation\nand public oversight,\ndesigned to monitor\nwork of the
       judicial system.</item>
@@ -26,7 +24,7 @@
   <string name="text_email_format_wrong">Email format is wrong</string>
   <string name="text_password_char_error">Password should containt at least 8 charachters</string>
   <string name="text_sign_in_error">Sign in error!</string>
-  <string name="text_error">Error!</string>
+  <string name="text_error">Error</string>
   <string name="text_sign_up_choose_role">Choose role</string>
   <string name="text_sign_up_judge_use_email">Use your official \nemail of judge</string>
   <string name="text_name">Name</string>
@@ -34,7 +32,6 @@
   <string name="text_specialization">Specialization</string>
   <string name="text_category">Category of case</string>
   <string name="text_phone">Phone</string>
-  <string name="text_phone_mask">+380</string>
   <string name="text_next">Next</string>
   <string name="text_terms_cond_fst">By registering you agree with</string>
   <string name="text_terms_cond_link">
@@ -45,28 +42,49 @@
   <string name="text_terms_cond_trd">and agree to the use of your</string>
   <string name="text_terms_cond_fth">personal data</string>
   <string name="text_category_of_cases">Category of cases</string>
-  <string-array name="categories">
-    <item>Administrative cases</item>
-    <item>Economic cases</item>
-    <item>Criminal cases</item>
-    <item>Urgent lawsuits</item>
-    <item>Administrative offenses</item>
-    <item>Civil cases</item>
-  </string-array>
-  <string-array name="specializations">
+  <string-array name="text_categories_client">
+    <item>Administrative violation</item>
     <item>Administrative</item>
-    <item>Economic</item>
-    <item>Criminal</item>
     <item>Civil</item>
+    <item>Criminal</item>
+    <item>Economic</item>
+    <item>Urgent lawsuits</item>
   </string-array>
-  <string name="text_specialization_hint">Choose specializations</string>
+  <string-array name="text_specializations_client">
+    <item>Administrative</item>
+    <item>Civil</item>
+    <item>Criminal</item>
+    <item>Economic</item>
+    <item>Legal</item>
+  </string-array>
+  <string-array name="text_courts_client">
+    <item>Supreme</item>
+    <item>Highest civil criminal</item>
+    <item>Highest economic</item>
+    <item>Highest administrative</item>
+    <item>Appellate</item>
+    <item>Appellate economic</item>
+    <item>Appellate administrative</item>
+    <item>Local</item>
+    <item>Local economic</item>
+    <item>Local administrative</item>
+  </string-array>
   <string name="text_name_must_contain_only_letters">Name must contain only letters without spaces</string>
-  <string name="text_surname_must_contain_only_letters">Surname must contain only letters</string>
+  <string name="text_surname_must_contain_only_letters">Surname  must contain only letters</string>
+  <string name="text_company_must_contain_only_letters">Company must contain only letters</string>
   <string name="text_category_must_be_selected">At least one category of case must be selected</string>
-  <string name="text_phone_must_start_380">Phone should start from +380 and contain 13 digits</string>
-  <string name="text_email_of_judge_must_end">Email of judge should contain @ and end with court.gov.ua</string>
+  <string name="text_specialization_must_be_selected">At least one specialization must be selected</string>
+  <string name="text_phone_must_start_380">Phone must start from "\"+380"\" and contain 13 digits</string>
+  <string name="text_email_of_judge_must_end">Email must contain only latin letters with "\"@"\" and end with "\"court.gov.ua"\"</string>
+  <string name="text_password_must_not_be_empty">Password must not be empty</string>
+  <string name="text_name_must_not_be_empty">Name must not be empty</string>
+  <string name="text_surname_must_not_be_empty">Surname must not be empty</string>
+  <string name="text_category_must_not_be_empty">Category must not be empty</string>
+  <string name="text_specialization_must_not_be_empty">Specialization must not be empty</string>
+  <string name="text_phone_must_not_be_empty">Phone must not be empty</string>
+  <string name="text_email_must_not_be_empty">Email must not be empty</string>
+  <string name="text_certificate_number_must_not_be_empty">Certification number must not be empty</string>
   <string name="text_forgot_password_desc">Enter your email,\nand we will send you a link\nfor password recovery</string>
-  <string name="text_send">text_send</string>
   <string name="text_sign_up_finish">Sign up finish</string>
   <string name="text_sign_up_finish_desc">We sent you a letter,\ncheck the email you specified</string>
   <string name="text_ok">Ok</string>
@@ -77,4 +95,35 @@
   <string name="text_place_of_work">Place of work</string>
   <string name="text_use_phone_you_provided">Use the phone number\nyou provided when registering the certificate</string>
   <string name="text_certificate_number_must_contain">Certificate number must contain only digits</string>
+  <string name="text_upload_your_photo">Take a picture of your face to confirm your identity</string>
+  <string name="text_avatar_not_found">Avatar not found</string>
+  <string name="text_doc_photo">Photo of\ndocument</string>
+  <string name="text_upload_document_photo">Upload or take a photo of document confirming yours personality (passport, driver\'s license, international passport)</string>
+  <string name="text_doc_not_found">Doc not found</string>
+  <string name="text_choose_name_from_drop_down">Enter your name and select it from the drop-down list</string>
+  <string name="text_full_name">Full name</string>
+  <string name="text_select_source">Select source</string>
+  <string name="text_camera_permissions">Please, provide camera permissions</string>
+  <string name="text_profile">Profile</string>
+  <string name="text_not_authorized">You are not authorized. Please sign in.</string>
+  <string name="text_cancel">Cancel</string>
+  <string name="text_logout">Logout</string>
+  <string name="text_exit">Exit</string>
+  <string name="text_type_of_court">Type of court</string>
+  <string name="text_regions">Regions</string>
+  <string name="text_cities">Cities</string>
+  <string name="text_most_discussed">The most\ndiscussed</string>
+  <string name="text_best_rated">Best rated</string>
+  <string name="text_found">Found</string>
+  <string name="text_settings">Settings</string>
+  <string name="text_court">Court</string>
+  <string name="text_courts">Courts</string>
+  <string name="text_not_selected">Not selected</string>
+  <string name="text_district">District</string>
+  <string name="text_region">Region</string>
+  <string name="text_city">City</string>
+  <string name="text_cases">Cases</string>
+  <string name="text_judge_search">Judge search</string>
+  <string name="text_please_wait">Please, wait</string>
+  <string name="text_user_is_already_registered">User is already registered</string>
 </resources>

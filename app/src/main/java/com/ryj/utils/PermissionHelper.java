@@ -28,15 +28,13 @@ public class PermissionHelper {
     ActivityCompat.requestPermissions(activity, requestedPermissions.toArray(new String[requestedPermissions.size()]), requestCode);
   }
 
-  public static boolean allPermissionsGranted(int[] grantResults) {
-    boolean allPermissionsGranted = true;
+  public static boolean isAllPermissionsGranted(int[] grantResults) {
     for (int i = 0; i < grantResults.length; i++) {
       if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-        allPermissionsGranted = false;
-        break;
+        return false;
       }
     }
-    return allPermissionsGranted;
+    return true;
   }
 
   public interface PermissionsChecker {

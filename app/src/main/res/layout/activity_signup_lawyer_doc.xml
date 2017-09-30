@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/bg_dark">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp">
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:fontFamily="sans-serif"
+      android:text="@string/text_sign_up_lawyer"
+      android:textColor="@android:color/background_light"
+      android:textSize="18sp"/>
+  </android.support.v7.widget.Toolbar>
+
+  <Button
+    android:id="@+id/next"
+    style="?android:borderlessButtonStyle"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_height_button"
+    android:layout_gravity="bottom"
+    android:background="@drawable/selector_button_white_bg"
+    android:enabled="false"
+    android:letterSpacing="0.5"
+    android:text="@string/text_ok"
+    android:textColor="@android:color/background_light"
+    android:textSize="@dimen/size_text_14sp"/>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="56dp"
+    android:layout_marginTop="80dp"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="0.9">
+
+      <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="44dp"
+        android:layout_marginRight="44dp"
+        android:gravity="center"
+        android:letterSpacing="0.03"
+        android:lineSpacingMultiplier="1.2"
+        android:text="@string/text_upload_document_photo"
+        android:textColor="@color/colorBlackText"
+        android:textSize="16sp"/>
+    </FrameLayout>
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <ImageView
+        android:layout_width="172dp"
+        android:layout_height="172dp"
+        android:layout_gravity="center"
+        android:alpha="0.4"
+        android:background="@drawable/background_circle_dotted"/>
+
+      <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/photo"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center"
+        android:background="@drawable/background_photo_default_gray"/>
+
+      <TextView
+        android:id="@+id/doc_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.14"
+        android:text="@string/text_doc_photo"
+        android:textColor="@android:color/background_light"
+        android:textSize="21sp"/>
+    </FrameLayout>
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1">
+
+      <ImageButton
+        android:id="@+id/make_photo"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="center"
+        android:background="@drawable/selector_signin"
+        android:src="@drawable/ic_photo">
+      </ImageButton>
+    </FrameLayout>
+  </LinearLayout>
+</FrameLayout>

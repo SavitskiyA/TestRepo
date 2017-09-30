@@ -11,31 +11,30 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
+import com.ryj.activities.auth.signup.citizen.SignUpCitizenActivity;
+import com.ryj.activities.auth.signup.judge.SignUpJudgeAutocompleteActivity;
 import com.ryj.activities.auth.signup.lawyer.SignUpLawyerActivity;
-import com.ryj.activities.auth.signup.citizen.CitizenSignUpActivity;
-import com.ryj.activities.auth.signup.judge.JudgeSignUpActivity;
-import com.ryj.activities.auth.signup.lawyer.SignUpLawyerActivityPhoto;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by andrey on 7/10/17.
- */
-
+/** Created by andrey on 7/10/17. */
 public class SignUpActivity extends BaseActivity {
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
+
   @BindView(R.id.title)
   TextView mTitle;
+
   @BindView(R.id.judge)
   FrameLayout mJudge;
+
   @BindView(R.id.lawyer)
   FrameLayout mAdvocate;
+
   @BindView(R.id.citizen)
   FrameLayout mCitizen;
-
 
   public static void start(Context context) {
     Intent i = new Intent(context, SignUpActivity.class);
@@ -56,13 +55,13 @@ public class SignUpActivity extends BaseActivity {
   public void onClick(View v) {
     switch (v.getId()) {
       case R.id.judge:
-        JudgeSignUpActivity.start(this);
+        SignUpJudgeAutocompleteActivity.start(this);
         break;
       case R.id.lawyer:
-        SignUpLawyerActivityPhoto.start(this);
+        SignUpLawyerActivity.start(this);
         break;
       case R.id.citizen:
-        CitizenSignUpActivity.start(this);
+        SignUpCitizenActivity.start(this);
         break;
     }
   }
@@ -78,4 +77,16 @@ public class SignUpActivity extends BaseActivity {
   protected TextView getToolbarTitle() {
     return mTitle;
   }
+
+  @Override
+  public void switchTab(int position, boolean isSelected) {}
+
+  @Override
+  public void setToolBarTitle(String title) {}
+
+  @Override
+  public void setToolbarVisibility(int visible) {}
+
+  @Override
+  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

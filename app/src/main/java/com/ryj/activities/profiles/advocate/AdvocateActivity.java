@@ -10,10 +10,7 @@ import android.widget.TextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 
-/**
- * Created by andrey on 7/12/17.
- */
-
+/** Created by andrey on 7/12/17. */
 public class AdvocateActivity extends BaseActivity {
   private static final String TAG = "AdvocateActivity";
 
@@ -39,4 +36,16 @@ public class AdvocateActivity extends BaseActivity {
   protected TextView getToolbarTitle() {
     return null;
   }
+
+  @Override
+  public void switchTab(int position, boolean isSelected) {}
+
+  @Override
+  public void setToolBarTitle(String title) {}
+
+  @Override
+  public void setToolbarVisibility(int visible) {}
+
+  @Override
+  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

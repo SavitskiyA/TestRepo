@@ -16,12 +16,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by andrey on 8/3/17.
- */
-
+/** Created by andrey on 8/3/17. */
 public class PasswordRecoveryFinishActivity extends BaseActivity {
   private static final String TAG = "PasswordRecoveryFinishActivity";
+
   @BindView(R.id.ok)
   Button mOk;
 
@@ -51,6 +49,19 @@ public class PasswordRecoveryFinishActivity extends BaseActivity {
 
   @OnClick(R.id.ok)
   public void onClick() {
-    SignInActivity.start(this);
+    SignInActivity.startWithEmptyStack(this);
+    finish();
   }
+
+  @Override
+  public void switchTab(int position, boolean isSelected) {}
+
+  @Override
+  public void setToolBarTitle(String title) {}
+
+  @Override
+  public void setToolbarVisibility(int visible) {}
+
+  @Override
+  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
+import com.ryj.models.enums.RequestType;
 import com.ryj.utils.FieldValidation;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.handlers.ErrorHandler;
@@ -29,24 +30,24 @@ import butterknife.OnTextChanged;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by andrey on 7/10/17.
- */
-
+/** Created by andrey on 7/10/17. */
 public class PasswordRecoveryActivity extends BaseActivity {
   private static final String TAG = "PasswordRecoveryActivity";
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
+
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
+
   @BindView(R.id.title)
   TextView mTitle;
+
   @BindView(R.id.email)
   EditText mEmail;
+
   @BindView(R.id.send)
   ImageButton mSend;
+
   @BindView(R.id.input_layout_email)
   TextInputLayout mEmailLayout;
 
@@ -106,16 +107,28 @@ public class PasswordRecoveryActivity extends BaseActivity {
 
   private void executeRestorePasswordRequest(String email) {
     mApi.restorePassword(email)
-            .compose(bindUntilEvent(ActivityEvent.DESTROY))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                    response -> {
-                      PasswordRecoveryFinishActivity.start(this);
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable);
-                    });
-
+        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+            response -> {
+              PasswordRecoveryFinishActivity.start(this);
+            },
+            throwable -> {
+              mErrorHandler.handleErrorByRequestType(
+                  throwable, this, RequestType.PASSWORD_RECOVERY);
+            });
   }
+
+  @Override
+  public void switchTab(int position, boolean isSelected) {}
+
+  @Override
+  public void setToolBarTitle(String title) {}
+
+  @Override
+  public void setToolbarVisibility(int visible) {}
+
+  @Override
+  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

@@ -11,11 +11,10 @@
   <dimen name="margin_sign_up_vertical">14dp</dimen>
   <dimen name="margin_sign_up_horizontal">28dp</dimen>
 
-  <dimen name="margin_sign_up_judge_horizontal">34dp</dimen>
+  <dimen name="margin_sign_up_judge_horizontal">36dp</dimen>
   <dimen name="margin_sign_up_judge_small">16dp</dimen>
-  <dimen name="margin_sign_up_judge_large">30dp</dimen>
+  <dimen name="margin_sign_up_judge_large">32dp</dimen>
 
-  <dimen name="padding_text">5dp</dimen>
   <dimen name="padding_sign_up_judge_small">10dp</dimen>
   <dimen name="padding_sign_up_judge_large">30dp</dimen>
 
@@ -23,35 +22,15 @@
   <dimen name="size_width_signin_boarderline">2dp</dimen>
 
   <dimen name="size_height_button">56dp</dimen>
-  <dimen name="size_height_button_sign_up">48dp</dimen>
 
+  <dimen name="size_text_18sp">18sp</dimen>
   <dimen name="size_text_16sp">16sp</dimen>
   <dimen name="size_text_14sp">14sp</dimen>
 
   <dimen name="size_center_text_30sp">30sp</dimen>
   <dimen name="size_bottom_text_20sp">20sp</dimen>
   <dimen name="margin_bottom_text_20dp">20dp</dimen>
-  <dimen name="margin_bottom_indicator">80dp</dimen>
-  <dimen name="margin_top_image">150dp</dimen>
-  <dimen name="margin_bottom_skip">160dp</dimen>
-  <dimen name="margin_left_tutorial_text">40dp</dimen>
-  <dimen name="diameter_dot_indicator">8dp</dimen>
 
-  <dimen name="margin_sign_in_left">60dp</dimen>
-  <dimen name="margin_sign_in_right">60dp</dimen>
-  <dimen name="margin_sign_in_footer_left">20dp</dimen>
-  <dimen name="margin_sign_in_footer_right">20dp</dimen>
-  <dimen name="margin_sign_in_vertical_small">10dp</dimen>
-
-
-  <dimen name="height_sign_in_edt">38dp</dimen>
-  <dimen name="height_sign_in_btn">44dp</dimen>
-  <dimen name="height_sign_in_footer_circle">30dp</dimen>
-
-  <dimen name="width_sign_in_edt_stroke">2dp</dimen>
-  <dimen name="radius_sign_in_edt_corners">2dp</dimen>
-  <dimen name="radius_btn_corners">90dp</dimen>
-  <dimen name="size_actionbar_title">18sp</dimen>
 
   <integer-array name="tutorial_images">
     <item>@drawable/tutorial_one_image</item>

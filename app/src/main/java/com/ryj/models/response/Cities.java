@@ -1,0 +1,56 @@
+package com.ryj.models.response;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+public class Cities {
+  @SerializedName("objects")
+  @Expose
+  private List<City> mCities;
+
+  @SerializedName("previous_page")
+  @Expose
+  private Integer mPreviousPage;
+
+  @SerializedName("current_page")
+  @Expose
+  private Integer mCurrentPage;
+
+  @SerializedName("next_page")
+  @Expose
+  private Integer mNextPage;
+
+  public List<City> getCities() {
+    return mCities;
+  }
+
+  public void setRegions(List<City> regions) {
+    this.mCities = regions;
+  }
+
+  public Integer getPreviousPage() {
+    return mPreviousPage;
+  }
+
+  public void setPreviousPage(Integer previousPage) {
+    this.mPreviousPage = previousPage;
+  }
+
+  public Integer getCurrentPage() {
+    return mCurrentPage;
+  }
+
+  public void setCurrentPage(Integer currentPage) {
+    this.mCurrentPage = currentPage;
+  }
+
+  public Object getNextPage() {
+    return mNextPage;
+  }
+
+  public void setNextPage(Integer nextPage) {
+    this.mNextPage = nextPage;
+  }
+}

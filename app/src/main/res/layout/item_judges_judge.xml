@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:fresco="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="105dp"
+             android:background="@android:color/background_light">
+
+  <ImageView
+    android:id="@+id/underline"
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:layout_gravity="bottom"
+    android:layout_marginLeft="24dp"
+    android:background="@color/colorGrayJudgesSeparatorUnderline"/>
+
+  <com.facebook.drawee.view.SimpleDraweeView
+    android:id="@+id/photo"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:layout_gravity="center_vertical|left"
+    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="24dp"
+    fresco:failureImage="@drawable/background_photo_default_gray"
+    fresco:placeholderImage="@drawable/background_photo_default_gray"
+    fresco:roundAsCircle="true"/>
+
+  <TextView
+    android:id="@+id/name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+    android:layout_marginLeft="108dp"
+    android:layout_marginTop="14dp"
+    android:fontFamily="sans-serif"
+    android:text="Jonny D"
+    android:textColor="@color/colorBlackText"
+    android:textSize="18sp"/>
+
+  <TextView
+    android:id="@+id/court"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+    android:layout_marginLeft="108dp"
+    android:layout_marginTop="40dp"
+    android:fontFamily="sans-serif"
+    android:text="Одеський районний суд"
+    android:textColor="@color/colorGrayHintLable"
+    android:textSize="14sp"
+    android:textStyle="normal"
+    />
+
+
+  <com.github.ornolfr.ratingview.RatingView
+    android:id="@+id/ratingbar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="108dp"
+    android:layout_marginTop="74dp"
+    android:focusableInTouchMode="false"
+    app:drawable_empty="@drawable/ic_star_ranking_empty"
+    app:drawable_filled="@drawable/ic_star_ranking_full"
+    app:drawable_half="@drawable/ic_star_ranking_half"
+    app:drawable_margin="8dp"
+    app:drawable_size="14dp"
+    app:is_indicator="true"
+    app:max_count="5"
+    app:rating="4.5"/>
+
+  <TextView
+    android:id="@+id/marks_count"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="224dp"
+    android:layout_marginTop="72dp"
+    android:fontFamily="sans-serif-medium"
+    android:gravity="center_horizontal"
+    android:lineSpacingMultiplier="1"
+    android:textColor="@color/colorBlackTextTranspGray"
+    android:textSize="15sp"
+    android:textStyle="normal"/>
+
+  <ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="272dp"
+    android:layout_marginTop="73dp"
+    android:src="@drawable/ic_comments"/>
+
+  <TextView
+    android:id="@+id/comments_count"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="296dp"
+    android:layout_marginTop="72dp"
+    android:fontFamily="sans-serif-medium"
+    android:gravity="center_horizontal"
+    android:lineSpacingMultiplier="1"
+    android:text="6"
+    android:textColor="@color/colorBlackTextTranspGray"
+    android:textSize="15sp"
+    android:textStyle="normal"/>
+</FrameLayout>

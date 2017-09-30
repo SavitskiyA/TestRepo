@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.ryj.R;
-import com.ryj.listeners.OnHolderCheckedListener;
+import com.ryj.listeners.OnHolderListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,9 +18,9 @@ import butterknife.OnCheckedChanged;
 public class SignUpItemHolder extends RecyclerView.ViewHolder {
   @BindView(R.id.item)
   CheckBox mItem;
-  private OnHolderCheckedListener mHolderCheckedListener;
+  private OnHolderListener mHolderCheckedListener;
 
-  public SignUpItemHolder(View itemView, OnHolderCheckedListener holderCheckedListener) {
+  public SignUpItemHolder(View itemView, OnHolderListener holderCheckedListener) {
     super(itemView);
     ButterKnife.bind(this, itemView);
     this.mHolderCheckedListener = holderCheckedListener;

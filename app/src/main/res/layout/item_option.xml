@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+  <RadioButton
+    android:id="@+id/option"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="24dp"
+    android:layout_marginStart="24dp"
+    android:button="@drawable/selector_optionbutton"
+    android:fontFamily="sans-serif"
+    android:paddingBottom="@dimen/padding_sign_up_judge_small"
+    android:paddingEnd="@dimen/padding_sign_up_judge_large"
+    android:paddingLeft="20dp"
+    android:paddingRight="@dimen/padding_sign_up_judge_large"
+    android:paddingTop="@dimen/padding_sign_up_judge_small"
+    android:text="RadioButton"
+    android:textColor="@drawable/selector_text_bluelight"
+    android:textSize="@dimen/size_text_18sp"/>
+
+  <ImageView
+    android:id="@+id/underline"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_gravity="bottom"
+    android:background="@color/colorGrayJudgesSeparatorUnderline"
+    android:visibility="gone"/>
+</FrameLayout>

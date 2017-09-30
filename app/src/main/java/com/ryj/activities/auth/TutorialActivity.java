@@ -22,14 +22,19 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class TutorialActivity extends BaseActivity {
   private static final String TAG = "TutorialActivity";
+
   @BindView(R.id.pager_container)
   ViewPager mPager;
+
   @BindView(R.id.indicator)
   CircleIndicator mIndicator;
+
   @BindView(R.id.skip)
   TextView mSkip;
+
   @BindArray(R.array.texts_tutorial)
   String[] mTutorials;
+
   @BindArray(R.array.tutorial_images)
   TypedArray mImages;
 
@@ -42,7 +47,6 @@ public class TutorialActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_tutorial);
-    getComponent().inject(this);
     ButterKnife.bind(this);
     mPager.setAdapter(new TutorialPagerAdapter(mTutorials, mImages, this));
     mIndicator.setViewPager(mPager);
@@ -65,4 +69,16 @@ public class TutorialActivity extends BaseActivity {
   protected TextView getToolbarTitle() {
     return null;
   }
+
+  @Override
+  public void switchTab(int position, boolean isSelected) {}
+
+  @Override
+  public void setToolBarTitle(String title) {}
+
+  @Override
+  public void setToolbarVisibility(int visible) {}
+
+  @Override
+  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

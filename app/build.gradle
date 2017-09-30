@@ -1,11 +1,21 @@
+buildscript {
+  repositories {
+    maven { url 'https://maven.fabric.io/public' }
+  }
+
+  dependencies {
+    classpath 'io.fabric.tools:gradle:1.+'
+  }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
   compileSdkVersion 25
-  buildToolsVersion "26.0.1"
+  buildToolsVersion "26.0.0"
   defaultConfig {
     applicationId "com.ryj"
-    minSdkVersion 15
+    minSdkVersion 19
     targetSdkVersion 25
     versionCode 1
     versionName "1.0"
@@ -20,7 +30,6 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
-
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
@@ -28,9 +37,8 @@ android {
 }
 
 repositories {
-  maven {
-    url "https://jitpack.io"
-  }
+  maven { url 'https://maven.fabric.io/public' }
+  maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -42,7 +50,10 @@ dependencies {
   compile 'com.android.support:appcompat-v7:25.3.1'
   compile 'com.android.support.constraint:constraint-layout:1.0.2'
   compile 'com.android.support:design:25.3.1'
-  compile 'com.android.support:recyclerview-v7:25.3.1'
+
+  compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+    transitive = true;
+  }
 
   compile 'com.google.dagger:dagger:2.11'
   annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
@@ -54,6 +65,7 @@ dependencies {
   compile 'io.reactivex.rxjava2:rxjava:2.1.0'
   compile 'com.trello.rxlifecycle2:rxlifecycle:2.1.0'
   compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
+  compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
   compile 'com.google.code.findbugs:jsr305:2.0.1'
 
   compile 'com.squareup.okhttp3:okhttp:3.8.0'
@@ -78,4 +90,7 @@ dependencies {
 
   compile 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
 
+  compile 'com.roughike:bottom-bar:2.3.1'
+
+  compile 'com.github.ornolfr:rating-view:0.1.2@aar'
 }

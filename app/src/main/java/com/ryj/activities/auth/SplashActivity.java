@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
+import com.ryj.activities.BottomBarContainerActivity;
 import com.ryj.activities.auth.signin.SignInActivity;
 import com.ryj.storage.prefs.Prefs;
 
@@ -21,11 +22,13 @@ import static com.ryj.Constants.SPLASH_TEXT_APPEARANCE_DURATION_MS;
 
 public class SplashActivity extends BaseActivity {
   private static final String TAG = "SplashActivity";
-  @Inject
-  Prefs mPrefs;
+  @Inject Prefs mPrefs;
+
   @BindView(R.id.image)
   ImageView mLogo;
+
   private Handler mHandler;
+  private Runnable runnable = () -> redirect();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,19 +37,9 @@ public class SplashActivity extends BaseActivity {
     ButterKnife.bind(this);
     getComponent().inject(this);
     hideStatusBar();
-
+    mHandler = new Handler();
     mLogo.animate().alpha(1f).setDuration(SPLASH_TEXT_APPEARANCE_DURATION_MS);
-    new Handler()
-            .postDelayed(
-                    () -> {
-                      if (mPrefs.getIsFirstTutorialLaunch()) {
-                        TutorialActivity.start(this);
-                      } else {
-                        SignInActivity.start(this);
-                      }
-                      finish();
-                    },
-                    SPLASH_TEXT_APPEARANCE_DURATION_MS);
+    mHandler.postDelayed(runnable, SPLASH_TEXT_APPEARANCE_DURATION_MS);
   }
 
   @Nullable
@@ -60,4 +53,33 @@ public class SplashActivity extends BaseActivity {
   protected TextView getToolbarTitle() {
     return null;
   }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    mHandler.removeCallbacks(runnable);
+  }
+
+  private void redirect() {
+    if (mPrefs.getSessionToken() != null) {
+      BottomBarContainerActivity.start(this);
+    } else if (mPrefs.getIsFirstTutorialLaunch()) {
+      TutorialActivity.start(this);
+    } else {
+      SignInActivity.start(this);
+    }
+    finish();
+  }
+
+  @Override
+  public void switchTab(int position, boolean isSelected) {}
+
+  @Override
+  public void setToolBarTitle(String title) {}
+
+  @Override
+  public void setToolbarVisibility(int visible) {}
+
+  @Override
+  public void setOptionsMenuVisibility(boolean isVisible) {}
 }

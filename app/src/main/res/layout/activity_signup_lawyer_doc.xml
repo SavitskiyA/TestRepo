@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:fresco="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@drawable/bg_dark">
@@ -8,7 +9,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="24dp">
+    android:layout_marginTop="@dimen/size_statusbar_hight">
 
     <TextView
       android:id="@+id/title"
@@ -73,12 +74,14 @@
         android:alpha="0.4"
         android:background="@drawable/background_circle_dotted"/>
 
-      <de.hdodenhof.circleimageview.CircleImageView
+      <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/photo"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_gravity="center"
-        android:background="@drawable/background_photo_default_gray"/>
+        fresco:failureImage="@drawable/background_photo_default_gray"
+        fresco:placeholderImage="@drawable/background_photo_default_gray"
+        fresco:roundAsCircle="true"/>
 
       <TextView
         android:id="@+id/doc_photo"

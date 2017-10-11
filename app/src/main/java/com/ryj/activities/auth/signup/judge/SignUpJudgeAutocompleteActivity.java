@@ -16,6 +16,7 @@ import com.ryj.listeners.Loadable;
 import com.ryj.models.User;
 import com.ryj.models.request.SignUpQuery;
 import com.ryj.models.response.Judge;
+import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.ToastUtil;
 import com.ryj.utils.handlers.ErrorHandler;
@@ -30,7 +31,6 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /** Created by andrey on 8/17/17. */
 public class SignUpJudgeAutocompleteActivity extends BaseActivity implements Loadable {
@@ -100,14 +100,10 @@ public class SignUpJudgeAutocompleteActivity extends BaseActivity implements Loa
   }
 
   @Override
-  public void setItemCount(int count) {}
-
-  @Override
   public void load(int page) {
     mApi.getJudgesByName(mName.getText().toString().trim(), page)
         .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(RxUtils.applySchedulers())
         .subscribe(
             response -> {
               if (page > 1) {

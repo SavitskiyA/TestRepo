@@ -24,5 +24,4 @@
       android:textColor="@drawable/selector_checkbox_text"
       android:textSize="18sp"/>
   </FrameLayout>
-
 </FrameLayout>

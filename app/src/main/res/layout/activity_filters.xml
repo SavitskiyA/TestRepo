@@ -9,7 +9,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="24dp">
+    android:layout_marginTop="@dimen/size_statusbar_hight">
 
     <TextView
       android:id="@+id/title"
@@ -30,42 +30,32 @@
     android:background="@android:color/background_light">
 
     <TextView
+      style="@style/FilterRowNameStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="18dp"
-      android:layout_marginLeft="44dp"
-      android:layout_marginTop="16dp"
-      android:fontFamily="sans-serif"
-      android:text="@string/text_court"
-      android:textColor="@color/colorBlackText"
-      android:textSize="@dimen/size_text_18sp"
-      android:textStyle="normal"
-      />
+      android:text="@string/text_court"/>
 
     <TextView
       android:id="@+id/court"
+      style="@style/FilterRowValueStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="end"
-      android:layout_marginBottom="18dp"
-      android:layout_marginRight="36dp"
-      android:layout_marginTop="16dp"
-      android:fontFamily="sans-serif"
-      android:text="@string/text_not_selected"
-      android:textColor="@color/colorBlackTextTranspGray"
-      android:textSize="@dimen/size_text_18sp"
-      android:textStyle="normal"
-      />
+      android:text="@string/text_not_selected"/>
 
     <ImageView
+      android:id="@+id/court_type_right_arrow"
+      style="@style/FilterIconArrowStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="end"
-      android:layout_marginBottom="16dp"
-      android:layout_marginRight="16dp"
-      android:layout_marginTop="@dimen/size_text_18sp"
       android:src="@drawable/ic_arrow_right_gray"/>
 
+
+    <ImageView
+      android:id="@+id/cancel_type_of_court"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      style="@style/FilterIconCancelStyle"
+      android:src="@drawable/ic_cancel_filter"/>
   </FrameLayout>
 
   <FrameLayout
@@ -96,40 +86,32 @@
     android:background="@android:color/background_light">
 
     <TextView
+      style="@style/FilterRowNameStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="18dp"
-      android:layout_marginLeft="44dp"
-      android:layout_marginTop="16dp"
-      android:fontFamily="sans-serif"
       android:text="@string/text_region"
-      android:textColor="@color/colorBlackText"
-      android:textSize="@dimen/size_text_18sp"
-      android:textStyle="normal"
       />
 
-    <TextView
-      android:id="@+id/option"
+    <ImageView
+      android:id="@+id/region_right_arrow"
+      style="@style/FilterIconArrowStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="end"
-      android:layout_marginBottom="18dp"
-      android:layout_marginRight="36dp"
-      android:layout_marginTop="16dp"
-      android:fontFamily="sans-serif"
-      android:text="@string/text_not_selected"
-      android:textColor="@color/colorBlackTextTranspGray"
-      android:textSize="@dimen/size_text_18sp"
-      android:textStyle="normal"/>
+      android:src="@drawable/ic_arrow_right_gray"/>
 
     <ImageView
+      android:id="@+id/cancel_region"
+      style="@style/FilterIconCancelStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="end"
-      android:layout_marginBottom="16dp"
-      android:layout_marginRight="16dp"
-      android:layout_marginTop="18dp"
-      android:src="@drawable/ic_arrow_right_gray"/>
+      android:src="@drawable/ic_cancel_filter"/>
+
+    <TextView
+      android:id="@+id/region"
+      style="@style/FilterRowValueStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/text_not_selected"/>
 
   </FrameLayout>
 
@@ -145,40 +127,31 @@
     android:background="@android:color/background_light">
 
     <TextView
+      style="@style/FilterRowNameStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="18dp"
-      android:layout_marginLeft="44dp"
-      android:layout_marginTop="16dp"
-      android:fontFamily="sans-serif"
-      android:text="@string/text_city"
-      android:textColor="@color/colorBlackText"
-      android:textSize="@dimen/size_text_18sp"
-      android:textStyle="normal"
-      />
+      android:text="@string/text_city"/>
 
     <ImageView
+      android:id="@+id/city_right_arrow"
+      style="@style/FilterIconArrowStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="end"
-      android:layout_marginBottom="16dp"
-      android:layout_marginRight="16dp"
-      android:layout_marginTop="18dp"
       android:src="@drawable/ic_arrow_right_gray"/>
+
+    <ImageView
+      android:id="@+id/cancel_city"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      style="@style/FilterIconCancelStyle"
+      android:src="@drawable/ic_cancel_filter"/>
 
     <TextView
       android:id="@+id/city"
+      style="@style/FilterRowValueStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="end"
-      android:layout_marginBottom="18dp"
-      android:layout_marginRight="36dp"
-      android:layout_marginTop="16dp"
-      android:fontFamily="sans-serif"
-      android:text="@string/text_not_selected"
-      android:textColor="@color/colorBlackTextTranspGray"
-      android:textSize="@dimen/size_text_18sp"
-      android:textStyle="normal"/>
+      android:text="@string/text_not_selected"/>
 
   </FrameLayout>
 
@@ -211,17 +184,10 @@
     android:background="@android:color/background_light">
 
     <TextView
+      style="@style/FilterRowNameStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="18dp"
-      android:layout_marginLeft="44dp"
-      android:layout_marginTop="16dp"
-      android:fontFamily="sans-serif"
-      android:text="@string/text_category"
-      android:textColor="@color/colorBlackText"
-      android:textSize="@dimen/size_text_18sp"
-      android:textStyle="normal"
-      />
+      android:text="@string/text_category"/>
 
     <FrameLayout
       android:id="@+id/frame_cases_selected"
@@ -247,29 +213,25 @@
     </FrameLayout>
 
     <ImageView
+      android:id="@+id/affairs_right_arrow"
+      style="@style/FilterIconArrowStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="end"
-      android:layout_marginBottom="16dp"
-      android:layout_marginRight="16dp"
-      android:layout_marginTop="18dp"
       android:src="@drawable/ic_arrow_right_gray"/>
 
+    <ImageView
+      android:id="@+id/cancel_affair"
+      style="@style/FilterIconCancelStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_cancel_filter"/>
 
     <TextView
       android:id="@+id/cases_not_selected"
+      style="@style/FilterRowValueStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="end"
-      android:layout_marginBottom="18dp"
-      android:layout_marginRight="36dp"
-      android:layout_marginTop="16dp"
-      android:fontFamily="sans-serif"
-      android:text="@string/text_not_selected"
-      android:textColor="@color/colorBlackTextTranspGray"
-      android:textSize="@dimen/size_text_18sp"
-      android:textStyle="normal"/>
-
+      android:text="@string/text_not_selected"/>
   </FrameLayout>
 
 </LinearLayout>

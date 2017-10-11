@@ -42,8 +42,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
       Response response = httpException.response();
       switch (response.code()) {
         case Constants.RESPONSE_STATUS_UNAUTHORIZED:
-          ToastUtil.show(ErrorUtils.getResponseErrorMessage(response), false);
-          RxBus.postEvent(new UnauthorizedEvent());
+          RxBus.postEvent(new UnauthorizedEvent(ErrorUtils.getResponseErrorMessage(response)));
           return;
         case Constants.RESPONSE_STATUS_INVALID_PLATFORM:
           ToastUtil.show(ErrorUtils.getResponseErrorMessage(response), false);

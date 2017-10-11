@@ -19,13 +19,12 @@ import com.ryj.Constants;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.activities.BottomBarContainerActivity;
-import com.ryj.activities.analytics.AnalyticsActivity;
 import com.ryj.activities.auth.PasswordRecoveryActivity;
 import com.ryj.activities.auth.signup.SignUpActivity;
-import com.ryj.activities.judges.JudgesActivity;
 import com.ryj.dialogs.SpinnerDialog;
 import com.ryj.storage.prefs.Prefs;
 import com.ryj.utils.FieldValidation;
+import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.handlers.ErrorHandler;
 import com.ryj.web.Api;
@@ -39,8 +38,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /** Created by andrey on 7/7/17. */
 public class SignInActivity extends BaseActivity {
@@ -153,30 +150,11 @@ public class SignInActivity extends BaseActivity {
         break;
       case R.id.forgot_password:
         PasswordRecoveryActivity.start(this);
-        break;
+        return;
       case R.id.sign_up:
         SignUpActivity.start(this);
-        break;
-      case R.id.img_judges:
-        JudgesActivity.start(this);
-        break;
-      case R.id.img_analytics:
-        AnalyticsActivity.start(this);
-        break;
-      case R.id.img_news:
-
-        break;
-      case R.id.txt_judges:
-        JudgesActivity.start(this);
-        break;
-      case R.id.txt_analytics:
-        AnalyticsActivity.start(this);
-        break;
-      case R.id.txt_news:
-
-        break;
+        return;
       default:
-        showToast(TAG);
     }
   }
 
@@ -244,18 +222,19 @@ public class SignInActivity extends BaseActivity {
   }
 
   private void executeSignInRequest(String email, String password) {
-    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING);
     mApi.signIn(email, password, Constants.PLATFORM, null)
         .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(RxUtils.applySchedulers())
+        .compose(
+            RxUtils.applyBeforeAndAfter(
+                (disposable) ->
+                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
+                () -> mSpinnerDialog.dismiss()))
         .subscribe(
             response -> {
-              mSpinnerDialog.dismiss();
               BottomBarContainerActivity.start(this);
             },
             throwable -> {
-              mSpinnerDialog.dismiss();
               mErrorHandler.handleError(throwable, this);
             });
   }

@@ -25,10 +25,6 @@
     <item name="colorAccent">@color/colorBlueLight</item>
   </style>
 
-  <style name="AppTheme.TranslucentedStatusBar.FiltersTheme">
-    <item name="android:homeAsUpIndicator">@drawable/ic_cancel</item>
-  </style>
-
   <style name="TextInputLayoutStyle">
     <item name="android:textColorHint">@color/colorGrayHintLable</item>
     <item name="colorAccent">@color/colorGrayHintLable</item>
@@ -50,5 +46,44 @@
     <item name="colorPrimary">@color/colorDarkToolBar</item>
     <item name="colorPrimaryDark">@color/colorDarkStatusBar</item>
     <item name="colorAccent">@color/colorBlueLight</item>
+  </style>
+
+  <style name="FilterRowStyle">
+    <item name="android:ellipsize">end</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textSize">@dimen/size_text_18sp</item>
+    <item name="android:textStyle">normal</item>
+  </style>
+
+  <style name="FilterRowValueStyle" parent="FilterRowStyle">
+    <item name="android:layout_marginStart">160dp</item>
+    <item name="android:layout_marginEnd">40dp</item>
+    <item name="android:layout_marginTop">16dp</item>
+    <item name="android:layout_marginBottom">18dp</item>
+    <item name="android:textColor">@color/colorBlackTextTranspGray</item>
+    <item name="android:layout_gravity">end</item>
+  </style>
+
+  <style name="FilterRowNameStyle" parent="FilterRowValueStyle">
+    <item name="android:layout_marginEnd">160dp</item>
+    <item name="android:layout_marginStart">44dp</item>
+    <item name="android:layout_gravity">start</item>
+    <item name="android:textColor">@color/colorBlackText</item>
+  </style>
+
+  <style name="FilterIconStyle">
+    <item name="android:layout_gravity">end</item>
+  </style>
+
+  <style name="FilterIconArrowStyle" parent="FilterIconStyle">
+    <item name="android:layout_marginTop">20dp</item>
+    <item name="android:layout_marginBottom">16dp</item>
+    <item name="android:layout_marginEnd">16dp</item>
+    <item name="android:layout_marginStart">16dp</item>
+  </style>
+
+  <style name="FilterIconCancelStyle" parent="FilterIconStyle">
+    <item name="android:layout_marginTop">8dp</item>
+    <item name="android:padding">16dp</item>
   </style>
 </resources>

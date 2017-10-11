@@ -28,6 +28,7 @@ import com.ryj.models.enums.RequestType;
 import com.ryj.models.enums.UserType;
 import com.ryj.models.request.SignUpQuery;
 import com.ryj.utils.FieldValidation;
+import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.URLSpanNoUnderline;
 import com.ryj.utils.handlers.ErrorHandler;
@@ -46,8 +47,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /** Created by andrey on 7/11/17. */
 public class SignUpJudgeActivity extends BaseActivity {
@@ -301,19 +300,20 @@ public class SignUpJudgeActivity extends BaseActivity {
   }
 
   private void executeSignUpRequest(SignUpQuery query) {
-    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING);
     mApi.signUp(query)
         .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(RxUtils.applySchedulers())
+        .compose(
+            RxUtils.applyBeforeAndAfter(
+                (disposable) ->
+                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
+                () -> mSpinnerDialog.dismiss()))
         .subscribe(
             response -> {
-              mSpinnerDialog.dismiss();
               ThankYouActivity.start(this);
               finish();
             },
             throwable -> {
-              mSpinnerDialog.dismiss();
               mErrorHandler.handleErrorByRequestType(throwable, this, RequestType.SIGN_UP_TEMP);
             });
   }

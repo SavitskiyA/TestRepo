@@ -32,12 +32,9 @@ import static com.ryj.models.enums.Courts.LOCAL_ADMINISTRATIVE;
 import static com.ryj.models.enums.Courts.LOCAL_ECONOMIC;
 import static com.ryj.models.enums.Courts.SUPREME;
 
-/**
- * Created by andrey on 9/29/17.
- */
+/** Created by andrey on 9/29/17. */
 public class FiltersCourtTypeActivity extends BaseActivity implements OnCourtTypeAdapterListener {
-  @Inject
-  Filters mFilters;
+  @Inject Filters mFilters;
 
   @BindView(R.id.recycler_view_list)
   RecyclerView mCourtTypes;
@@ -52,16 +49,16 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnCourtTyp
   String[] mCourtTypesClient;
 
   private String[] mCourtTypesServer = {
-          SUPREME.toString(),
-          HIGHEST_CIVIL_CRIMINAL.toString(),
-          HIGHEST_ECONOMIC.toString(),
-          HIGHEST_ADMINISTRATIVE.toString(),
-          APPELLATE.toString(),
-          APPELLATE_ECONOMIC.toString(),
-          APPELLATE_ADMIN.toString(),
-          LOCAL.toString(),
-          LOCAL_ECONOMIC.toString(),
-          LOCAL_ADMINISTRATIVE.toString()
+    SUPREME.toString(),
+    HIGHEST_CIVIL_CRIMINAL.toString(),
+    HIGHEST_ECONOMIC.toString(),
+    HIGHEST_ADMINISTRATIVE.toString(),
+    APPELLATE.toString(),
+    APPELLATE_ECONOMIC.toString(),
+    APPELLATE_ADMIN.toString(),
+    LOCAL.toString(),
+    LOCAL_ECONOMIC.toString(),
+    LOCAL_ADMINISTRATIVE.toString()
   };
 
   private CourtTypeAdapter mAdapter;
@@ -100,8 +97,13 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnCourtTyp
 
   @Override
   public void onHolderCheckedChange(int position) {
-    mFilters.setCourtType(mCourtTypesServer[position]);
-    mFilters.setCourtTypeClient(mCourtTypesClient[position]);
+    if (position != -1) {
+      mFilters.setCourtType(mCourtTypesServer[position]);
+      mFilters.setCourtTypeClient(mCourtTypesClient[position]);
+    } else {
+      mFilters.setCourtType(null);
+      mFilters.setCourtTypeClient(null);
+    }
   }
 
   private int getLastPosition() {

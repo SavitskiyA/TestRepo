@@ -8,12 +8,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.ryj.Constants;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
@@ -24,6 +25,7 @@ import com.ryj.models.enums.RequestType;
 import com.ryj.models.request.SignUpQuery;
 import com.ryj.utils.IOUtils;
 import com.ryj.utils.PermissionHelper;
+import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.ToastUtil;
 import com.ryj.utils.UriUtils;
@@ -40,8 +42,6 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
@@ -51,6 +51,7 @@ import pl.aprilapps.easyphotopicker.EasyImage;
 public class SignUpLawyerDocActivity extends BaseActivity {
   private static final String TAG = "SignUpLawyerDocActivity";
   private static final int REQUEST_PERMISSION_STORAGE = 1;
+  private static final String EXTRA_BUNDLE = "bundle";
   @Inject Api mApi;
   @Inject ErrorHandler mErrorHandler;
   @Inject SignUpQuery mQuery;
@@ -62,7 +63,7 @@ public class SignUpLawyerDocActivity extends BaseActivity {
   TextView mTitle;
 
   @BindView(R.id.photo)
-  ImageView mPhoto;
+  SimpleDraweeView mPhoto;
 
   @BindView(R.id.make_photo)
   ImageButton mTakePhoto;
@@ -101,7 +102,6 @@ public class SignUpLawyerDocActivity extends BaseActivity {
     setContentView(R.layout.activity_signup_lawyer_doc);
     getComponent().inject(this);
     ButterKnife.bind(this);
-    setSupportActionBar(mToolbar);
     setSupportActionBar(mToolbar);
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
@@ -215,7 +215,6 @@ public class SignUpLawyerDocActivity extends BaseActivity {
   }
 
   private void executeSignUp() {
-    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING);
     mApi.signUpLawyer(
             getUserPartMap(),
             getAccountPartMap(),
@@ -223,18 +222,19 @@ public class SignUpLawyerDocActivity extends BaseActivity {
             getAvatarAttachment(),
             getDocAttachment())
         .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(RxUtils.applySchedulers())
+        .compose(
+            RxUtils.applyBeforeAndAfter(
+                (disposable) ->
+                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
+                () -> mSpinnerDialog.dismiss()))
         .subscribe(
             response -> {
-              mSpinnerDialog.dismiss();
               ThankYouActivity.start(this);
               finish();
             },
             throwable -> {
-              mSpinnerDialog.dismiss();
               mErrorHandler.handleErrorByRequestType(throwable, this, RequestType.SIGN_UP_TEMP);
             });
-    ;
   }
 }

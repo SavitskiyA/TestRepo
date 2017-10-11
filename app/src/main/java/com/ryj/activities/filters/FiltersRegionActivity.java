@@ -17,6 +17,7 @@ import com.ryj.listeners.OnAreaAdapterListener;
 import com.ryj.models.Filters;
 import com.ryj.models.response.Area;
 import com.ryj.models.response.Region;
+import com.ryj.utils.RxUtils;
 import com.ryj.utils.handlers.ErrorHandler;
 import com.ryj.web.Api;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -28,20 +29,12 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by andrey on 9/19/17.
- */
-public class FiltersRegionActivity extends BaseActivity
-        implements Loadable, OnAreaAdapterListener {
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
-  @Inject
-  Filters mFilters;
+/** Created by andrey on 9/19/17. */
+public class FiltersRegionActivity extends BaseActivity implements Loadable, OnAreaAdapterListener {
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
+  @Inject Filters mFilters;
 
   @BindView(R.id.recycler_view_list)
   RecyclerView mRegions;
@@ -90,32 +83,26 @@ public class FiltersRegionActivity extends BaseActivity
   }
 
   @Override
-  public void setItemCount(int count) {
-  }
-
-  @Override
   public void load(int page) {
-    mApi.getRegions(
-            null, null, null, page)
-            .compose(bindUntilEvent(ActivityEvent.DESTROY))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                    response -> {
-                      if (page == 1) {
-                        mAdapter.reloadItems(getAreas(response.getRegions()));
-                      } else {
-                        mAdapter.addItems(getAreas(response.getRegions()));
-                      }
-                      mAreas.addAll(getAreas(response.getRegions()));
-                      mAdapter.setLastCheckedItem(getLastRegionIdPosition());
-                      if (response.getNextPage() == null) {
-                        mAdapter.setIsLoadable(false);
-                      }
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable, this);
-                    });
+    mApi.getRegions(page)
+        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+        .compose(RxUtils.applySchedulers())
+        .subscribe(
+            response -> {
+              if (page == 1) {
+                mAdapter.reloadItems(getAreas(response.getRegions()));
+              } else {
+                mAdapter.addItems(getAreas(response.getRegions()));
+              }
+              mAreas.addAll(getAreas(response.getRegions()));
+              mAdapter.setLastCheckedItem(getLastRegionIdPosition());
+              if (response.getNextPage() == null) {
+                mAdapter.setIsLoadable(false);
+              }
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this);
+            });
   }
 
   @Override

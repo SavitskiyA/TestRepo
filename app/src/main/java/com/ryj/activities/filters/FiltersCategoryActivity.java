@@ -27,8 +27,7 @@ import butterknife.ButterKnife;
 
 /** Created by andrey on 9/20/17. */
 public class FiltersCategoryActivity extends BaseActivity {
-  @Inject
-  Filters mFilters;
+  @Inject Filters mFilters;
 
   @BindView(R.id.categories)
   RecyclerView mCategories;

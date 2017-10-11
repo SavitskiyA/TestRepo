@@ -16,7 +16,6 @@ import com.ryj.R;
 import com.ryj.activities.auth.signin.SignInActivity;
 import com.ryj.di.ApplicationComponent;
 import com.ryj.dialogs.SpinnerDialog;
-import com.ryj.listeners.Switchable;
 import com.ryj.models.events.SignOutEvent;
 import com.ryj.models.events.UnauthorizedEvent;
 import com.ryj.rx.RxBus;
@@ -31,8 +30,9 @@ import javax.inject.Inject;
 
 import butterknife.BindString;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-public abstract class BaseActivity extends RxAppCompatActivity{
+public abstract class BaseActivity extends RxAppCompatActivity {
   @Inject Api mApi;
   @Inject Prefs mPrefs;
   @Inject ErrorHandler mErrorHandler;
@@ -141,12 +141,13 @@ public abstract class BaseActivity extends RxAppCompatActivity{
   protected void subscribeOnEvent() {
     RxBus.receiveEvent()
         .compose(bindUntilEvent(ActivityEvent.DESTROY))
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .filter(event -> event instanceof UnauthorizedEvent)
         .subscribe(
             event -> {
-              AlertDialog dialog = getDialog(mCancel, mOk);
-              dialog.setMessage(mUnauthorized);
+              AlertDialog dialog = getDialog(mOk);
+              dialog.setMessage(((UnauthorizedEvent) event).getMessage());
               dialog.show();
             },
             throwable -> {
@@ -155,6 +156,7 @@ public abstract class BaseActivity extends RxAppCompatActivity{
             });
     RxBus.receiveEvent()
         .compose(bindUntilEvent(ActivityEvent.DESTROY))
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .filter(event -> event instanceof SignOutEvent)
         .subscribe(

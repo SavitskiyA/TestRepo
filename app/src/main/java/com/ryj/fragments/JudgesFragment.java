@@ -20,6 +20,7 @@ import com.ryj.listeners.Loadable;
 import com.ryj.models.Filters;
 import com.ryj.models.enums.Direction;
 import com.ryj.models.enums.Sort;
+import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.handlers.ErrorHandler;
 import com.ryj.web.Api;
@@ -35,27 +36,21 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by andrey on 8/24/17.
- */
+/** Created by andrey on 8/24/17. */
 public class JudgesFragment extends BaseFragment implements Loadable {
   public static final String TAG = "JudgesFragment";
   public static final String EXTRA_PARENT_ACTIVITY = "parent_activity";
   public static final int PARENT_JUDGES = 0;
   public static final int PARENT_MOST_DISCUSSED = 1;
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
-  @Inject
-  Filters mFilters;
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
+  @Inject Filters mFilters;
 
   @BindString(R.string.text_judges)
   String mTitleJudges;
 
-  @BindString(R.string.text_most_discussed_in_one_line)
+  @BindString(R.string.text_most_discussed_1line)
   String mTitleMostDiscussed;
 
   @BindView(R.id.recyclerview)
@@ -81,7 +76,7 @@ public class JudgesFragment extends BaseFragment implements Loadable {
 
   @BindView(R.id.best_rated)
   TextView mBestRated;
-  private String mTitle;
+
   private Direction mDirection = Direction.ASC;
   private Sort mSorting = Sort.LAST_NAME;
 
@@ -106,7 +101,7 @@ public class JudgesFragment extends BaseFragment implements Loadable {
   @Nullable
   @Override
   public View onCreateView(
-          LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+      LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_judges, container, false);
     ButterKnife.bind(this, view);
     onTextChanged();
@@ -164,9 +159,9 @@ public class JudgesFragment extends BaseFragment implements Loadable {
 
   private void onTextChanged() {
     RxTextView.textChanges(mSearch)
-            .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-            .compose(bindUntilEvent(FragmentEvent.STOP))
-            .subscribe(query -> reset());
+        .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+        .compose(bindUntilEvent(FragmentEvent.STOP))
+        .subscribe(query -> reset());
   }
 
   @OnClick({R.id.sort, R.id.search_cancel})
@@ -191,42 +186,42 @@ public class JudgesFragment extends BaseFragment implements Loadable {
   }
 
   @Override
-  public void setItemCount(int count) {
-    mFoundCount.setText(String.valueOf(count));
-  }
-
-  @Override
   public void load(int page) {
     mApi.getJudges(
             mSearch.getText().toString(),
+            null,
+            mFilters.getAffairs(),
             mFilters.getCourtType(),
             mFilters.getCityId(),
             mFilters.getRegionId(),
-            mFilters.getAffairs(),
             mSorting.toString(),
             mDirection.toString(),
             page)
-            .compose(bindUntilEvent(FragmentEvent.STOP))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                    response -> {
-                      if (page == 1) {
-                        mAdapter.reloadItems(response.getObjects());
-                      } else {
-                        mAdapter.addItems(response.getObjects());
-                      }
-                      if (mSearch.length() > 0) {
-                        mFrameFoundCount.setVisibility(View.VISIBLE);
-                        mFound.setVisibility(View.VISIBLE);
-                      }
-                      if (response.getNextPage() == null) {
-                        mAdapter.setIsLoadable(false);
-                      }
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable, this.getContext());
-                    });
+        .compose(bindUntilEvent(FragmentEvent.STOP))
+        .compose(RxUtils.applySchedulers())
+        .subscribe(
+            response -> {
+              if (response.getTotalEntries() != null) {
+                mFoundCount.setText(String.valueOf(response.getTotalEntries()));
+              } else {
+                mFoundCount.setText(StringUtils.ZERO);
+              }
+              if (page == 1) {
+                mAdapter.reloadItems(response.getObjects());
+              } else {
+                mAdapter.addItems(response.getObjects());
+              }
+              if (mSearch.length() > 0) {
+                mFrameFoundCount.setVisibility(View.VISIBLE);
+                mFound.setVisibility(View.VISIBLE);
+              }
+              if (response.getNextPage() == null) {
+                mAdapter.setIsLoadable(false);
+              }
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this.getContext());
+            });
   }
 
   @Override

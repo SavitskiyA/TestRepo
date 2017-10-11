@@ -13,8 +13,10 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
+import com.ryj.dialogs.SpinnerDialog;
 import com.ryj.models.enums.RequestType;
 import com.ryj.utils.FieldValidation;
+import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.handlers.ErrorHandler;
 import com.ryj.web.Api;
@@ -27,8 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /** Created by andrey on 7/10/17. */
 public class PasswordRecoveryActivity extends BaseActivity {
@@ -54,6 +54,8 @@ public class PasswordRecoveryActivity extends BaseActivity {
   @BindString(R.string.text_email_format_wrong)
   String mEmailValidationError;
 
+  private SpinnerDialog mSpinnerDialog;
+
   public static void start(Context context) {
     Intent i = new Intent(context, PasswordRecoveryActivity.class);
     context.startActivity(i);
@@ -68,6 +70,7 @@ public class PasswordRecoveryActivity extends BaseActivity {
     setSupportActionBar(mToolbar);
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
+    mSpinnerDialog = getSpinnerDialog();
   }
 
   @Nullable
@@ -108,8 +111,12 @@ public class PasswordRecoveryActivity extends BaseActivity {
   private void executeRestorePasswordRequest(String email) {
     mApi.restorePassword(email)
         .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(RxUtils.applySchedulers())
+        .compose(
+            RxUtils.applyBeforeAndAfter(
+                (disposable) ->
+                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
+                () -> mSpinnerDialog.dismiss()))
         .subscribe(
             response -> {
               PasswordRecoveryFinishActivity.start(this);

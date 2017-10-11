@@ -5,23 +5,27 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by andrey on 8/17/17.
- */
-
+/** Created by andrey on 8/17/17. */
 public class Judges {
   @SerializedName("objects")
   @Expose
   private List<Judge> mObjects = null;
+
   @SerializedName("previous_page")
   @Expose
   private Integer mPreviousPage;
+
   @SerializedName("current_page")
   @Expose
   private Integer mCurrentPage;
+
   @SerializedName("next_page")
   @Expose
   private Integer mNextPage;
+
+  @SerializedName("total_entries")
+  @Expose
+  private Integer mTotalEntries;
 
   public List<Judge> getObjects() {
     return mObjects;
@@ -53,5 +57,13 @@ public class Judges {
 
   public void setNextPage(Integer nextPage) {
     this.mNextPage = nextPage;
+  }
+
+  public Integer getTotalEntries() {
+    return mTotalEntries;
+  }
+
+  public void setTotalEntries(Integer totalEntries) {
+    this.mTotalEntries = totalEntries;
   }
 }

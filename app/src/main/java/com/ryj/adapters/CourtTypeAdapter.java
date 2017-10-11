@@ -54,6 +54,7 @@ public class CourtTypeAdapter extends RecyclerView.Adapter<CourtTypeHolder>
     } else {
       mLastChecked = -1;
       notifyDataSetChanged();
+      mListener.onHolderCheckedChange(-1);
     }
   }
 

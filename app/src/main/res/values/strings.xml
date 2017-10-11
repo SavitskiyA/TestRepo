@@ -105,7 +105,7 @@
   <string name="text_select_source">Select source</string>
   <string name="text_camera_permissions">Please, provide camera permissions</string>
   <string name="text_profile">Profile</string>
-  <string name="text_not_authorized">You are not authorized. Please sign in.</string>
+  <string name="text_not_authorized">You are not authorized</string>
   <string name="text_cancel">Cancel</string>
   <string name="text_logout">Logout</string>
   <string name="text_exit">Exit</string>
@@ -113,7 +113,7 @@
   <string name="text_regions">Regions</string>
   <string name="text_cities">Cities</string>
   <string name="text_most_discussed">The most\ndiscussed</string>
-  <string name="text_most_discussed_in_one_line">The most discussed</string>
+  <string name="text_most_discussed_1line">The most discussed</string>
   <string name="text_best_rated">Best rated</string>
   <string name="text_found">Found</string>
   <string name="text_settings">Settings</string>

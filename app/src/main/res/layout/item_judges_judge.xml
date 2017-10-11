@@ -45,7 +45,6 @@
     android:layout_marginLeft="108dp"
     android:layout_marginTop="40dp"
     android:fontFamily="sans-serif"
-    android:text="Одеський районний суд"
     android:textColor="@color/colorGrayHintLable"
     android:textSize="14sp"
     android:textStyle="normal"

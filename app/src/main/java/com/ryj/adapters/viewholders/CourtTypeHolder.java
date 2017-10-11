@@ -13,7 +13,7 @@ import butterknife.OnClick;
 
 /** Created by andrey on 9/29/17. */
 public class CourtTypeHolder extends RecyclerView.ViewHolder {
-  @BindView(R.id.option)
+  @BindView(R.id.region)
   RadioButton mCourt;
 
   private OnHolderListener mHolderCheckedListener;
@@ -32,7 +32,7 @@ public class CourtTypeHolder extends RecyclerView.ViewHolder {
     mCourt.setTag(tag);
   }
 
-  @OnClick(R.id.option)
+  @OnClick(R.id.region)
   void onClick() {
     mHolderCheckedListener.onHolderCheckedChange(mCourt.isChecked(), (Integer) mCourt.getTag());
   }

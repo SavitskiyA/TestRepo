@@ -14,7 +14,7 @@ import butterknife.OnClick;
 
 /** Created by andrey on 9/18/17. */
 public class AreaHolder extends RecyclerView.ViewHolder {
-  @BindView(R.id.option)
+  @BindView(R.id.region)
   RadioButton mArea;
 
   @BindView(R.id.underline)
@@ -40,7 +40,7 @@ public class AreaHolder extends RecyclerView.ViewHolder {
     mArea.setTag(tag);
   }
 
-  @OnClick(R.id.option)
+  @OnClick(R.id.region)
   void onClick() {
     mHolderCheckedListener.onHolderCheckedChange(mArea.isChecked(), (Integer) mArea.getTag());
   }

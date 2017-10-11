@@ -1,14 +1,8 @@
 package com.ryj.models;
 
-import com.ryj.models.enums.Direction;
-import com.ryj.models.enums.Sort;
-
 import java.util.List;
 
-/**
- * Created by andrey on 9/30/17.
- */
-
+/** Created by andrey on 9/30/17. */
 public class Filters {
   private String mCourtType;
   private String mCourtTypeClient;
@@ -93,5 +87,25 @@ public class Filters {
     this.setAffairsBooleans(null);
     this.setCourtTypeClient(null);
     this.setCourtType(null);
+  }
+
+  public void clearCourtType() {
+    setCourtTypeClient(null);
+    setCourtType(null);
+  }
+
+  public void clearRegion() {
+    setRegion(null);
+    setRegionId(null);
+  }
+
+  public void clearCity() {
+    setCity(null);
+    setCityId(null);
+  }
+
+  public void clearAffairs() {
+    setAffairsBooleans(null);
+    setAffairs(null);
   }
 }

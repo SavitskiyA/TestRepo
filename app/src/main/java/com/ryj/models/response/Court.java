@@ -3,20 +3,32 @@ package com.ryj.models.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by andrey on 9/30/17.
- */
+/** Created by andrey on 8/17/17. */
 public class Court {
+
+  @SerializedName("title")
+  @Expose
+  private String mTitle;
 
   @SerializedName("id")
   @Expose
   private Integer mId;
+
   @SerializedName("name")
   @Expose
   private String mName;
+
   @SerializedName("kind")
   @Expose
   private String mKind;
+
+  public String getTitle() {
+    return mTitle;
+  }
+
+  public void setTitle(String title) {
+    this.mTitle = title;
+  }
 
   public Integer getId() {
     return mId;

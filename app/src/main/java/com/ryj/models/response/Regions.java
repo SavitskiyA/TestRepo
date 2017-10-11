@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /** Created by andrey on 9/8/17. */
-public class Regions{
+public class Regions {
   @SerializedName("objects")
   @Expose
   private List<Region> mRegions;
@@ -22,6 +22,10 @@ public class Regions{
   @SerializedName("next_page")
   @Expose
   private Integer mNextPage;
+
+  @SerializedName("total_entries")
+  @Expose
+  private Integer mTotalEntries;
 
   public List<Region> getRegions() {
     return mRegions;
@@ -53,5 +57,13 @@ public class Regions{
 
   public void setNextPage(Integer nextPage) {
     this.mNextPage = nextPage;
+  }
+
+  public Integer getTotalEntries() {
+    return mTotalEntries;
+  }
+
+  public void setTotalEntries(Integer totalEntries) {
+    this.mTotalEntries = totalEntries;
   }
 }

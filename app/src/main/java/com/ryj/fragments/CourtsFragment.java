@@ -20,6 +20,7 @@ import com.ryj.listeners.Loadable;
 import com.ryj.models.Filters;
 import com.ryj.models.enums.Direction;
 import com.ryj.models.enums.Sort;
+import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.handlers.ErrorHandler;
 import com.ryj.web.Api;
@@ -35,19 +36,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by andrey on 8/24/17.
- */
+/** Created by andrey on 8/24/17. */
 public class CourtsFragment extends BaseFragment implements Loadable {
   public static final String TAG = "CourtsFragment";
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
-  @Inject
-  Filters mFilters;
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
+  @Inject Filters mFilters;
 
   @BindString(R.string.text_courts)
   String mTitle;
@@ -93,7 +88,7 @@ public class CourtsFragment extends BaseFragment implements Loadable {
   @Nullable
   @Override
   public View onCreateView(
-          LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+      LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_courts, container, false);
     ButterKnife.bind(this, view);
     onTextChanged();
@@ -137,9 +132,9 @@ public class CourtsFragment extends BaseFragment implements Loadable {
 
   private void onTextChanged() {
     RxTextView.textChanges(mSearch)
-            .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-            .compose(bindUntilEvent(FragmentEvent.STOP))
-            .subscribe(query -> reset());
+        .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+        .compose(bindUntilEvent(FragmentEvent.STOP))
+        .subscribe(query -> reset());
   }
 
   @OnClick({R.id.sort, R.id.search_cancel})
@@ -164,11 +159,6 @@ public class CourtsFragment extends BaseFragment implements Loadable {
   }
 
   @Override
-  public void setItemCount(int count) {
-    mFoundCount.setText(String.valueOf(count));
-  }
-
-  @Override
   public void load(int page) {
     mApi.getCourts(
             mSearch.getText().toString(),
@@ -178,27 +168,27 @@ public class CourtsFragment extends BaseFragment implements Loadable {
             mSorting.toString(),
             mDirection.toString(),
             page)
-            .compose(bindUntilEvent(FragmentEvent.STOP))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                    response -> {
-                      if (page == 1) {
-                        mAdapter.reloadItems(response.getObjects());
-                      } else {
-                        mAdapter.addItems(response.getObjects());
-                      }
-                      if (mSearch.length() > 0) {
-                        mFrameFoundCount.setVisibility(View.VISIBLE);
-                        mFound.setVisibility(View.VISIBLE);
-                      }
-                      if (response.getNextPage() == null) {
-                        mAdapter.setIsLoadable(false);
-                      }
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable, this.getContext());
-                    });
+        .compose(bindUntilEvent(FragmentEvent.STOP))
+        .compose(RxUtils.applySchedulers())
+        .subscribe(
+            response -> {
+              mFoundCount.setText(String.valueOf(response.getTotalEntries()));
+              if (page == 1) {
+                mAdapter.reloadItems(response.getObjects());
+              } else {
+                mAdapter.addItems(response.getObjects());
+              }
+              if (mSearch.length() > 0) {
+                mFrameFoundCount.setVisibility(View.VISIBLE);
+                mFound.setVisibility(View.VISIBLE);
+              }
+              if (response.getNextPage() == null) {
+                mAdapter.setIsLoadable(false);
+              }
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this.getContext());
+            });
   }
 
   @Override

@@ -12,13 +12,12 @@ import android.widget.TextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.adapters.AreaAdapter;
-import com.ryj.dialogs.SpinnerDialog;
 import com.ryj.listeners.Loadable;
 import com.ryj.listeners.OnAreaAdapterListener;
 import com.ryj.models.Filters;
 import com.ryj.models.response.Area;
 import com.ryj.models.response.City;
-import com.ryj.utils.StringUtils;
+import com.ryj.utils.RxUtils;
 import com.ryj.utils.handlers.ErrorHandler;
 import com.ryj.web.Api;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -30,20 +29,12 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by andrey on 9/19/17.
- */
-public class FiltersCityActivity extends BaseActivity
-        implements Loadable, OnAreaAdapterListener {
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
-  @Inject
-  Filters mFilters;
+/** Created by andrey on 9/19/17. */
+public class FiltersCityActivity extends BaseActivity implements Loadable, OnAreaAdapterListener {
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
+  @Inject Filters mFilters;
 
   @BindView(R.id.cities)
   RecyclerView mCities;
@@ -57,7 +48,6 @@ public class FiltersCityActivity extends BaseActivity
   private AreaAdapter mAdapter;
   private int mPage = 1;
   private List<Area> mAreas = new ArrayList<>();
-  private SpinnerDialog mSpinnerDialog;
 
   public static void start(Context context) {
     Intent i = new Intent(context, FiltersCityActivity.class);
@@ -97,45 +87,30 @@ public class FiltersCityActivity extends BaseActivity
     mAdapter = new AreaAdapter(this, this, this);
     mCities.setLayoutManager(new LinearLayoutManager(this));
     mCities.setAdapter(mAdapter);
-    mSpinnerDialog = getSpinnerDialog();
-    mSpinnerDialog.setCancelable(false);
     reset();
   }
 
   @Override
-  public void setItemCount(int count) {
-  }
-
-  @Override
   public void load(int page) {
-    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING);
-    mApi.getCities(
-            null,
-            getRegionId(),
-            null,
-            null,
-            page)
-            .compose(bindUntilEvent(ActivityEvent.DESTROY))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                    response -> {
-                      mSpinnerDialog.dismiss();
-                      if (page == 1) {
-                        mAdapter.reloadItems(getAreas(response.getCities()));
-                      } else {
-                        mAdapter.addItems(getAreas(response.getCities()));
-                      }
-                      mAreas.addAll(getAreas(response.getCities()));
-                      mAdapter.setLastCheckedItem(getLastCityIdPosition());
-                      if (response.getNextPage() == null) {
-                        mAdapter.setIsLoadable(false);
-                      }
-                    },
-                    throwable -> {
-                      mSpinnerDialog.dismiss();
-                      mErrorHandler.handleError(throwable, this);
-                    });
+    mApi.getCities(getRegionId(), page)
+        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+        .compose(RxUtils.applySchedulers())
+        .subscribe(
+            response -> {
+              if (page == 1) {
+                mAdapter.reloadItems(getAreas(response.getCities()));
+              } else {
+                mAdapter.addItems(getAreas(response.getCities()));
+              }
+              mAreas.addAll(getAreas(response.getCities()));
+              mAdapter.setLastCheckedItem(getLastCityIdPosition());
+              if (response.getNextPage() == null) {
+                mAdapter.setIsLoadable(false);
+              }
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this);
+            });
   }
 
   @Override

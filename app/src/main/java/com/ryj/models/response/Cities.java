@@ -22,6 +22,10 @@ public class Cities {
   @Expose
   private Integer mNextPage;
 
+  @SerializedName("total_entries")
+  @Expose
+  private Integer mTotalEntries;
+
   public List<City> getCities() {
     return mCities;
   }
@@ -52,5 +56,13 @@ public class Cities {
 
   public void setNextPage(Integer nextPage) {
     this.mNextPage = nextPage;
+  }
+
+  public Integer getTotalEntries() {
+    return mTotalEntries;
+  }
+
+  public void setTotalEntries(Integer totalEntries) {
+    this.mTotalEntries = totalEntries;
   }
 }

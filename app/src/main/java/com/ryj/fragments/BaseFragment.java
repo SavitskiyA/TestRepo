@@ -30,7 +30,7 @@ public abstract class BaseFragment extends RxFragment {
     mButterKnifeUnbinder.unbind();
   }
 
-  private Switchable getSwitchActivity() {
+  private SwitchActivity getSwitchActivity() {
     if (this.getActivity() != null && this.getActivity() instanceof SwitchActivity) {
       return ((SwitchActivity) this.getActivity());
     } else {

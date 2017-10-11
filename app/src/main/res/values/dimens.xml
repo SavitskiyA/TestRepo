@@ -3,6 +3,8 @@
   <item name="visible" type="id"/>
   <item name="masked" type="id"/>
 
+  <dimen name="size_statusbar_hight">24dp</dimen>
+
   <dimen name="margin_sign_in_small">12dp</dimen>
   <dimen name="margin_sign_in_medium">16dp</dimen>
   <dimen name="margin_sign_in_large">24dp</dimen>

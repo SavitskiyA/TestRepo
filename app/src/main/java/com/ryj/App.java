@@ -12,9 +12,8 @@ import com.ryj.di.DaggerApplicationComponent;
 import com.ryj.di.GlobalModule;
 import com.ryj.di.NetworkModule;
 
-import net.danlew.android.joda.JodaTimeAndroid;
-
 import io.fabric.sdk.android.Fabric;
+import net.danlew.android.joda.JodaTimeAndroid;
 
 public class App extends Application {
 

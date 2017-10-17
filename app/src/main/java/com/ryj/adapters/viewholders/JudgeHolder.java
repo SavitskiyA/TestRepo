@@ -11,9 +11,10 @@ import com.ryj.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /** Created by andrey on 9/5/17. */
-public class JudgeHolder extends RecyclerView.ViewHolder {
+public class JudgeHolder extends RecyclerView.ViewHolder{
 
   @BindView(R.id.photo)
   SimpleDraweeView mPhoto;
@@ -61,4 +62,5 @@ public class JudgeHolder extends RecyclerView.ViewHolder {
   public void setCommentsCount(String count) {
     mCommentsCount.setText(count);
   }
+
 }

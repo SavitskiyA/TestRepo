@@ -14,7 +14,7 @@ import com.ryj.activities.BaseActivity;
 import com.ryj.adapters.AreaAdapter;
 import com.ryj.listeners.Loadable;
 import com.ryj.listeners.OnAreaAdapterListener;
-import com.ryj.models.Filters;
+import com.ryj.models.filters.Filters;
 import com.ryj.models.response.Area;
 import com.ryj.models.response.City;
 import com.ryj.utils.RxUtils;
@@ -103,7 +103,7 @@ public class FiltersCityActivity extends BaseActivity implements Loadable, OnAre
                 mAdapter.addItems(getAreas(response.getCities()));
               }
               mAreas.addAll(getAreas(response.getCities()));
-              mAdapter.setLastCheckedItem(getLastCityIdPosition());
+              mAdapter.setCurrentCheckedItem(getLastCityIdPosition());
               if (response.getNextPage() == null) {
                 mAdapter.setIsLoadable(false);
               }

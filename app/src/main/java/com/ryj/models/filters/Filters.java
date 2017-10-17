@@ -1,17 +1,29 @@
-package com.ryj.models;
+package com.ryj.models.filters;
+
+import com.ryj.models.enums.Direction;
+import com.ryj.models.enums.Sort;
+import com.ryj.models.response.Court;
 
 import java.util.List;
 
 /** Created by andrey on 9/30/17. */
 public class Filters {
+
+
+  private String mJudgeFullName;
+  private Integer mCourtId;
   private String mCourtType;
   private String mCourtTypeClient;
+  private String mCourtName;
   private Integer mCityId;
   private Integer mRegionId;
   private List<String> mAffairs;
   private String mRegion;
   private String mCity;
   private boolean[] mAffairsBooleans;
+  private Direction mDirection = Direction.ASC;
+  private Sort mSorting = Sort.LAST_NAME;
+  private Court mCourt;
 
   public String getCourtType() {
     return mCourtType;
@@ -77,6 +89,46 @@ public class Filters {
     this.mCourtTypeClient = courtTypeClient;
   }
 
+  public String getJudgeFullName() {
+    return mJudgeFullName;
+  }
+
+  public void setJudgeFullName(String judgeFullName) {
+    this.mJudgeFullName = judgeFullName;
+  }
+
+  public Integer getCourtId() {
+    return mCourtId;
+  }
+
+  public void setCourtId(Integer courtId) {
+    this.mCourtId = courtId;
+  }
+
+  public Direction getDirection() {
+    return mDirection;
+  }
+
+  public void setDirection(Direction direction) {
+    this.mDirection = direction;
+  }
+
+  public Sort getSorting() {
+    return mSorting;
+  }
+
+  public void setSorting(Sort sorting) {
+    this.mSorting = sorting;
+  }
+
+  public String getCourtName() {
+    return mCourtName;
+  }
+
+  public void setCourtName(String courtName) {
+    this.mCourtName = courtName;
+  }
+
   public void clear() {
     this.setCityId(null);
     this.setRegionId(null);
@@ -107,5 +159,13 @@ public class Filters {
   public void clearAffairs() {
     setAffairsBooleans(null);
     setAffairs(null);
+  }
+
+  public Court getCourt() {
+    return mCourt;
+  }
+
+  public void setCourt(Court court) {
+    this.mCourt = court;
   }
 }

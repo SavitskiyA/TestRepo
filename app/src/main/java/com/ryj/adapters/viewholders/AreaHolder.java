@@ -42,7 +42,8 @@ public class AreaHolder extends RecyclerView.ViewHolder {
 
   @OnClick(R.id.region)
   void onClick() {
-    mHolderCheckedListener.onHolderCheckedChange(mArea.isChecked(), (Integer) mArea.getTag());
+    mArea.setChecked(true);
+    mHolderCheckedListener.onHolderCheckedChange(true, (Integer) mArea.getTag());
   }
 
   public void setChecked(boolean isChecked) {

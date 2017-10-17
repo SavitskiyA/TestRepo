@@ -14,7 +14,7 @@ import com.ryj.activities.BaseActivity;
 import com.ryj.adapters.AreaAdapter;
 import com.ryj.listeners.Loadable;
 import com.ryj.listeners.OnAreaAdapterListener;
-import com.ryj.models.Filters;
+import com.ryj.models.filters.Filters;
 import com.ryj.models.response.Area;
 import com.ryj.models.response.Region;
 import com.ryj.utils.RxUtils;
@@ -69,7 +69,7 @@ public class FiltersRegionActivity extends BaseActivity implements Loadable, OnA
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_filters_option);
+    setContentView(R.layout.activity_filters_regions);
     getComponent().inject(this);
     ButterKnife.bind(this);
     setSupportActionBar(mToolBar);
@@ -95,7 +95,7 @@ public class FiltersRegionActivity extends BaseActivity implements Loadable, OnA
                 mAdapter.addItems(getAreas(response.getRegions()));
               }
               mAreas.addAll(getAreas(response.getRegions()));
-              mAdapter.setLastCheckedItem(getLastRegionIdPosition());
+              mAdapter.setCurrentCheckedItem(getLastRegionIdPosition());
               if (response.getNextPage() == null) {
                 mAdapter.setIsLoadable(false);
               }

@@ -17,9 +17,10 @@ import com.ryj.R;
 import com.ryj.activities.BottomBarContainerActivity;
 import com.ryj.adapters.CourtAdapter;
 import com.ryj.listeners.Loadable;
-import com.ryj.models.Filters;
+import com.ryj.listeners.OnHolderClickedListener;
 import com.ryj.models.enums.Direction;
-import com.ryj.models.enums.Sort;
+import com.ryj.models.filters.Filter;
+import com.ryj.models.filters.Filters;
 import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.handlers.ErrorHandler;
@@ -38,11 +39,12 @@ import butterknife.OnTextChanged;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /** Created by andrey on 8/24/17. */
-public class CourtsFragment extends BaseFragment implements Loadable {
+public class CourtsFragment extends BaseFragment implements Loadable, OnHolderClickedListener {
   public static final String TAG = "CourtsFragment";
   @Inject Api mApi;
   @Inject ErrorHandler mErrorHandler;
   @Inject Filters mFilters;
+  Filter filter;
 
   @BindString(R.string.text_courts)
   String mTitle;
@@ -67,9 +69,6 @@ public class CourtsFragment extends BaseFragment implements Loadable {
 
   @BindView(R.id.found)
   TextView mFound;
-
-  private Direction mDirection = Direction.ASC;
-  private Sort mSorting = Sort.LAST_NAME;
 
   private CourtAdapter mAdapter;
   private boolean mIsSort;
@@ -142,11 +141,11 @@ public class CourtsFragment extends BaseFragment implements Loadable {
     switch (v.getId()) {
       case R.id.sort:
         if (mIsSort) {
-          mDirection = Direction.ASC;
+          mFilters.setDirection(Direction.ASC);
           reset();
           mIsSort = false;
         } else {
-          mDirection = Direction.DESC;
+          mFilters.setDirection(Direction.DESC);
           reset();
           mIsSort = true;
         }
@@ -161,12 +160,12 @@ public class CourtsFragment extends BaseFragment implements Loadable {
   @Override
   public void load(int page) {
     mApi.getCourts(
-            mSearch.getText().toString(),
+            filter.getJudge().getName(),
             mFilters.getCourtType(),
             mFilters.getCityId(),
             mFilters.getRegionId(),
-            mSorting.toString(),
-            mDirection.toString(),
+            mFilters.getSorting().toString(),
+            mFilters.getDirection().toString(),
             page)
         .compose(bindUntilEvent(FragmentEvent.STOP))
         .compose(RxUtils.applySchedulers())
@@ -201,5 +200,10 @@ public class CourtsFragment extends BaseFragment implements Loadable {
     mPage = 1;
     mAdapter.setIsLoadable(true);
     load(mPage);
+  }
+
+  @Override
+  public void onClick(int position) {
+    mFilters.getCourt().setId();
   }
 }

@@ -27,9 +27,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by andrey on 8/24/17.
- */
+/** Created by andrey on 8/24/17. */
 public class BottomBarContainerActivity extends SwitchActivity implements Switchable {
   public static final Map<String, Integer> mBottomBarTabsMap = new HashMap<>();
 
@@ -59,6 +57,7 @@ public class BottomBarContainerActivity extends SwitchActivity implements Switch
     mBottomBarTabsMap.put(NewsFragment.TAG, 2);
     mBottomBarTabsMap.put(ProfileFragment.TAG, 3);
     mBottomBarTabsMap.put(CourtsFragment.TAG, 0);
+    mBottomBarTabsMap.put(CourtFragment.TAG, 0);
   }
 
   public static int getTabPosition(String tag) {
@@ -93,34 +92,34 @@ public class BottomBarContainerActivity extends SwitchActivity implements Switch
 
   private void setBottomBarSwitcher() {
     mBorromBar.setOnTabSelectListener(
-            tabId -> {
-              switch (tabId) {
-                case R.id.tab_judges:
-                  replaceFragment(
-                          JudgesChooseSectionFragment.newInstance(),
-                          R.id.container,
-                          true,
-                          false,
-                          JudgesChooseSectionFragment.TAG);
-                  return;
-                case R.id.tab_analytics:
-                  replaceFragment(
-                          AnalyticsFragment.newInstance(),
-                          R.id.container,
-                          true,
-                          false,
-                          AnalyticsFragment.TAG);
-                  return;
-                case R.id.tab_news:
-                  replaceFragment(
-                          NewsFragment.newInstance(), R.id.container, true, false, NewsFragment.TAG);
-                  return;
-                case R.id.tab_profile:
-                  replaceFragment(
-                          ProfileFragment.newInstance(), R.id.container, true, false, ProfileFragment.TAG);
-                  return;
-              }
-            });
+        tabId -> {
+          switch (tabId) {
+            case R.id.tab_judges:
+              replaceFragment(
+                  JudgesChooseSectionFragment.newInstance(),
+                  R.id.container,
+                  true,
+                  false,
+                  JudgesChooseSectionFragment.TAG);
+              return;
+            case R.id.tab_analytics:
+              replaceFragment(
+                  AnalyticsFragment.newInstance(),
+                  R.id.container,
+                  true,
+                  false,
+                  AnalyticsFragment.TAG);
+              return;
+            case R.id.tab_news:
+              replaceFragment(
+                  NewsFragment.newInstance(), R.id.container, true, false, NewsFragment.TAG);
+              return;
+            case R.id.tab_profile:
+              replaceFragment(
+                  ProfileFragment.newInstance(), R.id.container, true, false, ProfileFragment.TAG);
+              return;
+          }
+        });
   }
 
   @Override

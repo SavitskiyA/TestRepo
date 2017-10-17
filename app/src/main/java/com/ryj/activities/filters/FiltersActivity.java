@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
-import com.ryj.models.Filters;
+import com.ryj.models.filters.Filters;
 
 import javax.inject.Inject;
 
@@ -131,7 +131,7 @@ public class FiltersActivity extends BaseActivity {
     setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
     if (getIntent().getExtras().getInt(EXTRA_PARENT) == PARENT_COURTS) {
-      setCasesVisible(View.INVISIBLE);
+      setCasesVisible(View.GONE);
     } else {
       setCasesVisible(View.VISIBLE);
     }

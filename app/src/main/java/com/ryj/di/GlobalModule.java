@@ -3,7 +3,7 @@ package com.ryj.di;
 import android.preference.PreferenceManager;
 
 import com.ryj.App;
-import com.ryj.models.Filters;
+import com.ryj.models.filters.Filters;
 import com.ryj.models.request.SignUpQuery;
 import com.ryj.storage.prefs.Prefs;
 import com.ryj.storage.prefs.PrefsImpl;

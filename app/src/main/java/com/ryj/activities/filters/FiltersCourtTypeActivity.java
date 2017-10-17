@@ -13,7 +13,7 @@ import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.adapters.CourtTypeAdapter;
 import com.ryj.listeners.OnCourtTypeAdapterListener;
-import com.ryj.models.Filters;
+import com.ryj.models.filters.Filters;
 
 import javax.inject.Inject;
 
@@ -71,7 +71,7 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnCourtTyp
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_filters_option);
+    setContentView(R.layout.activity_filters_types_of_courts);
     getComponent().inject(this);
     ButterKnife.bind(this);
     setSupportActionBar(mToolBar);

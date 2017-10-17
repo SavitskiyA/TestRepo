@@ -28,6 +28,7 @@ public class StringUtils {
       "^([ ]*)[A-Za-zА-Яа-яЁёІіҐґЇї]+([ ][A-Za-zА-Яа-яЁёІіҐґЇї]+)*([ ]*)$";
   public static final String ONLY_DIGITS_PATTERN = "^([ ]*)[0-9]+([ ]*)$";
   public static final String LETTERS_DIGITS_PATTERN = "^([ ]*)[A-Za-zА-Яа-яЁёІіҐґЇї0-9_ ]*([ ]*)$";
+  public static final String JUDGES_WERE_FOUND = "judges were found";
   private static final LruCache<Integer, String> CACHE_JUDGE = new LruCache<>(1000);
 
   public static String getStringFromList(List<String> list, String separator) {

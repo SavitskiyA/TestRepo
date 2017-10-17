@@ -17,14 +17,14 @@ public class CourtTypeAdapter extends RecyclerView.Adapter<CourtTypeHolder>
   private LayoutInflater mInflater;
   private String[] mCourts;
   private OnCourtTypeAdapterListener mListener;
-  private int mLastChecked = -1;
+  private int mCurrentChecked = -1;
 
   public CourtTypeAdapter(
       Context context, OnCourtTypeAdapterListener listener, int lastChecked, String... courts) {
     this.mInflater = LayoutInflater.from(context);
     this.mListener = listener;
     this.mCourts = courts;
-    this.mLastChecked = lastChecked;
+    this.mCurrentChecked = lastChecked;
   }
 
   @Override
@@ -37,7 +37,7 @@ public class CourtTypeAdapter extends RecyclerView.Adapter<CourtTypeHolder>
   public void onBindViewHolder(CourtTypeHolder holder, int position) {
     holder.setTag(position);
     holder.setCourtType(mCourts[position]);
-    holder.setChecked(position == mLastChecked);
+    holder.setChecked(position == mCurrentChecked);
   }
 
   @Override
@@ -47,19 +47,13 @@ public class CourtTypeAdapter extends RecyclerView.Adapter<CourtTypeHolder>
 
   @Override
   public void onHolderCheckedChange(boolean enable, int position) {
-    if (enable && position != mLastChecked) {
-      mLastChecked = position;
-      notifyDataSetChanged();
-      mListener.onHolderCheckedChange(position);
-    } else {
-      mLastChecked = -1;
-      notifyDataSetChanged();
-      mListener.onHolderCheckedChange(-1);
-    }
+    mListener.onHolderCheckedChange(position);
+    mCurrentChecked = position;
+    notifyDataSetChanged();
   }
 
-  public void setLastCheckedItem(int position) {
-    mLastChecked = position;
+  public void setCurrentCheckedItem(int position) {
+    mCurrentChecked = position;
     notifyDataSetChanged();
   }
 }

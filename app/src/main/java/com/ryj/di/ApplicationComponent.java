@@ -62,4 +62,5 @@ public interface ApplicationComponent {
   void inject(JudgesFragment fragment);
 
   void inject(CourtsFragment fragment);
+
 }

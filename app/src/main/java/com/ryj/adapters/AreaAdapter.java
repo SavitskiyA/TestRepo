@@ -27,6 +27,7 @@ public class AreaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
   private Loadable mLoadable;
   private OnAreaAdapterListener mListener;
   private boolean mIsLoad;
+  private int mCurrentChecked = -1;
   private int mLastChecked = -1;
 
   public AreaAdapter(Context context, Loadable loadable, OnAreaAdapterListener listener) {
@@ -74,15 +75,9 @@ public class AreaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
   @Override
   public void onHolderCheckedChange(boolean enable, int position) {
-    if (enable && position != mLastChecked) {
-      mLastChecked = position;
-      notifyDataSetChanged();
-      mListener.onHolderCheckedChange(mAreas.get(position).getId(), position);
-    } else {
-      mLastChecked = -1;
-      notifyDataSetChanged();
-      mListener.onHolderCheckedChange(null, position);
-    }
+    mListener.onHolderCheckedChange(mAreas.get(position).getId(), position);
+    mCurrentChecked = position;
+    notifyDataSetChanged();
   }
 
   public void addItems(List<Area> areas) {
@@ -100,8 +95,8 @@ public class AreaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     mIsLoad = load;
   }
 
-  public void setLastCheckedItem(int position) {
-    mLastChecked = position;
+  public void setCurrentCheckedItem(int position) {
+    mCurrentChecked = position;
     notifyDataSetChanged();
   }
 
@@ -123,7 +118,7 @@ public class AreaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
     holder.setTag(position);
     holder.setArea(mAreas.get(position).getName());
-    holder.setChecked(position == mLastChecked);
+    holder.setChecked(position == mCurrentChecked);
   }
 
   @Override

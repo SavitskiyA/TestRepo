@@ -17,7 +17,7 @@ import com.ryj.R;
 import com.ryj.activities.BottomBarContainerActivity;
 import com.ryj.adapters.JudgeAdapter;
 import com.ryj.listeners.Loadable;
-import com.ryj.models.Filters;
+import com.ryj.models.filters.Filters;
 import com.ryj.models.enums.Direction;
 import com.ryj.models.enums.Sort;
 import com.ryj.utils.RxUtils;
@@ -77,9 +77,6 @@ public class JudgesFragment extends BaseFragment implements Loadable {
   @BindView(R.id.best_rated)
   TextView mBestRated;
 
-  private Direction mDirection = Direction.ASC;
-  private Sort mSorting = Sort.LAST_NAME;
-
   private JudgeAdapter mAdapter;
   private boolean mIsSort;
   private int mPage = 1;
@@ -120,7 +117,7 @@ public class JudgesFragment extends BaseFragment implements Loadable {
         break;
       case PARENT_MOST_DISCUSSED:
         setElementsVisible(View.GONE);
-        mSorting = Sort.COMMENTS_COUNT;
+        mFilters.setSorting(Sort.COMMENTS_COUNT);
         setActivityToolBarTitle(mTitleMostDiscussed);
         break;
     }
@@ -169,11 +166,11 @@ public class JudgesFragment extends BaseFragment implements Loadable {
     switch (v.getId()) {
       case R.id.sort:
         if (mIsSort) {
-          mDirection = Direction.ASC;
+          mFilters.setDirection(Direction.ASC);
           reset();
           mIsSort = false;
         } else {
-          mDirection = Direction.DESC;
+          mFilters.setDirection(Direction.DESC);
           reset();
           mIsSort = true;
         }
@@ -189,13 +186,13 @@ public class JudgesFragment extends BaseFragment implements Loadable {
   public void load(int page) {
     mApi.getJudges(
             mSearch.getText().toString(),
-            null,
+            mFilters.getCourtId(),
             mFilters.getAffairs(),
             mFilters.getCourtType(),
             mFilters.getCityId(),
             mFilters.getRegionId(),
-            mSorting.toString(),
-            mDirection.toString(),
+            mFilters.getSorting().toString(),
+            mFilters.getDirection().toString(),
             page)
         .compose(bindUntilEvent(FragmentEvent.STOP))
         .compose(RxUtils.applySchedulers())

@@ -10,6 +10,8 @@ import com.ryj.R;
 import com.ryj.adapters.viewholders.CourtHolder;
 import com.ryj.adapters.viewholders.LoaderViewHolder;
 import com.ryj.listeners.Loadable;
+import com.ryj.listeners.OnHolderClickedListener;
+import com.ryj.listeners.OnHolderListener;
 import com.ryj.models.response.Court;
 import com.ryj.utils.StringUtils;
 
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Created by andrey on 9/5/17. */
-public class CourtAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CourtAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnHolderClickedListener {
   private static final int VIEWTYPE_ITEM = 1;
   private static final int VIEWTYPE_LOADER = 2;
   private LayoutInflater mInflater;
@@ -109,5 +111,10 @@ public class CourtAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       holder.setCourt(StringUtils.ZERO);
     }
     holder.setRating(0f);
+  }
+
+  @Override
+  public void onClick(int position) {
+
   }
 }

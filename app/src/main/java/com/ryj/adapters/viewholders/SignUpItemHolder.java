@@ -36,7 +36,7 @@ public class SignUpItemHolder extends RecyclerView.ViewHolder {
 
   @OnCheckedChanged(R.id.item)
   void onCheckedChange() {
-    mHolderCheckedListener.onHolderCheckedChange(mItem.isChecked(), (Integer) mItem.getTag());
+    mHolderCheckedListener.onHolderClicked(mItem.isChecked(), (Integer) mItem.getTag());
   }
 
   public void setTag(int tag) {

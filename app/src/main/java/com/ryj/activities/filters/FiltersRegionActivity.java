@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
-import com.ryj.adapters.AreaAdapter;
-import com.ryj.listeners.Loadable;
-import com.ryj.listeners.OnAreaAdapterListener;
-import com.ryj.models.filters.Filters;
+import com.ryj.adapters.LoadableAdapter;
+import com.ryj.listeners.LoadListener;
+import com.ryj.listeners.OnHolderListener;
+import com.ryj.models.Filters;
 import com.ryj.models.response.Area;
 import com.ryj.models.response.Region;
 import com.ryj.utils.RxUtils;
@@ -31,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /** Created by andrey on 9/19/17. */
-public class FiltersRegionActivity extends BaseActivity implements Loadable, OnAreaAdapterListener {
+public class FiltersRegionActivity extends BaseActivity implements LoadListener, OnHolderListener {
   @Inject Api mApi;
   @Inject ErrorHandler mErrorHandler;
   @Inject Filters mFilters;
@@ -45,7 +45,7 @@ public class FiltersRegionActivity extends BaseActivity implements Loadable, OnA
   @BindView(R.id.title)
   TextView mTitle;
 
-  private AreaAdapter mAdapter;
+  private LoadableAdapter mAdapter;
   private int mPage = 1;
   private List<Area> mAreas = new ArrayList<>();
 
@@ -76,7 +76,7 @@ public class FiltersRegionActivity extends BaseActivity implements Loadable, OnA
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
-    mAdapter = new AreaAdapter(this, this, this);
+    mAdapter = new LoadableAdapter(this, this, this);
     mRegions.setLayoutManager(new LinearLayoutManager(this));
     mRegions.setAdapter(mAdapter);
     reset();
@@ -117,14 +117,6 @@ public class FiltersRegionActivity extends BaseActivity implements Loadable, OnA
     load(mPage);
   }
 
-  @Override
-  public void onHolderCheckedChange(Integer itemId, Integer itemIdPosition) {
-    mFilters.setRegionId(itemId);
-    mFilters.setRegion(mAreas.get(itemIdPosition).getName());
-    mFilters.setCityId(null);
-    mFilters.setCity(null);
-  }
-
   private List<Area> getAreas(List<Region> regions) {
     List<Area> areas = new ArrayList<>();
     for (Region region : regions) {
@@ -140,5 +132,13 @@ public class FiltersRegionActivity extends BaseActivity implements Loadable, OnA
       }
     }
     return -1;
+  }
+
+  @Override
+  public void onHolderClicked(boolean enable, int position) {
+    mFilters.setRegionId(mAreas.get(position).getId());
+    mFilters.setRegion(mAreas.get(position).getName());
+    mFilters.setCityId(null);
+    mFilters.setCity(null);
   }
 }

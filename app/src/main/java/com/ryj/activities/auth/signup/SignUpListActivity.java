@@ -14,7 +14,7 @@ import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.activities.auth.signup.judge.SignUpJudgeActivity;
 import com.ryj.adapters.SignUpItemAdapter;
-import com.ryj.listeners.OnButtonEnableListener;
+import com.ryj.listeners.OnHolderListener;
 import com.ryj.utils.StringUtils;
 
 import butterknife.BindView;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /** Created by andrey on 7/22/17. */
-public class SignUpListActivity extends BaseActivity implements OnButtonEnableListener {
+public class SignUpListActivity extends BaseActivity implements OnHolderListener {
   private static String EXTRA_LIST_TITLE = "list_title";
   private static String EXTRA_LIST_ARRAY = "list_array";
   private static String EXTRA_LIST_BOOLEANS = "list_booleans";
@@ -96,7 +96,7 @@ public class SignUpListActivity extends BaseActivity implements OnButtonEnableLi
   }
 
   @Override
-  public void onButtonEnable(boolean enable) {
+  public void onHolderClicked(boolean enable, int position) {
     if (mIsButtonResponsive) {
       mOk.setEnabled(enable);
     }

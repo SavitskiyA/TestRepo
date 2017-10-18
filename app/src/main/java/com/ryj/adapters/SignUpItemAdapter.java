@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.ryj.R;
 import com.ryj.adapters.viewholders.SignUpItemHolder;
-import com.ryj.listeners.OnButtonEnableListener;
 import com.ryj.listeners.OnHolderListener;
 
 import java.util.ArrayList;
@@ -22,17 +21,17 @@ public class SignUpItemAdapter extends RecyclerView.Adapter<SignUpItemHolder> im
   private ArrayList<String> mChoosenCategoriesList = new ArrayList<>();
   private boolean[] mChoosenCategoriesBooleans;
   private LayoutInflater mInflater;
-  private OnButtonEnableListener mOnButtonEnableListener;
+  private OnHolderListener mOnButtonEnableListener;
 
 
-  public SignUpItemAdapter(String[] categories, boolean[] choosenCategories, OnButtonEnableListener onButtonEnableListener, Context context) {
+  public SignUpItemAdapter(String[] categories, boolean[] choosenCategories, OnHolderListener onButtonEnableListener, Context context) {
     this.mCategories = categories;
     this.mChoosenCategoriesBooleans = choosenCategories;
     this.mOnButtonEnableListener = onButtonEnableListener;
     this.mInflater = LayoutInflater.from(context);
     this.fillCategoriesList();
     if (mChoosenCategoriesList.size() > 0) {
-      mOnButtonEnableListener.onButtonEnable(true);
+      mOnButtonEnableListener.onHolderClicked(true, 0);
     }
   }
 
@@ -55,14 +54,14 @@ public class SignUpItemAdapter extends RecyclerView.Adapter<SignUpItemHolder> im
   }
 
   @Override
-  public void onHolderCheckedChange(boolean enable, int position) {
+  public void onHolderClicked(boolean enable, int position) {
     if (enable) {
       if (mChoosenCategoriesBooleans[position]) {
-        mOnButtonEnableListener.onButtonEnable(enable);
+        mOnButtonEnableListener.onHolderClicked(enable, 0);
       } else {
         mChoosenCategoriesBooleans[position] = enable;
         mChoosenCategoriesList.add(mCategories[position]);
-        mOnButtonEnableListener.onButtonEnable(enable);
+        mOnButtonEnableListener.onHolderClicked(enable, 0);
       }
     } else {
       if (mChoosenCategoriesList.contains(mCategories[position])) {
@@ -70,7 +69,7 @@ public class SignUpItemAdapter extends RecyclerView.Adapter<SignUpItemHolder> im
         mChoosenCategoriesBooleans[position] = enable;
       }
       if (mChoosenCategoriesList.size() == 0) {
-        mOnButtonEnableListener.onButtonEnable(false);
+        mOnButtonEnableListener.onHolderClicked(enable, 0);
       }
     }
   }

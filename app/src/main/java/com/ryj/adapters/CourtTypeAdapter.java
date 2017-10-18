@@ -8,19 +8,20 @@ import android.view.ViewGroup;
 
 import com.ryj.R;
 import com.ryj.adapters.viewholders.CourtTypeHolder;
-import com.ryj.listeners.OnCourtTypeAdapterListener;
 import com.ryj.listeners.OnHolderListener;
 
-/** Created by andrey on 9/29/17. */
+/**
+ * Created by andrey on 9/29/17.
+ */
 public class CourtTypeAdapter extends RecyclerView.Adapter<CourtTypeHolder>
-    implements OnHolderListener {
+        implements OnHolderListener {
   private LayoutInflater mInflater;
   private String[] mCourts;
-  private OnCourtTypeAdapterListener mListener;
+  private OnHolderListener mListener;
   private int mCurrentChecked = -1;
 
   public CourtTypeAdapter(
-      Context context, OnCourtTypeAdapterListener listener, int lastChecked, String... courts) {
+          Context context, OnHolderListener listener, int lastChecked, String... courts) {
     this.mInflater = LayoutInflater.from(context);
     this.mListener = listener;
     this.mCourts = courts;
@@ -46,8 +47,8 @@ public class CourtTypeAdapter extends RecyclerView.Adapter<CourtTypeHolder>
   }
 
   @Override
-  public void onHolderCheckedChange(boolean enable, int position) {
-    mListener.onHolderCheckedChange(position);
+  public void onHolderClicked(boolean enable, int position) {
+    mListener.onHolderClicked(false, position);
     mCurrentChecked = position;
     notifyDataSetChanged();
   }

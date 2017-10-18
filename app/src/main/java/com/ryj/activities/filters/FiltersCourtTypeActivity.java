@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.adapters.CourtTypeAdapter;
-import com.ryj.listeners.OnCourtTypeAdapterListener;
-import com.ryj.models.filters.Filters;
+import com.ryj.listeners.OnHolderListener;
+import com.ryj.models.Filters;
 
 import javax.inject.Inject;
 
@@ -33,7 +33,7 @@ import static com.ryj.models.enums.Courts.LOCAL_ECONOMIC;
 import static com.ryj.models.enums.Courts.SUPREME;
 
 /** Created by andrey on 9/29/17. */
-public class FiltersCourtTypeActivity extends BaseActivity implements OnCourtTypeAdapterListener {
+public class FiltersCourtTypeActivity extends BaseActivity implements OnHolderListener {
   @Inject Filters mFilters;
 
   @BindView(R.id.recycler_view_list)
@@ -95,17 +95,6 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnCourtTyp
     return mTitle;
   }
 
-  @Override
-  public void onHolderCheckedChange(int position) {
-    if (position != -1) {
-      mFilters.setCourtType(mCourtTypesServer[position]);
-      mFilters.setCourtTypeClient(mCourtTypesClient[position]);
-    } else {
-      mFilters.setCourtType(null);
-      mFilters.setCourtTypeClient(null);
-    }
-  }
-
   private int getLastPosition() {
     for (int i = 0; i < mCourtTypesServer.length; i++) {
       if (mCourtTypesServer[i].equals(mFilters.getCourtType())) {
@@ -113,5 +102,16 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnCourtTyp
       }
     }
     return -1;
+  }
+
+  @Override
+  public void onHolderClicked(boolean enable, int position) {
+    if (position != -1) {
+      mFilters.setCourtType(mCourtTypesServer[position]);
+      mFilters.setCourtTypeClient(mCourtTypesClient[position]);
+    } else {
+      mFilters.setCourtType(null);
+      mFilters.setCourtTypeClient(null);
+    }
   }
 }

@@ -5,5 +5,5 @@ package com.ryj.listeners;
  */
 
 public interface OnHolderListener {
-  public void onHolderCheckedChange(boolean enable, int position);
+  void onHolderClicked(boolean enable, int position);
 }

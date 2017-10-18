@@ -47,7 +47,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryHolder>
   }
 
   @Override
-  public void onHolderCheckedChange(boolean enable, int position) {
+  public void onHolderClicked(boolean enable, int position) {
     mSelectedCategoriesBoolean[position] = enable;
   }
 

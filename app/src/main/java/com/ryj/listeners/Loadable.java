@@ -1,11 +1,23 @@
 package com.ryj.listeners;
 
-/** Created by andrey on 8/18/17. */
-public interface Loadable {
+import android.support.v7.widget.RecyclerView;
 
-  void load(int page);
+import java.util.List;
 
-  int increment();
+/**
+ * Created by andrey on 10/18/17.
+ */
 
-  void reset();
+public interface Loadable<T> {
+  void addItems(List<T> judges);
+
+  void reloadItems(List<T> judges);
+
+  void loadMore(int position);
+
+  void bindLoaderHolder(RecyclerView.ViewHolder viewHolder);
+
+  void bindItemHolder(RecyclerView.ViewHolder viewHolder, int position);
+
+  void setIsLoadable(boolean load);
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:background="@android:color/background_light">
 
-  <FrameLayout
+  <RelativeLayout
     android:id="@+id/frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,11 +16,11 @@
       android:id="@+id/court_name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="top|center_horizontal"
+      android:layout_centerHorizontal="true"
       android:layout_marginEnd="50dp"
       android:layout_marginStart="50dp"
       android:layout_marginTop="20dp"
-      android:gravity="center"
+      android:gravity="center_horizontal"
       android:text="Апеляційний суд Харківської області"
       android:textColor="@color/colorBlackText"
       android:textSize="@dimen/size_text_18sp"/>
@@ -29,8 +29,10 @@
       android:id="@+id/ratingbar"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_below="@+id/court_name"
+      android:layout_marginBottom="22dp"
       android:layout_marginLeft="108dp"
-      android:layout_marginTop="82dp"
+      android:layout_marginTop="13dp"
       android:focusableInTouchMode="false"
       app:drawable_empty="@drawable/ic_star_ranking_empty"
       app:drawable_filled="@drawable/ic_star_ranking_full"
@@ -45,18 +47,18 @@
       android:id="@+id/marks_count"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_below="@+id/court_name"
       android:layout_marginBottom="22dp"
       android:layout_marginLeft="224dp"
-      android:layout_marginTop="82dp"
+      android:layout_marginStart="12dp"
+      android:layout_marginTop="13dp"
+      android:layout_toEndOf="@+id/ratingbar"
       android:fontFamily="sans-serif-medium"
-      android:gravity="center_horizontal"
-      android:lineSpacingMultiplier="1"
       android:text="76"
       android:textColor="@color/colorBlackTextTranspGray"
       android:textSize="15sp"
       android:textStyle="normal"/>
-
-  </FrameLayout>
+  </RelativeLayout>
 
   <TextView
     android:id="@+id/courts_found_count"
@@ -72,10 +74,9 @@
     android:textSize="@dimen/size_text_14sp"/>
 
   <android.support.v7.widget.RecyclerView
-    android:id="@+id/container"
+    android:id="@+id/recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@+id/border_line"
-    android:layout_below="@+id/found"/>
+    android:layout_below="@+id/courts_found_count"/>
 
 </RelativeLayout>

@@ -17,6 +17,7 @@ import com.ryj.activities.filters.FiltersCategoryActivity;
 import com.ryj.activities.filters.FiltersCityActivity;
 import com.ryj.activities.filters.FiltersCourtTypeActivity;
 import com.ryj.activities.filters.FiltersRegionActivity;
+import com.ryj.fragments.CourtFragment;
 import com.ryj.fragments.CourtsFragment;
 import com.ryj.fragments.JudgesFragment;
 
@@ -62,5 +63,7 @@ public interface ApplicationComponent {
   void inject(JudgesFragment fragment);
 
   void inject(CourtsFragment fragment);
+
+  void inject(CourtFragment fragment);
 
 }

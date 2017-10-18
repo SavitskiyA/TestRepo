@@ -38,7 +38,7 @@ public class CategoryHolder extends RecyclerView.ViewHolder {
 
   @OnCheckedChanged(R.id.item)
   void onCheckedChange() {
-    mHolderCheckedListener.onHolderCheckedChange(mItem.isChecked(), (Integer) mItem.getTag());
+    mHolderCheckedListener.onHolderClicked(mItem.isChecked(), (Integer) mItem.getTag());
   }
 
   public void setChecked(boolean checked) {

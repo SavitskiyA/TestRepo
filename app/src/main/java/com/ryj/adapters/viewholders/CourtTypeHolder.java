@@ -34,7 +34,7 @@ public class CourtTypeHolder extends RecyclerView.ViewHolder {
 
   @OnClick(R.id.region)
   void onClick() {
-    mHolderCheckedListener.onHolderCheckedChange(mCourt.isChecked(), (Integer) mCourt.getTag());
+    mHolderCheckedListener.onHolderClicked(mCourt.isChecked(), (Integer) mCourt.getTag());
   }
 
   public void setChecked(boolean isChecked) {

@@ -12,7 +12,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.adapters.AutocompleteAdapter;
-import com.ryj.listeners.Loadable;
+import com.ryj.listeners.LoadListener;
 import com.ryj.models.User;
 import com.ryj.models.request.SignUpQuery;
 import com.ryj.models.response.Judge;
@@ -32,11 +32,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-/** Created by andrey on 8/17/17. */
-public class SignUpJudgeAutocompleteActivity extends BaseActivity implements Loadable {
-  @Inject Api mApi;
-  @Inject ErrorHandler mErrorHandler;
-  @Inject SignUpQuery mQuery;
+/**
+ * Created by andrey on 8/17/17.
+ */
+public class SignUpJudgeAutocompleteActivity extends BaseActivity implements LoadListener {
+  @Inject
+  Api mApi;
+  @Inject
+  ErrorHandler mErrorHandler;
+  @Inject
+  SignUpQuery mQuery;
 
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
@@ -83,47 +88,46 @@ public class SignUpJudgeAutocompleteActivity extends BaseActivity implements Loa
     mAdapter = new AutocompleteAdapter(this, this);
     mName.setAdapter(mAdapter);
     mName.setOnItemClickListener(
-        (parent, view, position, id) -> {
-          Judge judge = (Judge) parent.getItemAtPosition(position);
-          if (judge.getAccessStatus() != null) {
-            ToastUtil.show(mUserIsAlreadyRegistered, false);
-            mName.setText(StringUtils.EMPTY_STRING);
-          } else {
-            mName.setText(StringUtils.getFullName(judge));
-            mQuery.setUser(new User());
-            mQuery.getUser().setId(judge.getId());
-            mQuery.getUser().setFirstName(judge.getFirstName());
-            mQuery.getUser().setLastName(judge.getLastName());
-            SignUpJudgeActivity.start(SignUpJudgeAutocompleteActivity.this);
-          }
-        });
-  }
-
-  @Override
-  public void load(int page) {
-    mApi.getJudgesByName(mName.getText().toString().trim(), page)
-        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .compose(RxUtils.applySchedulers())
-        .subscribe(
-            response -> {
-              if (page > 1) {
-                mAdapter.addItems(response.getObjects());
+            (parent, view, position, id) -> {
+              Judge judge = (Judge) parent.getItemAtPosition(position);
+              if (judge.getAccessStatus() != null) {
+                ToastUtil.show(mUserIsAlreadyRegistered, false);
+                mName.setText(StringUtils.EMPTY_STRING);
               } else {
-                mAdapter.reloadItems(response.getObjects());
+                mName.setText(StringUtils.getFullName(judge));
+                mQuery.setUser(new User());
+                mQuery.getUser().setId(judge.getId());
+                mQuery.getUser().setFirstName(judge.getFirstName());
+                mQuery.getUser().setLastName(judge.getLastName());
+                SignUpJudgeActivity.start(SignUpJudgeAutocompleteActivity.this);
               }
-              if (response.getNextPage() == null) {
-                mAdapter.setIsLoadable(false);
-              }
-            },
-            throwable -> {
-              mErrorHandler.handleError(throwable, this);
             });
   }
 
   @Override
+  public void load(int page) {
+    mApi.getJudges(mName.getText().toString().trim(), page)
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .compose(RxUtils.applySchedulers())
+            .subscribe(
+                    response -> {
+                      if (page > 1) {
+                        mAdapter.addItems(response.getObjects());
+                      } else {
+                        mAdapter.reloadItems(response.getObjects());
+                      }
+                      if (response.getNextPage() == null) {
+                        mAdapter.setIsLoadable(false);
+                      }
+                    },
+                    throwable -> {
+                      mErrorHandler.handleError(throwable, this);
+                    });
+  }
+
+  @Override
   public int increment() {
-    mPage++;
-    return mPage;
+    return mPage++;
   }
 
   @Override
@@ -135,8 +139,8 @@ public class SignUpJudgeAutocompleteActivity extends BaseActivity implements Loa
 
   private void onTextChanged() {
     RxTextView.textChanges(mName)
-        .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .subscribe(query -> reset());
+            .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .subscribe(query -> reset());
   }
 }

@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
-import com.ryj.adapters.LoadableAdapter;
-import com.ryj.listeners.LoadListener;
-import com.ryj.listeners.OnHolderListener;
-import com.ryj.models.Filters;
+import com.ryj.adapters.LoadableListRecyclerAdapter;
+import com.ryj.interfaces.LoadListener;
+import com.ryj.interfaces.OnHolderListener;
+import com.ryj.models.filters.Filters;
 import com.ryj.models.response.Area;
 import com.ryj.models.response.City;
 import com.ryj.utils.RxUtils;
@@ -30,16 +30,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by andrey on 9/19/17.
- */
+/** Created by andrey on 9/19/17. */
 public class FiltersCityActivity extends BaseActivity implements LoadListener, OnHolderListener {
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
-  @Inject
-  Filters mFilters;
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
+  @Inject Filters mFilters;
 
   @BindView(R.id.cities)
   RecyclerView mCities;
@@ -50,7 +45,7 @@ public class FiltersCityActivity extends BaseActivity implements LoadListener, O
   @BindView(R.id.title)
   TextView mTitle;
 
-  private LoadableAdapter mAdapter;
+  private LoadableListRecyclerAdapter mAdapter;
   private int mPage = 1;
   private List<Area> mAreas = new ArrayList<>();
 
@@ -89,7 +84,7 @@ public class FiltersCityActivity extends BaseActivity implements LoadListener, O
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
-    mAdapter = new LoadableAdapter(this, this, this);
+    mAdapter = new LoadableListRecyclerAdapter(this, this, this);
     mCities.setLayoutManager(new LinearLayoutManager(this));
     mCities.setAdapter(mAdapter);
     reset();
@@ -98,24 +93,24 @@ public class FiltersCityActivity extends BaseActivity implements LoadListener, O
   @Override
   public void load(int page) {
     mApi.getCities(getRegionId(), page)
-            .compose(bindUntilEvent(ActivityEvent.DESTROY))
-            .compose(RxUtils.applySchedulers())
-            .subscribe(
-                    response -> {
-                      if (page == 1) {
-                        mAdapter.reloadItems(getAreas(response.getCities()));
-                      } else {
-                        mAdapter.addItems(getAreas(response.getCities()));
-                      }
-                      mAreas.addAll(getAreas(response.getCities()));
-                      mAdapter.setCurrentCheckedItem(getLastCityIdPosition());
-                      if (response.getNextPage() == null) {
-                        mAdapter.setIsLoadable(false);
-                      }
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable, this);
-                    });
+        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+        .compose(RxUtils.applySchedulers())
+        .subscribe(
+            response -> {
+              if (page == 1) {
+                mAdapter.reloadItems(getAreas(response.getCities()));
+              } else {
+                mAdapter.addItems(getAreas(response.getCities()));
+              }
+              mAreas.addAll(getAreas(response.getCities()));
+              mAdapter.setCurrentCheckedItem(getLastCityIdPosition());
+              if (response.getNextPage() == null) {
+                mAdapter.setIsLoadable(false);
+              }
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this);
+            });
   }
 
   @Override

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
-import com.ryj.models.Filters;
+import com.ryj.models.filters.Filters;
 
 import javax.inject.Inject;
 

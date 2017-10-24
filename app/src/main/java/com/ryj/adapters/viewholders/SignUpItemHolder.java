@@ -5,19 +5,17 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.ryj.R;
-import com.ryj.listeners.OnHolderListener;
+import com.ryj.interfaces.OnHolderListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 
-/**
- * Created by andrey on 7/22/17.
- */
-
+/** Created by andrey on 7/22/17. */
 public class SignUpItemHolder extends RecyclerView.ViewHolder {
   @BindView(R.id.item)
   CheckBox mItem;
+
   private OnHolderListener mHolderCheckedListener;
 
   public SignUpItemHolder(View itemView, OnHolderListener holderCheckedListener) {

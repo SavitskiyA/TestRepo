@@ -11,10 +11,9 @@ import com.ryj.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /** Created by andrey on 9/5/17. */
-public class JudgeHolder extends RecyclerView.ViewHolder{
+public class JudgeHolder extends RecyclerView.ViewHolder {
 
   @BindView(R.id.photo)
   SimpleDraweeView mPhoto;
@@ -34,13 +33,16 @@ public class JudgeHolder extends RecyclerView.ViewHolder{
   @BindView(R.id.comments_count)
   TextView mCommentsCount;
 
+  @BindView(R.id.text_stub)
+  TextView mTextStub;
+
   public JudgeHolder(View itemView) {
     super(itemView);
     ButterKnife.bind(this, itemView);
   }
 
-  public void setPhoto(Uri uri) {
-    mPhoto.setImageURI(uri);
+  public void setPlaceHolder(int resource) {
+    mPhoto.setImageResource(resource);
   }
 
   public void setName(String name) {
@@ -63,4 +65,16 @@ public class JudgeHolder extends RecyclerView.ViewHolder{
     mCommentsCount.setText(count);
   }
 
+  public void setPhoto(Uri uri) {
+    mPhoto.setImageURI(uri);
+  }
+
+  public void showTextStub(String textStub) {
+    mTextStub.setVisibility(View.VISIBLE);
+    mTextStub.setText(textStub);
+  }
+
+  public void hideTextStub() {
+    mTextStub.setVisibility(View.GONE);
+  }
 }

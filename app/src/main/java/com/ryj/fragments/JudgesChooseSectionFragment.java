@@ -81,7 +81,6 @@ public class JudgesChooseSectionFragment extends BaseFragment {
   @Override
   public void onPause() {
     super.onPause();
-    switchActivityTab(BottomBarContainerActivity.getTabPosition(TAG), false);
   }
 
   @Override

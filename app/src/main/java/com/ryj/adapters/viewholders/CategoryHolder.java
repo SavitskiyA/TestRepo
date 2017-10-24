@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.ryj.R;
-import com.ryj.listeners.OnHolderListener;
+import com.ryj.interfaces.OnHolderListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

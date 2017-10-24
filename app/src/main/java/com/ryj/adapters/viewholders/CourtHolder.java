@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.github.ornolfr.ratingview.RatingView;
 import com.ryj.R;
-import com.ryj.listeners.OnHolderListener;
+import com.ryj.interfaces.OnHolderListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

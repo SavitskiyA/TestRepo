@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
-import com.ryj.adapters.CourtTypeAdapter;
-import com.ryj.listeners.OnHolderListener;
-import com.ryj.models.Filters;
+import com.ryj.adapters.ItemListRecyclerAdapter;
+import com.ryj.interfaces.OnHolderListener;
+import com.ryj.models.filters.Filters;
+
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -61,7 +63,7 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnHolderLi
     LOCAL_ADMINISTRATIVE.toString()
   };
 
-  private CourtTypeAdapter mAdapter;
+  private ItemListRecyclerAdapter<String> mAdapter;
 
   public static void start(Context context) {
     Intent i = new Intent(context, FiltersCourtTypeActivity.class);
@@ -78,7 +80,12 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnHolderLi
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
-    mAdapter = new CourtTypeAdapter(this, this, getLastPosition(), mCourtTypesClient);
+    if (mFilters.getCourtsBooleans() == null) {
+      mFilters.setCourtsBooleans(new boolean[mCourtTypesClient.length]);
+    }
+    mAdapter =
+        new ItemListRecyclerAdapter<String>(
+            this, this, Arrays.asList(mCourtTypesClient), mFilters.getCourtsBooleans());
     mCourtTypes.setLayoutManager(new LinearLayoutManager(this));
     mCourtTypes.setAdapter(mAdapter);
   }
@@ -109,6 +116,7 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnHolderLi
     if (position != -1) {
       mFilters.setCourtType(mCourtTypesServer[position]);
       mFilters.setCourtTypeClient(mCourtTypesClient[position]);
+      mFilters.getCourtsBooleans()[position] = enable;
     } else {
       mFilters.setCourtType(null);
       mFilters.setCourtTypeClient(null);

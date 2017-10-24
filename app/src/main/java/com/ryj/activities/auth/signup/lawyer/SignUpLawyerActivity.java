@@ -23,13 +23,13 @@ import com.ryj.models.Session;
 import com.ryj.models.User;
 import com.ryj.models.enums.Specializations;
 import com.ryj.models.enums.UserType;
+import com.ryj.models.filters.Items;
 import com.ryj.models.request.SignUpQuery;
 import com.ryj.utils.FieldValidation;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.URLSpanNoUnderline;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -41,13 +41,14 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 
-/** Created by andrey on 8/10/17. */
+/**
+ * Created by andrey on 8/10/17.
+ */
 public class SignUpLawyerActivity extends BaseActivity {
-  private static final String TAG = "SignUpLawyerActivity";
-  private static String EXTRA_LIST_STRING = "list_string";
-  private static String EXTRA_LIST_BOOLEANS = "list_booleans";
-  private static int REQUEST_CODE = 1;
-  @Inject SignUpQuery mQuery;
+  @Inject
+  SignUpQuery mQuery;
+  @Inject
+  Items mItems;
 
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
@@ -62,7 +63,7 @@ public class SignUpLawyerActivity extends BaseActivity {
   String mLink;
 
   @BindArray(R.array.text_specializations_client)
-  String[] mSpecializations;
+  String[] mSpecializationsClient;
 
   @BindView(R.id.certificate_number)
   EditText mCertificateNumber;
@@ -158,13 +159,12 @@ public class SignUpLawyerActivity extends BaseActivity {
   Button mNext;
 
   private AlertDialog mDialog;
-  private boolean[] mChoosenSpecializationsBooleans;
-  private Specializations[] mSpecializationsBackEnd = {
-    Specializations.ADMINISTRATIVE,
-    Specializations.CIVIL,
-    Specializations.CRIMINAL,
-    Specializations.ECONOMIC,
-    Specializations.LEGAL
+  private Specializations[] mSpecializationsServer = {
+          Specializations.ADMINISTRATIVE,
+          Specializations.CIVIL,
+          Specializations.CRIMINAL,
+          Specializations.ECONOMIC,
+          Specializations.LEGAL
   };
 
   public static void start(Context context) {
@@ -185,8 +185,16 @@ public class SignUpLawyerActivity extends BaseActivity {
     mTerms.setText(Html.fromHtml(mLink));
     mTerms.setMovementMethod(LinkMovementMethod.getInstance());
     URLSpanNoUnderline.removeUnderlines((Spannable) mTerms.getText());
-    mChoosenSpecializationsBooleans = new boolean[mSpecializations.length];
     mDialog = getDialog(mOk);
+    mItems.init(Arrays.asList(mSpecializationsClient), Arrays.asList(mSpecializationsServer));
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    if (mItems.getResultClient() != null) {
+      mSpecialization.setText(mItems.getResultClient());
+    }
   }
 
   @Nullable
@@ -205,23 +213,10 @@ public class SignUpLawyerActivity extends BaseActivity {
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.specializations:
-        SignUpListActivity.startForResult(
-            this,
-            mSpecializationsListTitle,
-            mSpecializations,
-            mChoosenSpecializationsBooleans,
-            REQUEST_CODE);
+        SignUpListActivity.start(this, mSpecializationsListTitle);
         break;
       case R.id.next:
         validateSignUpRequest();
-    }
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == REQUEST_CODE && data != null) {
-      mSpecialization.setText(data.getStringExtra(EXTRA_LIST_STRING));
-      mChoosenSpecializationsBooleans = data.getBooleanArrayExtra(EXTRA_LIST_BOOLEANS);
     }
   }
 
@@ -261,7 +256,7 @@ public class SignUpLawyerActivity extends BaseActivity {
 
   private boolean isSurnameValid() {
     return FieldValidation.isValid(
-        mSurname.getText().toString(), StringUtils.LETTERS_SPACE_PATTERN);
+            mSurname.getText().toString(), StringUtils.LETTERS_SPACE_PATTERN);
   }
 
   private boolean isPhoneValid() {
@@ -274,12 +269,12 @@ public class SignUpLawyerActivity extends BaseActivity {
 
   private boolean isCertificateNumberValid() {
     return FieldValidation.isValid(
-        mCertificateNumber.getText().toString(), StringUtils.ONLY_DIGITS_PATTERN);
+            mCertificateNumber.getText().toString(), StringUtils.ONLY_DIGITS_PATTERN);
   }
 
   private boolean isCompanyValid() {
     return FieldValidation.isValid(
-        mCompany.getText().toString(), StringUtils.LETTERS_DIGITS_PATTERN);
+            mCompany.getText().toString(), StringUtils.LETTERS_DIGITS_PATTERN);
   }
 
   private boolean isSpecializationValid() {
@@ -288,21 +283,21 @@ public class SignUpLawyerActivity extends BaseActivity {
 
   private boolean isAllFieldsValid() {
     return isNameValid()
-        && isSurnameValid()
-        && isPhoneValid()
-        && isEmailValid()
-        && isCertificateNumberValid()
-        && isCompanyValid();
+            && isSurnameValid()
+            && isPhoneValid()
+            && isEmailValid()
+            && isCertificateNumberValid()
+            && isCompanyValid();
   }
 
   @OnFocusChange({
-    R.id.certificate_number,
-    R.id.fullname,
-    R.id.surname,
-    R.id.email,
-    R.id.phone,
-    R.id.company,
-    R.id.specializations
+          R.id.certificate_number,
+          R.id.fullname,
+          R.id.surname,
+          R.id.email,
+          R.id.phone,
+          R.id.company,
+          R.id.specializations
   })
   public void onFocusChanged(View v, boolean isFocused) {
     switch (v.getId()) {
@@ -395,7 +390,7 @@ public class SignUpLawyerActivity extends BaseActivity {
       User user = new User(mName.getText(), mSurname.getText());
       user.setPhone(mPhone.getText());
       user.setType(UserType.LAWYER);
-      user.setSpecializations(getChoosenSpecializationsServer());
+      user.setSpecializations(mItems.getResultServer());
       user.setCertNumber(mCertificateNumber.getText());
       if (mCompany.length() > 0) {
         user.setCompany(mCompany.getText());
@@ -407,15 +402,5 @@ public class SignUpLawyerActivity extends BaseActivity {
       mQuery.setSession(session);
       SignUpLawyerAvatarActivity.start(this);
     }
-  }
-
-  private List<Specializations> getChoosenSpecializationsServer() {
-    List<Specializations> choosenSpecializationServerList = new ArrayList<>();
-    for (int i = 0; i < mChoosenSpecializationsBooleans.length; i++) {
-      if (mChoosenSpecializationsBooleans[i]) {
-        choosenSpecializationServerList.add(mSpecializationsBackEnd[i]);
-      }
-    }
-    return choosenSpecializationServerList;
   }
 }

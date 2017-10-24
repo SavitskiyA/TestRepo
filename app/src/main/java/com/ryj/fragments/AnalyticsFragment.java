@@ -51,7 +51,6 @@ public class AnalyticsFragment extends BaseFragment {
   @Override
   public void onPause() {
     super.onPause();
-    switchActivityTab(BottomBarContainerActivity.getTabPosition(TAG), false);
     setActivityOptionsMenuVisibility(true);
   }
 

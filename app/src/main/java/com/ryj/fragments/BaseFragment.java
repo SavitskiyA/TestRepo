@@ -9,7 +9,6 @@ import com.ryj.App;
 import com.ryj.activities.BaseActivity;
 import com.ryj.activities.SwitchActivity;
 import com.ryj.di.ApplicationComponent;
-import com.ryj.listeners.Switchable;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.ButterKnife;

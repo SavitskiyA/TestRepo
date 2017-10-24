@@ -15,12 +15,12 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.ryj.R;
 import com.ryj.activities.BottomBarContainerActivity;
-import com.ryj.adapters.LoadableAdapter;
-import com.ryj.listeners.LoadListener;
-import com.ryj.listeners.OnHolderListener;
-import com.ryj.models.Filters;
+import com.ryj.adapters.LoadableListRecyclerAdapter;
+import com.ryj.interfaces.LoadListener;
+import com.ryj.interfaces.OnHolderListener;
 import com.ryj.models.enums.Direction;
 import com.ryj.models.enums.Sort;
+import com.ryj.models.filters.Filters;
 import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.handlers.ErrorHandler;
@@ -38,20 +38,15 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-/**
- * Created by andrey on 8/24/17.
- */
+/** Created by andrey on 8/24/17. */
 public class JudgesFragment extends BaseFragment implements LoadListener, OnHolderListener {
   public static final String TAG = "JudgesFragment";
   public static final String EXTRA_PARENT_ACTIVITY = "parent_activity";
   public static final int PARENT_JUDGES = 0;
   public static final int PARENT_MOST_DISCUSSED = 1;
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
-  @Inject
-  Filters mFilters;
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
+  @Inject Filters mFilters;
 
   @BindString(R.string.text_judges)
   String mTitleJudges;
@@ -83,7 +78,7 @@ public class JudgesFragment extends BaseFragment implements LoadListener, OnHold
   @BindView(R.id.best_rated)
   TextView mBestRated;
 
-  private LoadableAdapter mAdapter;
+  private LoadableListRecyclerAdapter mAdapter;
   private boolean mIsSort;
   private int mPage = 1;
 
@@ -104,11 +99,11 @@ public class JudgesFragment extends BaseFragment implements LoadListener, OnHold
   @Nullable
   @Override
   public View onCreateView(
-          LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+      LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_judges, container, false);
     ButterKnife.bind(this, view);
     onTextChanged();
-    mAdapter = new LoadableAdapter(inflater.getContext(), this, this);
+    mAdapter = new LoadableListRecyclerAdapter(inflater.getContext(), this, this);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
     mRecyclerView.setAdapter(mAdapter);
     setMode(getArguments().getInt(EXTRA_PARENT_ACTIVITY, 0));
@@ -162,9 +157,9 @@ public class JudgesFragment extends BaseFragment implements LoadListener, OnHold
 
   private void onTextChanged() {
     RxTextView.textChanges(mSearch)
-            .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-            .compose(bindUntilEvent(FragmentEvent.STOP))
-            .subscribe(query -> reset());
+        .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+        .compose(bindUntilEvent(FragmentEvent.STOP))
+        .subscribe(query -> reset());
   }
 
   @OnClick({R.id.sort, R.id.search_cancel})
@@ -200,31 +195,31 @@ public class JudgesFragment extends BaseFragment implements LoadListener, OnHold
             mFilters.getSorting().toString(),
             mFilters.getDirection().toString(),
             page)
-            .compose(bindUntilEvent(FragmentEvent.STOP))
-            .compose(RxUtils.applySchedulers())
-            .subscribe(
-                    response -> {
-                      if (response.getTotalEntries() != null) {
-                        mFoundCount.setText(String.valueOf(response.getTotalEntries()));
-                      } else {
-                        mFoundCount.setText(StringUtils.ZERO);
-                      }
-                      if (page == 1) {
-                        mAdapter.reloadItems(response.getObjects());
-                      } else {
-                        mAdapter.addItems(response.getObjects());
-                      }
-                      if (mSearch.length() > 0) {
-                        mFrameFoundCount.setVisibility(View.VISIBLE);
-                        mFound.setVisibility(View.VISIBLE);
-                      }
-                      if (response.getNextPage() == null) {
-                        mAdapter.setIsLoadable(false);
-                      }
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable, this.getContext());
-                    });
+        .compose(bindUntilEvent(FragmentEvent.STOP))
+        .compose(RxUtils.applySchedulers())
+        .subscribe(
+            response -> {
+              if (response.getTotalEntries() != null) {
+                mFoundCount.setText(String.valueOf(response.getTotalEntries()));
+              } else {
+                mFoundCount.setText(StringUtils.ZERO);
+              }
+              if (page == 1) {
+                mAdapter.reloadItems(response.getObjects());
+              } else {
+                mAdapter.addItems(response.getObjects());
+              }
+              if (mSearch.length() > 0) {
+                mFrameFoundCount.setVisibility(View.VISIBLE);
+                mFound.setVisibility(View.VISIBLE);
+              }
+              if (response.getNextPage() == null) {
+                mAdapter.setIsLoadable(false);
+              }
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this.getContext());
+            });
   }
 
   @Override
@@ -245,7 +240,5 @@ public class JudgesFragment extends BaseFragment implements LoadListener, OnHold
   }
 
   @Override
-  public void onHolderClicked(boolean enable, int position) {
-
-  }
+  public void onHolderClicked(boolean enable, int position) {}
 }

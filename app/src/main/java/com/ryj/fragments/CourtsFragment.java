@@ -15,11 +15,11 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.ryj.R;
 import com.ryj.activities.BottomBarContainerActivity;
-import com.ryj.adapters.LoadableAdapter;
-import com.ryj.listeners.LoadListener;
-import com.ryj.listeners.OnHolderListener;
-import com.ryj.models.Filters;
+import com.ryj.adapters.LoadableListRecyclerAdapter;
+import com.ryj.interfaces.LoadListener;
+import com.ryj.interfaces.OnHolderListener;
 import com.ryj.models.enums.Direction;
+import com.ryj.models.filters.Filters;
 import com.ryj.models.response.Court;
 import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
@@ -40,17 +40,12 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-/**
- * Created by andrey on 8/24/17.
- */
+/** Created by andrey on 8/24/17. */
 public class CourtsFragment extends BaseFragment implements LoadListener, OnHolderListener {
   public static final String TAG = "CourtsFragment";
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
-  @Inject
-  Filters mFilters;
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
+  @Inject Filters mFilters;
 
   @BindString(R.string.text_courts)
   String mTitle;
@@ -76,7 +71,7 @@ public class CourtsFragment extends BaseFragment implements LoadListener, OnHold
   @BindView(R.id.found)
   TextView mFound;
 
-  private LoadableAdapter mAdapter;
+  private LoadableListRecyclerAdapter mAdapter;
   private boolean mIsSort;
   private int mPage = 1;
   private List<Court> mCourtList = new ArrayList<>();
@@ -94,11 +89,11 @@ public class CourtsFragment extends BaseFragment implements LoadListener, OnHold
   @Nullable
   @Override
   public View onCreateView(
-          LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+      LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_courts, container, false);
     ButterKnife.bind(this, view);
     onTextChanged();
-    mAdapter = new LoadableAdapter(inflater.getContext(), this, this);
+    mAdapter = new LoadableListRecyclerAdapter(inflater.getContext(), this, this);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
     mRecyclerView.setAdapter(mAdapter);
     return view;
@@ -138,9 +133,9 @@ public class CourtsFragment extends BaseFragment implements LoadListener, OnHold
 
   private void onTextChanged() {
     RxTextView.textChanges(mSearch)
-            .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-            .compose(bindUntilEvent(FragmentEvent.STOP))
-            .subscribe(query -> reset());
+        .debounce(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+        .compose(bindUntilEvent(FragmentEvent.STOP))
+        .subscribe(query -> reset());
   }
 
   @OnClick({R.id.sort, R.id.search_cancel})
@@ -174,30 +169,30 @@ public class CourtsFragment extends BaseFragment implements LoadListener, OnHold
             mFilters.getSorting().toString(),
             mFilters.getDirection().toString(),
             page)
-            .compose(bindUntilEvent(FragmentEvent.STOP))
-            .compose(RxUtils.applySchedulers())
-            .subscribe(
-                    response -> {
-                      mFoundCount.setText(String.valueOf(response.getTotalEntries()));
-                      if (page == 1) {
-                        mCourtList.clear();
-                        mCourtList.addAll(response.getObjects());
-                        mAdapter.reloadItems(mCourtList);
-                      } else {
-                        mCourtList.addAll(response.getObjects());
-                        mAdapter.addItems(mCourtList);
-                      }
-                      if (mSearch.length() > 0) {
-                        mFrameFoundCount.setVisibility(View.VISIBLE);
-                        mFound.setVisibility(View.VISIBLE);
-                      }
-                      if (response.getNextPage() == null) {
-                        mAdapter.setIsLoadable(false);
-                      }
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable, this.getContext());
-                    });
+        .compose(bindUntilEvent(FragmentEvent.STOP))
+        .compose(RxUtils.applySchedulers())
+        .subscribe(
+            response -> {
+              mFoundCount.setText(String.valueOf(response.getTotalEntries()));
+              if (page == 1) {
+                mCourtList.clear();
+                mCourtList.addAll(response.getObjects());
+                mAdapter.reloadItems(mCourtList);
+              } else {
+                mCourtList.addAll(response.getObjects());
+                mAdapter.addItems(mCourtList);
+              }
+              if (mSearch.length() > 0) {
+                mFrameFoundCount.setVisibility(View.VISIBLE);
+                mFound.setVisibility(View.VISIBLE);
+              }
+              if (response.getNextPage() == null) {
+                mAdapter.setIsLoadable(false);
+              }
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this.getContext());
+            });
   }
 
   @Override
@@ -216,14 +211,10 @@ public class CourtsFragment extends BaseFragment implements LoadListener, OnHold
   public void onHolderClicked(boolean enable, int position) {
     Court court = mCourtList.get(position);
     replaceFragment(
-            CourtFragment.newInstance(court.getId(),
-                    court.getName(),
-                    34,
-                    4f),
-            R.id.container,
-            true,
-            false,
-            CourtFragment.TAG);
-
+        CourtFragment.newInstance(court.getId(), court.getName(), 34, 4f),
+        R.id.container,
+        true,
+        false,
+        CourtFragment.TAG);
   }
 }

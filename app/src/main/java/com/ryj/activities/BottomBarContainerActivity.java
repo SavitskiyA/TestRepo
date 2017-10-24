@@ -20,7 +20,7 @@ import com.ryj.fragments.JudgesChooseSectionFragment;
 import com.ryj.fragments.JudgesFragment;
 import com.ryj.fragments.NewsFragment;
 import com.ryj.fragments.ProfileFragment;
-import com.ryj.listeners.Switchable;
+import com.ryj.interfaces.Switchable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,9 +28,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by andrey on 8/24/17.
- */
+/** Created by andrey on 8/24/17. */
 public class BottomBarContainerActivity extends SwitchActivity implements Switchable {
   public static final Map<String, Integer> mBottomBarTabsMap = new HashMap<>();
 
@@ -47,6 +45,7 @@ public class BottomBarContainerActivity extends SwitchActivity implements Switch
   FrameLayout mContainer;
 
   private String mCurrentFragmentTag;
+  private boolean mIsClick;
 
   public static void start(Context context) {
     Intent i = new Intent(context, BottomBarContainerActivity.class);
@@ -95,34 +94,40 @@ public class BottomBarContainerActivity extends SwitchActivity implements Switch
 
   private void setBottomBarSwitcher() {
     mBorromBar.setOnTabSelectListener(
-            tabId -> {
-              switch (tabId) {
-                case R.id.tab_judges:
-                  replaceFragment(
-                          JudgesChooseSectionFragment.newInstance(),
-                          R.id.container,
-                          true,
-                          false,
-                          JudgesChooseSectionFragment.TAG);
-                  return;
-                case R.id.tab_analytics:
-                  replaceFragment(
-                          AnalyticsFragment.newInstance(),
-                          R.id.container,
-                          true,
-                          false,
-                          AnalyticsFragment.TAG);
-                  return;
-                case R.id.tab_news:
-                  replaceFragment(
-                          NewsFragment.newInstance(), R.id.container, true, false, NewsFragment.TAG);
-                  return;
-                case R.id.tab_profile:
-                  replaceFragment(
-                          ProfileFragment.newInstance(), R.id.container, true, false, ProfileFragment.TAG);
-                  return;
-              }
-            });
+        tabId -> {
+          if (!mIsClick) {
+            switch (tabId) {
+              case R.id.tab_judges:
+                replaceFragment(
+                    JudgesChooseSectionFragment.newInstance(),
+                    R.id.container,
+                    true,
+                    false,
+                    JudgesChooseSectionFragment.TAG);
+                return;
+              case R.id.tab_analytics:
+                replaceFragment(
+                    AnalyticsFragment.newInstance(),
+                    R.id.container,
+                    true,
+                    false,
+                    AnalyticsFragment.TAG);
+                return;
+              case R.id.tab_news:
+                replaceFragment(
+                    NewsFragment.newInstance(), R.id.container, true, false, NewsFragment.TAG);
+                return;
+              case R.id.tab_profile:
+                replaceFragment(
+                    ProfileFragment.newInstance(),
+                    R.id.container,
+                    true,
+                    false,
+                    ProfileFragment.TAG);
+                return;
+            }
+          }
+        });
   }
 
   @Override
@@ -176,7 +181,9 @@ public class BottomBarContainerActivity extends SwitchActivity implements Switch
 
   @Override
   public void switchTab(int position, boolean isSelected) {
-    mBorromBar.getTabAtPosition(position).setSelected(isSelected);
+    mIsClick = true;
+    mBorromBar.getTabAtPosition(position).callOnClick();
+    mIsClick = false;
   }
 
   @Override

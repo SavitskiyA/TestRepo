@@ -12,11 +12,13 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
-import com.ryj.adapters.CategoryAdapter;
-import com.ryj.models.Filters;
+import com.ryj.adapters.ItemListRecyclerAdapter;
+import com.ryj.interfaces.OnHolderListener;
 import com.ryj.models.enums.Affairs;
+import com.ryj.models.filters.Filters;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /** Created by andrey on 9/20/17. */
-public class FiltersCategoryActivity extends BaseActivity {
+public class FiltersCategoryActivity extends BaseActivity implements OnHolderListener {
   @Inject Filters mFilters;
 
   @BindView(R.id.categories)
@@ -39,9 +41,9 @@ public class FiltersCategoryActivity extends BaseActivity {
   TextView mTitle;
 
   @BindArray(R.array.text_categories_client)
-  String[] mCategoriesClient;
+  String[] mAffairsClient;
 
-  private Affairs[] mCategoriesBackEnd = {
+  private Affairs[] mAffairsServer = {
     Affairs.ADMIN_VIOLATION,
     Affairs.ADMINISTRATIVE,
     Affairs.CIVIL,
@@ -50,7 +52,7 @@ public class FiltersCategoryActivity extends BaseActivity {
     Affairs.URGENT_LAWSUITS
   };
 
-  private CategoryAdapter mAdapter;
+  private ItemListRecyclerAdapter mAdapter;
 
   public static void start(Context context) {
     Intent i = new Intent(context, FiltersCategoryActivity.class);
@@ -79,7 +81,12 @@ public class FiltersCategoryActivity extends BaseActivity {
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
-    mAdapter = new CategoryAdapter(this, mCategoriesClient, mFilters.getAffairsBooleans());
+    if (mFilters.getAffairsBooleans() == null) {
+      mFilters.setAffairsBooleans(new boolean[mAffairsClient.length]);
+    }
+    mAdapter =
+        new ItemListRecyclerAdapter<String>(
+            this, this, Arrays.asList(mAffairsClient), mFilters.getAffairsBooleans());
     mCategories.setLayoutManager(new LinearLayoutManager(this));
     mCategories.setAdapter(mAdapter);
   }
@@ -88,8 +95,7 @@ public class FiltersCategoryActivity extends BaseActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
-        mFilters.setAffairs(getChoosenCategories(mAdapter.getSelectedCategoriesBoolean()));
-        mFilters.setAffairsBooleans(mAdapter.getSelectedCategoriesBoolean());
+        mFilters.setAffairs(getChoosenCategories(mFilters.getAffairsBooleans()));
         onBackPressed();
         return true;
       default:
@@ -99,11 +105,16 @@ public class FiltersCategoryActivity extends BaseActivity {
 
   private List<String> getChoosenCategories(boolean[] choosenCategoriesBoolean) {
     List<String> choosenCategories = new ArrayList<>();
-    for (int i = 0; i < mCategoriesBackEnd.length; i++) {
+    for (int i = 0; i < mAffairsServer.length; i++) {
       if (choosenCategoriesBoolean[i]) {
-        choosenCategories.add(mCategoriesBackEnd[i].toString());
+        choosenCategories.add(mAffairsServer[i].toString());
       }
     }
     return choosenCategories;
+  }
+
+  @Override
+  public void onHolderClicked(boolean enable, int position) {
+    mFilters.getAffairsBooleans()[position] = enable;
   }
 }

@@ -17,28 +17,28 @@ import com.ryj.adapters.viewholders.LoaderViewHolder;
 import com.ryj.fragments.CourtFragment;
 import com.ryj.fragments.CourtsFragment;
 import com.ryj.fragments.JudgesFragment;
-import com.ryj.listeners.LoadListener;
-import com.ryj.listeners.Loadable;
-import com.ryj.listeners.OnHolderListener;
+import com.ryj.interfaces.LoadListener;
+import com.ryj.interfaces.Loadable;
+import com.ryj.interfaces.OnHolderListener;
 import com.ryj.models.response.Area;
 import com.ryj.models.response.Court;
 import com.ryj.models.response.Judge;
+import com.ryj.utils.DrawUtils;
 import com.ryj.utils.StringUtils;
 
 import java.util.List;
 
-/**
- * Created by andrey on 10/18/17.
- */
-
-public class LoadableAdapter<T> extends ListRecyclerAdapter<T> implements Loadable<T>, OnHolderListener {
+/** Created by andrey on 10/18/17. */
+public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
+    implements Loadable<T>, OnHolderListener {
   private boolean mIsLoad;
   private int mCurrentChecked = -1;
   private LoadListener mLoadable;
   private LayoutInflater mInflater;
   private OnHolderListener mListener;
 
-  public LoadableAdapter(Context context, LoadListener loadListener, OnHolderListener holderListener) {
+  public LoadableListRecyclerAdapter(
+      Context context, LoadListener loadListener, OnHolderListener holderListener) {
     mInflater = LayoutInflater.from(context);
     mLoadable = loadListener;
     mListener = holderListener;
@@ -58,12 +58,12 @@ public class LoadableAdapter<T> extends ListRecyclerAdapter<T> implements Loadab
       return new JudgeHolder(mInflater.inflate(R.layout.item_judges_judge, parent, false));
     } else if (mListener instanceof CourtsFragment) {
       return new CourtHolder(mInflater.inflate(R.layout.item_courts_court, parent, false), this);
-    } else if (mListener instanceof FiltersCityActivity || mListener instanceof FiltersRegionActivity) {
+    } else if (mListener instanceof FiltersCityActivity
+        || mListener instanceof FiltersRegionActivity) {
       return new AreaHolder(mInflater.inflate(R.layout.item_option, parent, false), this);
     } else {
       throw new RuntimeException("this is not an instance of necessary parent");
     }
-
   }
 
   @Override
@@ -85,7 +85,7 @@ public class LoadableAdapter<T> extends ListRecyclerAdapter<T> implements Loadab
 
   @Override
   public void bindItemHolder(RecyclerView.ViewHolder viewHolder, int position) {
-    if (viewHolder instanceof JudgeHolder ) {
+    if (viewHolder instanceof JudgeHolder) {
       bindJudgeHolder(viewHolder, position);
     } else if (viewHolder instanceof CourtHolder) {
       bindCourtHolder(viewHolder, position);
@@ -146,6 +146,11 @@ public class LoadableAdapter<T> extends ListRecyclerAdapter<T> implements Loadab
 
     if (judge.getAvatar().getOrigin() != null) {
       holder.setPhoto(Uri.parse(judge.getAvatar().getOrigin()));
+      holder.hideTextStub();
+    } else {
+      holder.setPlaceHolder(
+          DrawUtils.RESOURCES[StringUtils.getFullNameLength(judge) % DrawUtils.RESOURCES.length]);
+      holder.showTextStub(StringUtils.getAbbrFromFullName(judge));
     }
   }
 
@@ -190,7 +195,8 @@ public class LoadableAdapter<T> extends ListRecyclerAdapter<T> implements Loadab
       onJudgeHolderClicked(enable, position);
     } else if (mListener instanceof CourtsFragment) {
       onCourtHolderClicked(enable, position);
-    } else if (mListener instanceof FiltersCityActivity || mListener instanceof FiltersRegionActivity) {
+    } else if (mListener instanceof FiltersCityActivity
+        || mListener instanceof FiltersRegionActivity) {
       onAreaHolderClicked(enable, position);
     } else {
       throw new RuntimeException("this is not an instance of necessary parent");
@@ -207,6 +213,5 @@ public class LoadableAdapter<T> extends ListRecyclerAdapter<T> implements Loadab
     mListener.onHolderClicked(enable, position);
   }
 
-  private void onJudgeHolderClicked(boolean enable, int position) {
-  }
+  private void onJudgeHolderClicked(boolean enable, int position) {}
 }

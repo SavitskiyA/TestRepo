@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 
 import com.ryj.R;
-import com.ryj.listeners.OnHolderListener;
+import com.ryj.interfaces.OnHolderListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

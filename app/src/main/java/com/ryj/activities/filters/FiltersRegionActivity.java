@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
-import com.ryj.adapters.LoadableAdapter;
-import com.ryj.listeners.LoadListener;
-import com.ryj.listeners.OnHolderListener;
-import com.ryj.models.Filters;
+import com.ryj.adapters.LoadableListRecyclerAdapter;
+import com.ryj.interfaces.LoadListener;
+import com.ryj.interfaces.OnHolderListener;
+import com.ryj.models.filters.Filters;
 import com.ryj.models.response.Area;
 import com.ryj.models.response.Region;
 import com.ryj.utils.RxUtils;
@@ -45,7 +45,7 @@ public class FiltersRegionActivity extends BaseActivity implements LoadListener,
   @BindView(R.id.title)
   TextView mTitle;
 
-  private LoadableAdapter mAdapter;
+  private LoadableListRecyclerAdapter mAdapter;
   private int mPage = 1;
   private List<Area> mAreas = new ArrayList<>();
 
@@ -76,7 +76,7 @@ public class FiltersRegionActivity extends BaseActivity implements LoadListener,
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
-    mAdapter = new LoadableAdapter(this, this, this);
+    mAdapter = new LoadableListRecyclerAdapter(this, this, this);
     mRegions.setLayoutManager(new LinearLayoutManager(this));
     mRegions.setAdapter(mAdapter);
     reset();

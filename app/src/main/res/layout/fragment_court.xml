@@ -1,82 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/background_light">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:background="@android:color/background_light">
 
-  <RelativeLayout
-    android:id="@+id/frame"
+  <android.support.design.widget.AppBarLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentStart="true"
-    android:layout_below="@+id/toolbar">
+    android:background="@android:color/background_light"
+    app:expandedTitleMarginEnd="64dp"
+    app:expandedTitleMarginStart="48dp">
+
+    <include layout="@layout/item_court_profile"/>
 
     <TextView
-      android:id="@+id/court_name"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerHorizontal="true"
-      android:layout_marginEnd="50dp"
-      android:layout_marginStart="50dp"
-      android:layout_marginTop="20dp"
-      android:gravity="center_horizontal"
-      android:text="Апеляційний суд Харківської області"
+      android:id="@+id/courts_found_count"
+      android:layout_width="match_parent"
+      android:layout_height="46dp"
+      android:layout_alignParentStart="true"
+      android:layout_below="@+id/frame"
+      android:layout_gravity="bottom"
+
+      android:background="@color/colorGrayJudgesSeparatorUnderline"
+      android:gravity="center"
+      android:lineSpacingMultiplier="1"
       android:textColor="@color/colorBlackText"
-      android:textSize="@dimen/size_text_18sp"/>
-
-    <com.github.ornolfr.ratingview.RatingView
-      android:id="@+id/ratingbar"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/court_name"
-      android:layout_marginBottom="22dp"
-      android:layout_marginLeft="108dp"
-      android:layout_marginTop="13dp"
-      android:focusableInTouchMode="false"
-      app:drawable_empty="@drawable/ic_star_ranking_empty"
-      app:drawable_filled="@drawable/ic_star_ranking_full"
-      app:drawable_half="@drawable/ic_star_ranking_half"
-      app:drawable_margin="8dp"
-      app:drawable_size="14dp"
-      app:is_indicator="true"
-      app:max_count="5"
-      app:rating="4.5"/>
-
-    <TextView
-      android:id="@+id/marks_count"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/court_name"
-      android:layout_marginBottom="22dp"
-      android:layout_marginLeft="224dp"
-      android:layout_marginStart="12dp"
-      android:layout_marginTop="13dp"
-      android:layout_toEndOf="@+id/ratingbar"
-      android:fontFamily="sans-serif-medium"
-      android:text="76"
-      android:textColor="@color/colorBlackTextTranspGray"
-      android:textSize="15sp"
-      android:textStyle="normal"/>
-  </RelativeLayout>
-
-  <TextView
-    android:id="@+id/courts_found_count"
-    android:layout_width="match_parent"
-    android:layout_height="46dp"
-    android:layout_alignParentStart="true"
-    android:layout_below="@+id/frame"
-    android:background="@color/colorGrayJudgesSeparatorUnderline"
-    android:gravity="center"
-    android:lineSpacingMultiplier="1"
-    android:text="Знайдено 37 суддiв"
-    android:textColor="@color/colorBlackText"
-    android:textSize="@dimen/size_text_14sp"/>
+      android:textSize="@dimen/size_text_14sp"/>
+  </android.support.design.widget.AppBarLayout>
 
   <android.support.v7.widget.RecyclerView
     android:id="@+id/recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@+id/courts_found_count"/>
-
-</RelativeLayout>
+    android:background="@android:color/background_light"
+    android:scrollbars="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+</android.support.design.widget.CoordinatorLayout>

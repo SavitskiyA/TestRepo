@@ -11,8 +11,8 @@ import android.widget.Filterable;
 import com.ryj.R;
 import com.ryj.adapters.viewholders.AutoCompleteHolder;
 import com.ryj.adapters.viewholders.LoaderViewHolder;
-import com.ryj.listeners.Loadable;
-import com.ryj.listeners.LoadListener;
+import com.ryj.interfaces.LoadListener;
+import com.ryj.interfaces.Loadable;
 import com.ryj.models.response.Judge;
 import com.ryj.utils.StringUtils;
 
@@ -22,11 +22,11 @@ import java.util.List;
  * Created by andrey on 10/18/17.
  */
 
-public class AutocompleteAdapter extends ListBaseAdapter<Judge> implements Loadable<Judge>, Filterable {
+public class AutocompleteListBaseAdapter extends ListBaseAdapter<Judge> implements Loadable<Judge>, Filterable {
   private LayoutInflater mInflater;
   private LoadListener mLoadable;
 
-  public AutocompleteAdapter(Context context, LoadListener loadable) {
+  public AutocompleteListBaseAdapter(Context context, LoadListener loadable) {
     this.mInflater = LayoutInflater.from(context);
     this.mLoadable = loadable;
   }

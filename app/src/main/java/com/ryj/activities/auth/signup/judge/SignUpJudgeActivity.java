@@ -1,6 +1,5 @@
 package com.ryj.activities.auth.signup.judge;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +25,7 @@ import com.ryj.models.Session;
 import com.ryj.models.enums.Affairs;
 import com.ryj.models.enums.RequestType;
 import com.ryj.models.enums.UserType;
+import com.ryj.models.filters.Items;
 import com.ryj.models.request.SignUpQuery;
 import com.ryj.utils.FieldValidation;
 import com.ryj.utils.RxUtils;
@@ -35,8 +35,7 @@ import com.ryj.utils.handlers.ErrorHandler;
 import com.ryj.web.Api;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -48,15 +47,22 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 
-/** Created by andrey on 7/11/17. */
+/**
+ * Created by andrey on 7/11/17.
+ */
 public class SignUpJudgeActivity extends BaseActivity {
   private static final String TAG = "SignUpJudgeActivity";
   private static String EXTRA_LIST_STRING = "list_string";
   private static String EXTRA_LIST_BOOLEANS = "list_booleans";
   private static int REQUEST_CODE = 1;
-  @Inject Api mApi;
-  @Inject ErrorHandler mErrorHandler;
-  @Inject SignUpQuery mQuery;
+  @Inject
+  Api mApi;
+  @Inject
+  ErrorHandler mErrorHandler;
+  @Inject
+  SignUpQuery mQuery;
+  @Inject
+  Items mItems;
 
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
@@ -71,7 +77,7 @@ public class SignUpJudgeActivity extends BaseActivity {
   String mLink;
 
   @BindArray(R.array.text_categories_client)
-  String[] mCategories;
+  String[] mAffairsClient;
 
   @BindView(R.id.category)
   EditText mCategory;
@@ -126,28 +132,18 @@ public class SignUpJudgeActivity extends BaseActivity {
 
   private AlertDialog mDialog;
   private SpinnerDialog mSpinnerDialog;
-  private boolean[] mChoosenCategoriesBooleans;
-  private Affairs[] mAffairs = {
-    Affairs.ADMIN_VIOLATION,
-    Affairs.ADMINISTRATIVE,
-    Affairs.CIVIL,
-    Affairs.CRIMINAL,
-    Affairs.ECONOMIC,
-    Affairs.URGENT_LAWSUITS
+  private Affairs[] mAffairsServer = {
+          Affairs.ADMIN_VIOLATION,
+          Affairs.ADMINISTRATIVE,
+          Affairs.CIVIL,
+          Affairs.CRIMINAL,
+          Affairs.ECONOMIC,
+          Affairs.URGENT_LAWSUITS
   };
 
   public static void start(Context context) {
     Intent i = new Intent(context, SignUpJudgeActivity.class);
     context.startActivity(i);
-  }
-
-  public static void sendActivityResult(
-      Activity activity, String choosenCategories, boolean[] choosenCategoriesBooleans) {
-    Intent intent = new Intent();
-    intent.putExtra(EXTRA_LIST_STRING, choosenCategories);
-    intent.putExtra(EXTRA_LIST_BOOLEANS, choosenCategoriesBooleans);
-    activity.setResult(RESULT_OK, intent);
-    activity.onBackPressed();
   }
 
   @Override
@@ -163,11 +159,19 @@ public class SignUpJudgeActivity extends BaseActivity {
     mTerms.setText(Html.fromHtml(mLink));
     mTerms.setMovementMethod(LinkMovementMethod.getInstance());
     URLSpanNoUnderline.removeUnderlines((Spannable) mTerms.getText());
-    mChoosenCategoriesBooleans = new boolean[mCategories.length];
     mDialog = getDialog(mOk);
     mSpinnerDialog = getSpinnerDialog();
     mSpinnerDialog.setCancelable(false);
     mFullName.setText(StringUtils.getFullName(mQuery.getUser()));
+    mItems.init(Arrays.asList(mAffairsClient), Arrays.asList(mAffairsServer));
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    if (mItems.getResultClient() != null) {
+      mCategory.setText(mItems.getResultClient());
+    }
   }
 
   @Nullable
@@ -186,19 +190,10 @@ public class SignUpJudgeActivity extends BaseActivity {
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.category:
-        SignUpListActivity.startForResult(
-            this, mCategoriesListTitle, mCategories, mChoosenCategoriesBooleans, REQUEST_CODE);
+        SignUpListActivity.start(this, mCategoriesListTitle);
         break;
       case R.id.next:
         createSignUpRequest();
-    }
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == REQUEST_CODE && data != null) {
-      mCategory.setText(data.getStringExtra(EXTRA_LIST_STRING));
-      mChoosenCategoriesBooleans = data.getBooleanArrayExtra(EXTRA_LIST_BOOLEANS);
     }
   }
 
@@ -252,8 +247,7 @@ public class SignUpJudgeActivity extends BaseActivity {
         break;
       case R.id.category:
         if (isFocused) {
-          SignUpListActivity.startForResult(
-              this, mCategoriesListTitle, mCategories, mChoosenCategoriesBooleans, REQUEST_CODE);
+          SignUpListActivity.start(this, mCategoriesListTitle);
         }
         break;
     }
@@ -292,7 +286,7 @@ public class SignUpJudgeActivity extends BaseActivity {
         mQuery.getUser().setPhone(mPhone.getText());
       }
       mQuery.getUser().setType(UserType.JUDGE);
-      mQuery.getUser().setAffairs(getChoosenCategoriesServer());
+      mQuery.getUser().setAffairs(mItems.getResultServer());
       mQuery.setAccount(new Account(mEmail.getText()));
       mQuery.setSession(new Session());
       executeSignUpRequest(mQuery);
@@ -301,30 +295,20 @@ public class SignUpJudgeActivity extends BaseActivity {
 
   private void executeSignUpRequest(SignUpQuery query) {
     mApi.signUp(query)
-        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .compose(RxUtils.applySchedulers())
-        .compose(
-            RxUtils.applyBeforeAndAfter(
-                (disposable) ->
-                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
-                () -> mSpinnerDialog.dismiss()))
-        .subscribe(
-            response -> {
-              ThankYouActivity.start(this);
-              finish();
-            },
-            throwable -> {
-              mErrorHandler.handleErrorByRequestType(throwable, this, RequestType.SIGN_UP_TEMP);
-            });
-  }
-
-  private List<Affairs> getChoosenCategoriesServer() {
-    List<Affairs> choosenCategoriesServerList = new ArrayList<>();
-    for (int i = 0; i < mChoosenCategoriesBooleans.length; i++) {
-      if (mChoosenCategoriesBooleans[i]) {
-        choosenCategoriesServerList.add(mAffairs[i]);
-      }
-    }
-    return choosenCategoriesServerList;
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .compose(RxUtils.applySchedulers())
+            .compose(
+                    RxUtils.applyBeforeAndAfter(
+                            (disposable) ->
+                                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
+                            () -> mSpinnerDialog.dismiss()))
+            .subscribe(
+                    response -> {
+                      ThankYouActivity.start(this);
+                      finish();
+                    },
+                    throwable -> {
+                      mErrorHandler.handleErrorByRequestType(throwable, this, RequestType.SIGN_UP_TEMP);
+                    });
   }
 }

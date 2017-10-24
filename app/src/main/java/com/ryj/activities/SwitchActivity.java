@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import com.ryj.listeners.Switchable;
+import com.ryj.interfaces.Switchable;
 
 /**
  * Created by andrey on 9/30/17.

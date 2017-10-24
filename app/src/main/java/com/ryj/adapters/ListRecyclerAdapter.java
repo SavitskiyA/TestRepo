@@ -1,10 +1,6 @@
 package com.ryj.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-
-import com.ryj.adapters.viewholders.LoaderViewHolder;
-import com.ryj.listeners.Loadable;
 
 import java.util.ArrayList;
 import java.util.List;

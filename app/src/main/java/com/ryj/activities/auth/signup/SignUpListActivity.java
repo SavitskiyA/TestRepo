@@ -1,6 +1,6 @@
 package com.ryj.activities.auth.signup;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.activities.auth.signup.judge.SignUpJudgeActivity;
-import com.ryj.adapters.SignUpItemAdapter;
-import com.ryj.listeners.OnHolderListener;
-import com.ryj.utils.StringUtils;
+import com.ryj.adapters.ItemListRecyclerAdapter;
+import com.ryj.interfaces.OnHolderListener;
+import com.ryj.models.filters.Items;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,9 +26,8 @@ import butterknife.OnClick;
 /** Created by andrey on 7/22/17. */
 public class SignUpListActivity extends BaseActivity implements OnHolderListener {
   private static String EXTRA_LIST_TITLE = "list_title";
-  private static String EXTRA_LIST_ARRAY = "list_array";
-  private static String EXTRA_LIST_BOOLEANS = "list_booleans";
   private static boolean mIsButtonResponsive;
+  @Inject Items mItems;
 
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
@@ -40,20 +41,13 @@ public class SignUpListActivity extends BaseActivity implements OnHolderListener
   @BindView(R.id.ok)
   Button mOk;
 
-  private SignUpItemAdapter mAdapter;
+  private ItemListRecyclerAdapter<String> mAdapter;
 
-  public static void startForResult(
-      Activity activity,
-      String title,
-      String[] categories,
-      boolean[] choosenCategoriesBoolean,
-      int requestCode) {
-    Intent intent = new Intent(activity, SignUpListActivity.class);
-    intent.putExtra(EXTRA_LIST_TITLE, title);
-    intent.putExtra(EXTRA_LIST_ARRAY, categories);
-    intent.putExtra(EXTRA_LIST_BOOLEANS, choosenCategoriesBoolean);
-    activity.startActivityForResult(intent, requestCode);
-    mIsButtonResponsive = activity instanceof SignUpJudgeActivity ? true : false;
+  public static void start(Context context, String title) {
+    Intent i = new Intent(context, SignUpListActivity.class);
+    i.putExtra(EXTRA_LIST_TITLE, title);
+    mIsButtonResponsive = context instanceof SignUpJudgeActivity ? true : false;
+    context.startActivity(i);
   }
 
   @Nullable
@@ -72,15 +66,16 @@ public class SignUpListActivity extends BaseActivity implements OnHolderListener
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_signup_list);
+    getComponent().inject(this);
     ButterKnife.bind(this);
     setSupportActionBar(mToolbar);
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
     Bundle extras = getIntent().getExtras();
     mTitle.setText(extras.getString(EXTRA_LIST_TITLE));
-    String[] categories = extras.getStringArray(EXTRA_LIST_ARRAY);
-    boolean[] choosenCategories = extras.getBooleanArray(EXTRA_LIST_BOOLEANS);
-    mAdapter = new SignUpItemAdapter(categories, choosenCategories, this, this);
+    mAdapter =
+        new ItemListRecyclerAdapter<String>(
+            this, this, mItems.getItemsClient(), mItems.getBooleans());
     mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     mRecyclerView.setAdapter(mAdapter);
     mOk.setEnabled(!mIsButtonResponsive);
@@ -88,11 +83,7 @@ public class SignUpListActivity extends BaseActivity implements OnHolderListener
 
   @OnClick(R.id.ok)
   public void onClick() {
-    String choosenCategories =
-        StringUtils.getStringFromList(
-            mAdapter.getChoosenCategoriesList(), StringUtils.DOT_COMMA_SPACE);
-    boolean[] choosenCategoriesBooleans = mAdapter.getChoosenCategoriesBooleans();
-    SignUpJudgeActivity.sendActivityResult(this, choosenCategories, choosenCategoriesBooleans);
+    onBackPressed();
   }
 
   @Override
@@ -100,5 +91,6 @@ public class SignUpListActivity extends BaseActivity implements OnHolderListener
     if (mIsButtonResponsive) {
       mOk.setEnabled(enable);
     }
+    mItems.setBoolean(enable, position);
   }
 }

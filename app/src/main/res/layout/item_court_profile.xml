@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             app:layout_scrollFlags="scroll|enterAlways">
+
+  <TextView
+    android:id="@+id/court_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top|center_horizontal"
+    android:layout_marginEnd="50dp"
+    android:layout_marginStart="50dp"
+    android:layout_marginTop="20dp"
+    android:gravity="center"
+    android:textColor="@color/colorBlackText"
+    android:textSize="@dimen/size_text_18sp"/>
+
+  <com.github.ornolfr.ratingview.RatingView
+    android:id="@+id/ratingbar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="108dp"
+    android:layout_marginTop="66dp"
+    android:focusableInTouchMode="false"
+    app:drawable_empty="@drawable/ic_star_ranking_empty"
+    app:drawable_filled="@drawable/ic_star_ranking_full"
+    app:drawable_half="@drawable/ic_star_ranking_half"
+    app:drawable_margin="8dp"
+    app:drawable_size="14dp"
+    app:is_indicator="true"
+    app:max_count="5"
+    app:rating="4.5"/>
+
+  <TextView
+    android:id="@+id/marks_count"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="22dp"
+    android:layout_marginLeft="224dp"
+    android:layout_marginTop="62dp"
+    android:fontFamily="sans-serif-medium"
+    android:gravity="center_horizontal"
+    android:lineSpacingMultiplier="1"
+    android:textColor="@color/colorBlackTextTranspGray"
+    android:textSize="15sp"
+    android:textStyle="normal"/>
+</FrameLayout>

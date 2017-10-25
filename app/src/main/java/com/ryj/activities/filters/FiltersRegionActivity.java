@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
+import com.ryj.adapters.ListRecyclerAdapter;
 import com.ryj.adapters.LoadableListRecyclerAdapter;
 import com.ryj.interfaces.LoadListener;
 import com.ryj.interfaces.OnHolderListener;
@@ -30,11 +31,16 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/** Created by andrey on 9/19/17. */
+/**
+ * Created by andrey on 9/19/17.
+ */
 public class FiltersRegionActivity extends BaseActivity implements LoadListener, OnHolderListener {
-  @Inject Api mApi;
-  @Inject ErrorHandler mErrorHandler;
-  @Inject Filters mFilters;
+  @Inject
+  Api mApi;
+  @Inject
+  ErrorHandler mErrorHandler;
+  @Inject
+  Filters mFilters;
 
   @BindView(R.id.recycler_view_list)
   RecyclerView mRegions;
@@ -85,24 +91,24 @@ public class FiltersRegionActivity extends BaseActivity implements LoadListener,
   @Override
   public void load(int page) {
     mApi.getRegions(page)
-        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .compose(RxUtils.applySchedulers())
-        .subscribe(
-            response -> {
-              if (page == 1) {
-                mAdapter.reloadItems(getAreas(response.getRegions()));
-              } else {
-                mAdapter.addItems(getAreas(response.getRegions()));
-              }
-              mAreas.addAll(getAreas(response.getRegions()));
-              mAdapter.setCurrentCheckedItem(getLastRegionIdPosition());
-              if (response.getNextPage() == null) {
-                mAdapter.setIsLoadable(false);
-              }
-            },
-            throwable -> {
-              mErrorHandler.handleError(throwable, this);
-            });
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .compose(RxUtils.applySchedulers())
+            .subscribe(
+                    response -> {
+                      if (page == 1) {
+                        mAdapter.reloadItems(getAreas(response.getRegions()));
+                      } else {
+                        mAdapter.addItems(getAreas(response.getRegions()));
+                      }
+                      mAreas.addAll(getAreas(response.getRegions()));
+                      mAdapter.setCurrentCheckedItem(getLastRegionIdPosition());
+                      if (response.getNextPage() == null) {
+                        mAdapter.setIsLoadable(false);
+                      }
+                    },
+                    throwable -> {
+                      mErrorHandler.handleError(throwable, this);
+                    });
   }
 
   @Override

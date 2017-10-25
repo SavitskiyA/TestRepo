@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.adapters.ItemListRecyclerAdapter;
+import com.ryj.adapters.ListRecyclerAdapter;
 import com.ryj.interfaces.OnHolderListener;
 import com.ryj.models.enums.Affairs;
 import com.ryj.models.filters.Filters;
@@ -27,9 +28,12 @@ import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/** Created by andrey on 9/20/17. */
+/**
+ * Created by andrey on 9/20/17.
+ */
 public class FiltersCategoryActivity extends BaseActivity implements OnHolderListener {
-  @Inject Filters mFilters;
+  @Inject
+  Filters mFilters;
 
   @BindView(R.id.categories)
   RecyclerView mCategories;
@@ -44,12 +48,12 @@ public class FiltersCategoryActivity extends BaseActivity implements OnHolderLis
   String[] mAffairsClient;
 
   private Affairs[] mAffairsServer = {
-    Affairs.ADMIN_VIOLATION,
-    Affairs.ADMINISTRATIVE,
-    Affairs.CIVIL,
-    Affairs.CRIMINAL,
-    Affairs.ECONOMIC,
-    Affairs.URGENT_LAWSUITS
+          Affairs.ADMIN_VIOLATION,
+          Affairs.ADMINISTRATIVE,
+          Affairs.CIVIL,
+          Affairs.CRIMINAL,
+          Affairs.ECONOMIC,
+          Affairs.URGENT_LAWSUITS
   };
 
   private ItemListRecyclerAdapter mAdapter;
@@ -85,8 +89,8 @@ public class FiltersCategoryActivity extends BaseActivity implements OnHolderLis
       mFilters.setAffairsBooleans(new boolean[mAffairsClient.length]);
     }
     mAdapter =
-        new ItemListRecyclerAdapter<String>(
-            this, this, Arrays.asList(mAffairsClient), mFilters.getAffairsBooleans());
+            new ItemListRecyclerAdapter<String>(
+                    this, this, Arrays.asList(mAffairsClient), mFilters.getAffairsBooleans());
     mCategories.setLayoutManager(new LinearLayoutManager(this));
     mCategories.setAdapter(mAdapter);
   }

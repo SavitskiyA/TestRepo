@@ -17,6 +17,8 @@ public interface Loadable<T> {
 
   void bindLoaderHolder(RecyclerView.ViewHolder viewHolder);
 
+  void bindLoadMoreHolder(RecyclerView.ViewHolder viewHolder, int position);
+
   void bindItemHolder(RecyclerView.ViewHolder viewHolder, int position);
 
   void setIsLoadable(boolean load);

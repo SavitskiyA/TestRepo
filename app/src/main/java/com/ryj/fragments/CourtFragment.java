@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.github.ornolfr.ratingview.RatingView;
 import com.ryj.R;
 import com.ryj.activities.BottomBarContainerActivity;
+import com.ryj.adapters.ListRecyclerAdapter;
 import com.ryj.adapters.LoadableListRecyclerAdapter;
 import com.ryj.interfaces.LoadListener;
 import com.ryj.interfaces.OnHolderListener;

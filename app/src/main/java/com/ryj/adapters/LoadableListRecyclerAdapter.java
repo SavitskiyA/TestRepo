@@ -13,6 +13,7 @@ import com.ryj.activities.filters.FiltersRegionActivity;
 import com.ryj.adapters.viewholders.AreaHolder;
 import com.ryj.adapters.viewholders.CourtHolder;
 import com.ryj.adapters.viewholders.JudgeHolder;
+import com.ryj.adapters.viewholders.LoadMoreViewHolder;
 import com.ryj.adapters.viewholders.LoaderViewHolder;
 import com.ryj.fragments.CourtFragment;
 import com.ryj.fragments.CourtsFragment;
@@ -28,9 +29,11 @@ import com.ryj.utils.StringUtils;
 
 import java.util.List;
 
-/** Created by andrey on 10/18/17. */
+/**
+ * Created by andrey on 10/18/17.
+ */
 public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
-    implements Loadable<T>, OnHolderListener {
+        implements Loadable<T>, OnHolderListener {
   private boolean mIsLoad;
   private int mCurrentChecked = -1;
   private LoadListener mLoadable;
@@ -38,16 +41,21 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
   private OnHolderListener mListener;
 
   public LoadableListRecyclerAdapter(
-      Context context, LoadListener loadListener, OnHolderListener holderListener) {
+          Context context, LoadListener loadListener, OnHolderListener holderListener) {
     mInflater = LayoutInflater.from(context);
     mLoadable = loadListener;
     mListener = holderListener;
+    if (mListener instanceof JudgesFragment) {
+      setAllCommentsButtonShown(true);
+    }
   }
 
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     if (viewType == VIEWTYPE_LOADER) {
       return new LoaderViewHolder(mInflater.inflate(R.layout.item_load, parent, false));
+    } else if (viewType == VIEWTYPE_LOAD_MORE) {
+      return new LoadMoreViewHolder(mInflater.inflate(R.layout.item_load_more_all_comments, parent, false), this);
     } else {
       return createHolder(parent);
     }
@@ -59,7 +67,7 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
     } else if (mListener instanceof CourtsFragment) {
       return new CourtHolder(mInflater.inflate(R.layout.item_courts_court, parent, false), this);
     } else if (mListener instanceof FiltersCityActivity
-        || mListener instanceof FiltersRegionActivity) {
+            || mListener instanceof FiltersRegionActivity) {
       return new AreaHolder(mInflater.inflate(R.layout.item_option, parent, false), this);
     } else {
       throw new RuntimeException("this is not an instance of necessary parent");
@@ -68,9 +76,13 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    loadMore(position);
+    if (!isAllCommentsButtonShown()) {
+      loadMore(position);
+    }
     if (holder instanceof LoaderViewHolder) {
       bindLoaderHolder(holder);
+    } else if (holder instanceof LoadMoreViewHolder) {
+      bindLoadMoreHolder(holder, position);
     } else {
       bindItemHolder(holder, position);
     }
@@ -149,7 +161,7 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
       holder.hideTextStub();
     } else {
       holder.setPlaceHolder(
-          DrawUtils.RESOURCES[StringUtils.getFullNameLength(judge) % DrawUtils.RESOURCES.length]);
+              DrawUtils.RESOURCES[StringUtils.getFullNameLength(judge) % DrawUtils.RESOURCES.length]);
       holder.showTextStub(StringUtils.getAbbrFromFullName(judge));
     }
   }
@@ -164,6 +176,12 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
       holder.setLoadSpinnerVisible(View.GONE);
       holder.stopAnimation();
     }
+  }
+
+  @Override
+  public void bindLoadMoreHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    LoadMoreViewHolder holder = (LoadMoreViewHolder) viewHolder;
+    holder.setTag(position);
   }
 
   @Override
@@ -193,10 +211,11 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
   public void onHolderClicked(boolean enable, int position) {
     if (mListener instanceof JudgesFragment || mListener instanceof CourtFragment) {
       onJudgeHolderClicked(enable, position);
+//      onLoadMoreHolderClicked(enable, position);
     } else if (mListener instanceof CourtsFragment) {
       onCourtHolderClicked(enable, position);
     } else if (mListener instanceof FiltersCityActivity
-        || mListener instanceof FiltersRegionActivity) {
+            || mListener instanceof FiltersRegionActivity) {
       onAreaHolderClicked(enable, position);
     } else {
       throw new RuntimeException("this is not an instance of necessary parent");
@@ -213,5 +232,12 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
     mListener.onHolderClicked(enable, position);
   }
 
-  private void onJudgeHolderClicked(boolean enable, int position) {}
+  private void onJudgeHolderClicked(boolean enable, int position) {
+
+  }
+
+  private void onLoadMoreHolderClicked(boolean enable, int position) {
+    setAllCommentsButtonShown(false);
+    mLoadable.load(mLoadable.increment());
+  }
 }

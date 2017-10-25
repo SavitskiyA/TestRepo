@@ -4,6 +4,7 @@
   <color name="colorPrimaryDark">#303F9F</color>
   <color name="colorAccent">#FF4081</color>
   <color name="colorBlueLight">#6ec1f8</color>
+  <color name="colorBlueLightSecond">#5eccfc</color>
   <color name="colorBlueLightTransp">#7F5eccfc</color>
   <color name="colorWhiteTransp">#29ffffff</color>
   <color name="colorDarkGradientStart">#8b94a3</color>
@@ -26,4 +27,5 @@
   <color name="colorGraySettings">#bbbbbb</color>
   <color name="colorGrayJudgesSeparatorUnderline">#f2f2f2</color>
   <color name="colorWhiteTransparentProgress">#b3ffffff</color>
+  <color name="colorWhiteTranspOne">#d9ffffff</color>
 </resources>

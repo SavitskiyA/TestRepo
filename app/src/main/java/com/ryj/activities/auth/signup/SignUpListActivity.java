@@ -14,6 +14,7 @@ import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.activities.auth.signup.judge.SignUpJudgeActivity;
 import com.ryj.adapters.ItemListRecyclerAdapter;
+import com.ryj.adapters.ListRecyclerAdapter;
 import com.ryj.interfaces.OnHolderListener;
 import com.ryj.models.filters.Items;
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.adapters.ItemListRecyclerAdapter;
+import com.ryj.adapters.ListRecyclerAdapter;
 import com.ryj.interfaces.OnHolderListener;
 import com.ryj.models.filters.Filters;
 
@@ -34,9 +35,12 @@ import static com.ryj.models.enums.Courts.LOCAL_ADMINISTRATIVE;
 import static com.ryj.models.enums.Courts.LOCAL_ECONOMIC;
 import static com.ryj.models.enums.Courts.SUPREME;
 
-/** Created by andrey on 9/29/17. */
+/**
+ * Created by andrey on 9/29/17.
+ */
 public class FiltersCourtTypeActivity extends BaseActivity implements OnHolderListener {
-  @Inject Filters mFilters;
+  @Inject
+  Filters mFilters;
 
   @BindView(R.id.recycler_view_list)
   RecyclerView mCourtTypes;
@@ -51,16 +55,16 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnHolderLi
   String[] mCourtTypesClient;
 
   private String[] mCourtTypesServer = {
-    SUPREME.toString(),
-    HIGHEST_CIVIL_CRIMINAL.toString(),
-    HIGHEST_ECONOMIC.toString(),
-    HIGHEST_ADMINISTRATIVE.toString(),
-    APPELLATE.toString(),
-    APPELLATE_ECONOMIC.toString(),
-    APPELLATE_ADMIN.toString(),
-    LOCAL.toString(),
-    LOCAL_ECONOMIC.toString(),
-    LOCAL_ADMINISTRATIVE.toString()
+          SUPREME.toString(),
+          HIGHEST_CIVIL_CRIMINAL.toString(),
+          HIGHEST_ECONOMIC.toString(),
+          HIGHEST_ADMINISTRATIVE.toString(),
+          APPELLATE.toString(),
+          APPELLATE_ECONOMIC.toString(),
+          APPELLATE_ADMIN.toString(),
+          LOCAL.toString(),
+          LOCAL_ECONOMIC.toString(),
+          LOCAL_ADMINISTRATIVE.toString()
   };
 
   private ItemListRecyclerAdapter<String> mAdapter;
@@ -84,8 +88,8 @@ public class FiltersCourtTypeActivity extends BaseActivity implements OnHolderLi
       mFilters.setCourtsBooleans(new boolean[mCourtTypesClient.length]);
     }
     mAdapter =
-        new ItemListRecyclerAdapter<String>(
-            this, this, Arrays.asList(mCourtTypesClient), mFilters.getCourtsBooleans());
+            new ItemListRecyclerAdapter<String>(
+                    this, this, Arrays.asList(mCourtTypesClient), mFilters.getCourtsBooleans());
     mCourtTypes.setLayoutManager(new LinearLayoutManager(this));
     mCourtTypes.setAdapter(mAdapter);
   }

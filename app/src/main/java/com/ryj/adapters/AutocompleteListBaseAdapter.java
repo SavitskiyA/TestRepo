@@ -102,6 +102,11 @@ public class AutocompleteListBaseAdapter extends ListBaseAdapter<Judge> implemen
   }
 
   @Override
+  public void bindLoadMoreHolder(RecyclerView.ViewHolder viewHolder, int position) {
+
+  }
+
+  @Override
   public void bindItemHolder(RecyclerView.ViewHolder viewHolder, int position) {
     AutoCompleteHolder holder = (AutoCompleteHolder) viewHolder;
     holder.setName(StringUtils.getFullName(mItems.get(position)));

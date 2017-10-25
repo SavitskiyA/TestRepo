@@ -93,4 +93,6 @@ dependencies {
   compile 'com.roughike:bottom-bar:2.3.1'
 
   compile 'com.github.ornolfr:rating-view:0.1.2@aar'
+
+  compile 'com.h6ah4i.android.materialshadowninepatch:materialshadowninepatch:0.6.5'
 }

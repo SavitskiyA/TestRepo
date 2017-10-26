@@ -28,4 +28,9 @@
   <color name="colorGrayJudgesSeparatorUnderline">#f2f2f2</color>
   <color name="colorWhiteTransparentProgress">#b3ffffff</color>
   <color name="colorWhiteTranspOne">#d9ffffff</color>
+  <color name="colorTextDarkOne">#d92a2c2c</color>
+  <color name="colorBackgroundDarkOne">#545a66</color>
+  <color name="colorBlueLightOne">#5ac0ed</color>
+  <color name="colorGreenLike">#30bf9e</color>
+  <color name="colorRedDislike">#fd6652</color>
 </resources>

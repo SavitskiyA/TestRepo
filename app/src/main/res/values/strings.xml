@@ -130,4 +130,6 @@
   <string name="text_marks_count">Marks</string>
   <string name="text_comments">Comments</string>
   <string name="text_all_comments">All comments</string>
+  <string name="text_estimate">estimate</string>
+  <string name="text_comment">comment</string>
 </resources>

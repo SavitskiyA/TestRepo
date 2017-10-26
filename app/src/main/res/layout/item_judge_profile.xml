@@ -4,7 +4,7 @@
              xmlns:fresce="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="300dp"
-             android:background="@drawable/bg_dark"
+             android:background="@drawable/bg_jp_b"
              app:layout_scrollFlags="scroll|enterAlways">
 
   <com.facebook.drawee.view.SimpleDraweeView
@@ -85,5 +85,20 @@
     android:layout_marginTop="12dp"
     android:src="@drawable/ic_edit"/>
 
+  <ImageView
+    android:id="@+id/back"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="12dp"
+    android:src="@drawable/ic_settings"/>
 
+  <ImageView
+    android:id="@+id/toFavourites"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="12dp"
+    android:src="@drawable/ic_edit"/>
 </FrameLayout>

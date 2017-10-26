@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:fresce="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+  <com.facebook.drawee.view.SimpleDraweeView
+    android:id="@+id/photo"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="24dp"
+    android:background="@drawable/gradient_judge_four"
+    fresce:roundAsCircle="true"/>
+
+  <TextView
+    android:id="@+id/text_stub"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="24dp"
+    android:gravity="center"
+    android:text="AD"
+    android:textAllCaps="true"
+    android:textColor="@android:color/background_light"
+    android:textSize="@dimen/size_bottom_text_20sp"/>
+
+
+  <TextView
+    android:id="@+id/fullname"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="100dp"
+    android:layout_marginStart="100dp"
+    android:layout_marginTop="24dp"
+    android:fontFamily="sans-serif-medium"
+    android:letterSpacing="0.03"
+    android:lines="2"
+    android:text="Петро Кіт Петро Кіт Петро Кіт Петро Кіт Петро Кіт"
+    android:textColor="@color/colorBlackText"
+    android:textSize="@dimen/size_text_16sp"
+    android:textStyle="normal"/>
+
+  <TextView
+    android:id="@+id/date"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_marginEnd="20dp"
+    android:layout_marginTop="25dp"
+    android:fontFamily="sans-serif"
+    android:text="24 бер 2014"
+    android:textColor="@color/colorBlackTextTranspGray"
+    android:textSize="12sp"
+    android:textStyle="normal"
+    />
+
+  <TextView
+    android:id="@+id/body"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/fullname"
+    android:layout_marginEnd="20dp"
+    android:layout_marginStart="100dp"
+    android:layout_marginTop="6dp"
+    android:fontFamily="sans-serif"
+    android:letterSpacing="0.03"
+    android:maxLines="5"
+    android:text="Чудовий хлопчина, невимовно радий знайомству і можливості працювати разом."
+    android:textColor="@color/colorBlackTextTranspGray"
+    android:textStyle="normal"/>
+
+  <ImageView
+    android:id="@+id/like"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/body"
+    android:layout_below="@+id/body"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/selector_like"/>
+
+  <ImageView
+    android:id="@+id/dislike"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/like"
+    android:layout_below="@+id/body"
+    android:layout_marginStart="100dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/selector_dislike"/>
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/like"
+    android:layout_below="@+id/body"
+    android:layout_marginStart="40dp"
+    android:layout_marginTop="15dp"
+    android:fontFamily="sans-serif"
+    android:gravity="center_horizontal"
+    android:text="13"
+    android:textColor="@color/colorGreenLike"
+    android:textSize="@dimen/size_text_16sp"
+    android:textStyle="normal"/>
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/dislike"
+    android:layout_below="@+id/body"
+    android:layout_marginStart="40dp"
+    android:layout_marginTop="15dp"
+    android:fontFamily="sans-serif"
+    android:gravity="center_horizontal"
+    android:text="3"
+    android:textColor="@color/colorRedDislike"
+    android:textSize="@dimen/size_text_16sp"
+    android:textStyle="normal"/>
+
+  <ImageView
+    android:id="@+id/complain"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_below="@+id/body"
+    android:layout_marginEnd="20dp"
+    android:layout_marginTop="15dp"
+    android:background="@drawable/ic_flag_complain"/>
+</RelativeLayout>

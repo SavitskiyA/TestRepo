@@ -39,12 +39,17 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 
-/** Created by andrey on 7/7/17. */
+/**
+ * Created by andrey on 7/7/17.
+ */
 public class SignInActivity extends BaseActivity {
   private static final String TAG = "SignInActivity";
-  @Inject Prefs mPrefs;
-  @Inject Api mApi;
-  @Inject ErrorHandler mErrorHandler;
+  @Inject
+  Prefs mPrefs;
+  @Inject
+  Api mApi;
+  @Inject
+  ErrorHandler mErrorHandler;
 
   @BindView(R.id.image)
   ImageView mImage;
@@ -133,15 +138,15 @@ public class SignInActivity extends BaseActivity {
   }
 
   @OnClick({
-    R.id.sign_in,
-    R.id.forgot_password,
-    R.id.sign_up,
-    R.id.img_judges,
-    R.id.img_analytics,
-    R.id.img_news,
-    R.id.txt_news,
-    R.id.txt_analytics,
-    R.id.txt_judges
+          R.id.sign_in,
+          R.id.forgot_password,
+          R.id.sign_up,
+          R.id.img_judges,
+          R.id.img_analytics,
+          R.id.img_news,
+          R.id.txt_news,
+          R.id.txt_analytics,
+          R.id.txt_judges
   })
   public void onClick(View view) {
     switch (view.getId()) {
@@ -217,26 +222,27 @@ public class SignInActivity extends BaseActivity {
     validateFields();
     if (isAllFieldsValid()) {
       executeSignInRequest(
-          mEmail.getText().toString().trim(), mPassword.getText().toString().trim());
+              mEmail.getText().toString().trim(), mPassword.getText().toString().trim());
     }
   }
 
   private void executeSignInRequest(String email, String password) {
     mApi.signIn(email, password, Constants.PLATFORM, null)
-        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .compose(RxUtils.applySchedulers())
-        .compose(
-            RxUtils.applyBeforeAndAfter(
-                (disposable) ->
-                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
-                () -> mSpinnerDialog.dismiss()))
-        .subscribe(
-            response -> {
-              BottomBarContainerActivity.start(this);
-            },
-            throwable -> {
-              mErrorHandler.handleError(throwable, this);
-            });
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .compose(RxUtils.applySchedulers())
+            .compose(
+                    RxUtils.applyBeforeAndAfter(
+                            (disposable) ->
+                                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
+                            () -> mSpinnerDialog.dismiss()))
+            .subscribe(
+                    response -> {
+                      mPrefs.setCurrentUserId(response.getId());
+                      BottomBarContainerActivity.start(this);
+                    },
+                    throwable -> {
+                      mErrorHandler.handleError(throwable, this);
+                    });
   }
 
   @Nullable

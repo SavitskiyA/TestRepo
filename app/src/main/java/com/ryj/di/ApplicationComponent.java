@@ -6,6 +6,7 @@ import com.ryj.activities.auth.MainActivity;
 import com.ryj.activities.auth.PasswordRecoveryActivity;
 import com.ryj.activities.auth.SplashActivity;
 import com.ryj.activities.auth.signin.SignInActivity;
+import com.ryj.activities.auth.signup.SignUpListActivity;
 import com.ryj.activities.auth.signup.citizen.SignUpCitizenActivity;
 import com.ryj.activities.auth.signup.judge.SignUpJudgeActivity;
 import com.ryj.activities.auth.signup.judge.SignUpJudgeAutocompleteActivity;
@@ -17,8 +18,12 @@ import com.ryj.activities.filters.FiltersCategoryActivity;
 import com.ryj.activities.filters.FiltersCityActivity;
 import com.ryj.activities.filters.FiltersCourtTypeActivity;
 import com.ryj.activities.filters.FiltersRegionActivity;
+import com.ryj.activities.settings.EditProfileJudgeActivity;
+import com.ryj.activities.settings.EditProfileLawyerActivity;
+import com.ryj.activities.settings.SettingsActivity;
 import com.ryj.fragments.CourtFragment;
 import com.ryj.fragments.CourtsFragment;
+import com.ryj.fragments.JudgeFragment;
 import com.ryj.fragments.JudgesFragment;
 
 import dagger.Component;
@@ -46,6 +51,8 @@ public interface ApplicationComponent {
 
   void inject(SignUpCitizenActivity activity);
 
+  void inject(SignUpListActivity activity);
+
   void inject(SignUpJudgeAutocompleteActivity activity);
 
   void inject(BottomBarContainerActivity activity);
@@ -60,9 +67,17 @@ public interface ApplicationComponent {
 
   void inject(FiltersCourtTypeActivity activity);
 
+  void inject(SettingsActivity activity);
+
+  void inject(EditProfileJudgeActivity activity);
+
+  void inject(EditProfileLawyerActivity activity);
+
   void inject(JudgesFragment fragment);
 
   void inject(CourtsFragment fragment);
 
   void inject(CourtFragment fragment);
+
+  void inject(JudgeFragment fragment);
 }

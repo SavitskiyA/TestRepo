@@ -2,24 +2,24 @@ package com.ryj.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.ryj.R;
 import com.ryj.activities.BottomBarContainerActivity;
-import com.ryj.adapters.LoadableListRecyclerAdapter;
 import com.ryj.interfaces.LoadListener;
 import com.ryj.interfaces.OnHolderListener;
+import com.ryj.models.enums.UserType;
+import com.ryj.storage.prefs.Prefs;
 import com.ryj.utils.handlers.ErrorHandler;
 import com.ryj.web.Api;
-
-import org.w3c.dom.Comment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -32,15 +32,22 @@ import butterknife.ButterKnife;
 
 public class JudgeFragment extends BaseFragment implements LoadListener, OnHolderListener {
   public static final String TAG = "JudgeFragment";
-  private static final String EXTRA_PRIVATE_SETTINGS = "private_settings";
   private static final String EXTRA_JUDGE_ID = "judge_id";
-  private static final String EXTRA_JUDGE_FIRST_NAME = "judge_first_name";
-  private static final String EXTRA_JUDGE_LAST_NAME = "judge_last_name";
-  private static final String EXTRA_COURT = "court";
   @Inject
   Api mApi;
   @Inject
   ErrorHandler mErrorHandler;
+  @Inject
+  Prefs mPrefs;
+
+  @BindView(R.id.photo)
+  SimpleDraweeView mPhoto;
+
+  @BindView(R.id.abbr)
+  TextView mAbbr;
+
+  @BindView(R.id.back)
+  ImageView mBack;
 
   @BindView(R.id.settings)
   ImageView mSettings;
@@ -48,27 +55,43 @@ public class JudgeFragment extends BaseFragment implements LoadListener, OnHolde
   @BindView(R.id.edit)
   ImageView mEdit;
 
-  public static CourtFragment newInstance(
-          int judgeId, String courtName, int courtMarksCount, float courtRating) {
-    Bundle bundle = new Bundle();
+  @BindView(R.id.favourites)
+  ImageView mFavourites;
 
-    CourtFragment instance = new CourtFragment();
+  @BindView(R.id.comments_count)
+  TextView mCommentsCount;
+
+  @BindView(R.id.marks_count)
+  TextView mMarksCount;
+
+  @BindView(R.id.comment)
+  Button mComment;
+
+  @BindView(R.id.estimate)
+  Button mEstimate;
+
+  @BindView(R.id.frame_buttons)
+  LinearLayout mButtons;
+
+  @BindView(R.id.marks_recycler_view)
+  RecyclerView mMarks;
+
+  @BindView(R.id.comments_recycler_view)
+  RecyclerView mComments;
+
+  public static JudgeFragment newInstance(int judgeId) {
+    Bundle bundle = new Bundle();
+    bundle.putInt(EXTRA_JUDGE_ID, judgeId);
+    JudgeFragment instance = new JudgeFragment();
     instance.setArguments(bundle);
     return instance;
   }
 
 
-  private LoadableListRecyclerAdapter mAdapter;
-  private int mJudgeId;
-//  private List<Mark> mMarkList = new ArrayList<>();
-  private List<Comment> mCommentList = new ArrayList<>();
-  private int mPage = 1;
-
-
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-//    getComponent().inject(this);
+    getComponent().inject(this);
   }
 
   @Nullable
@@ -77,13 +100,32 @@ public class JudgeFragment extends BaseFragment implements LoadListener, OnHolde
           LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_judge, container, false);
     ButterKnife.bind(this, view);
-    mAdapter = new LoadableListRecyclerAdapter(inflater.getContext(), this, this);
-    setView(getArguments());
-    reset();
+    configProfileIcons(getArguments().getInt(EXTRA_JUDGE_ID), mPrefs.getCurrentUserId(), mPrefs.getUserType());
     return view;
   }
 
-  private void setView(Bundle arguments) {
+  private void configProfileIcons(int judgeId, int currentId, UserType type) {
+    if (judgeId == currentId) {
+      mBack.setVisibility(View.GONE);
+      mSettings.setVisibility(View.VISIBLE);
+      mEdit.setVisibility(View.VISIBLE);
+      mFavourites.setVisibility(View.GONE);
+      mButtons.setVisibility(View.GONE);
+      return;
+    }
+    if (type == UserType.LAWYER) {
+      mBack.setVisibility(View.VISIBLE);
+      mSettings.setVisibility(View.GONE);
+      mEdit.setVisibility(View.GONE);
+      mFavourites.setVisibility(View.VISIBLE);
+      mButtons.setVisibility(View.VISIBLE);
+      return;
+    }
+    mButtons.setVisibility(View.GONE);
+    mBack.setVisibility(View.VISIBLE);
+    mSettings.setVisibility(View.GONE);
+    mEdit.setVisibility(View.GONE);
+    mFavourites.setVisibility(View.GONE);
   }
 
   @Override

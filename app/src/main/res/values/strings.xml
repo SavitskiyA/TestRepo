@@ -132,4 +132,11 @@
   <string name="text_all_comments">All comments</string>
   <string name="text_estimate">estimate</string>
   <string name="text_comment">comment</string>
+  <string name="text_message_to_email">Message to e-mail</string>
+  <string name="text_edit_user_data">Edit user data</string>
+  <string name="text_change_password">Change password</string>
+  <string name="text_contact_us">Contact us</string>
+  <string name="text_about">About</string>
+  <string name="text_log_out">Log out</string>
+  <string name="text_your_profile">Your profile</string>
 </resources>

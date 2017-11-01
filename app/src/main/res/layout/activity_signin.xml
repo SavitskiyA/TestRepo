@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@drawable/bg_dark">
@@ -43,11 +44,11 @@
 
           <EditText
             android:id="@+id/email"
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_email"
-            android:inputType="textEmailAddress"
-            style="@style/EditTextStyle"/>
+            android:inputType="textEmailAddress"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -62,37 +63,56 @@
 
           <EditText
             android:id="@+id/password"
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_password"
-            android:inputType="textPassword"
-            style="@style/EditTextStyle"/>
+            android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
       </LinearLayout>
 
 
-      <ImageButton
-        android:id="@+id/sign_in"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+      <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/ripple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:background="@drawable/selector_signin"
-        android:src="@drawable/ic_arrow">
-      </ImageButton>
+        app:mrl_rippleAlpha="0.1"
+        app:mrl_rippleColor="@android:color/black"
+        app:mrl_rippleOverlay="true"
+        app:mrl_rippleRoundedCorners="40dp">
+
+        <ImageButton
+          android:id="@+id/sign_in"
+          android:layout_width="64dp"
+          android:layout_height="64dp"
+          android:background="@drawable/sign_in_shape_button_layer_list"
+          android:src="@drawable/ic_arrow">
+        </ImageButton>
+      </com.balysv.materialripple.MaterialRippleLayout>
     </FrameLayout>
 
-    <TextView
-      android:id="@+id/forgot_password"
+    <com.balysv.materialripple.MaterialRippleLayout
+
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_marginBottom="10dp"
       android:layout_marginTop="14dp"
-      android:alpha="0.5"
-      android:text="@string/text_forgot_password"
-      android:textColor="@android:color/background_light"
-      android:textSize="@dimen/size_text_16sp"/>
+      app:mrl_rippleAlpha="0.1"
+      app:mrl_rippleColor="@android:color/black"
+      app:mrl_rippleOverlay="true"
+      app:mrl_rippleRoundedCorners="40dp">
 
+      <TextView
+        android:id="@+id/forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
+        android:text="@string/text_forgot_password"
+        android:textColor="@android:color/background_light"
+        android:textSize="@dimen/size_text_16sp"/>
+    </com.balysv.materialripple.MaterialRippleLayout>
   </LinearLayout>
 
   <LinearLayout
@@ -186,15 +206,23 @@
 
   </LinearLayout>
 
-  <Button
-    android:id="@+id/sign_up"
-    style="?android:borderlessButtonStyle"
+  <com.balysv.materialripple.MaterialRippleLayout
     android:layout_width="match_parent"
-    android:layout_height="@dimen/size_height_button"
+    android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="@color/colorBlueLightSecond"
-    android:letterSpacing="0.5"
-    android:text="@string/text_sign_up"
-    android:textColor="@android:color/background_light"
-    android:textSize="@dimen/size_text_14sp"/>
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true">
+
+    <Button
+      android:id="@+id/sign_up"
+      style="?android:borderlessButtonStyle"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_height_button"
+      android:background="@color/colorBlueLight"
+      android:letterSpacing="0.5"
+      android:text="@string/text_sign_up"
+      android:textColor="@android:color/background_light"
+      android:textSize="@dimen/size_text_14sp"/>
+  </com.balysv.materialripple.MaterialRippleLayout>
 </FrameLayout>

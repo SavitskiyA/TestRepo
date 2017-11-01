@@ -3,7 +3,11 @@ package com.ryj.models.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/** Created by andrey on 8/17/17. */
+import java.util.List;
+
+/**
+ * Created by andrey on 8/17/17.
+ */
 public class Court {
 
   @SerializedName("title")
@@ -21,6 +25,18 @@ public class Court {
   @SerializedName("kind")
   @Expose
   private String mKind;
+
+  @SerializedName("avg_rating")
+  @Expose
+  private Float mAvgRating;
+
+  @SerializedName("judges")
+  @Expose
+  private List<Judge> mJudges;
+
+  @SerializedName("ratings_count")
+  @Expose
+  private Integer mRatingCount;
 
   public String getTitle() {
     return mTitle;
@@ -52,5 +68,29 @@ public class Court {
 
   public void setKind(String kind) {
     this.mKind = kind;
+  }
+
+  public Float getAvgRating() {
+    return mAvgRating;
+  }
+
+  public void setAvgRating(Float avgRating) {
+    this.mAvgRating = avgRating;
+  }
+
+  public List<Judge> getJudges() {
+    return mJudges;
+  }
+
+  public void setJudges(List<Judge> judges) {
+    this.mJudges = judges;
+  }
+
+  public Integer getRatingCount() {
+    return mRatingCount;
+  }
+
+  public void setRatingCount(Integer ratingCount) {
+    this.mRatingCount = ratingCount;
   }
 }

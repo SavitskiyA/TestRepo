@@ -21,12 +21,15 @@ import com.ryj.interfaces.OnHolderListener;
 import com.ryj.models.enums.Direction;
 import com.ryj.models.enums.Sort;
 import com.ryj.models.filters.Filters;
+import com.ryj.models.response.Judge;
 import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.handlers.ErrorHandler;
 import com.ryj.web.Api;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -86,6 +89,7 @@ public class JudgesFragment extends BaseFragment implements LoadListener, OnHold
   private LoadableListRecyclerAdapter mAdapter;
   private boolean mIsSort;
   private int mPage = 1;
+  private List<Judge> mJudgeList = new ArrayList<>();
 
   public static JudgesFragment newInstance(int parent) {
     Bundle bundle = new Bundle();
@@ -210,8 +214,11 @@ public class JudgesFragment extends BaseFragment implements LoadListener, OnHold
                         mFoundCount.setText(StringUtils.ZERO);
                       }
                       if (page == 1) {
+                        mJudgeList.clear();
+                        mJudgeList.addAll(response.getObjects());
                         mAdapter.reloadItems(response.getObjects());
                       } else {
+                        mJudgeList.addAll(response.getObjects());
                         mAdapter.addItems(response.getObjects());
                       }
                       if (mSearch.length() > 0) {
@@ -246,5 +253,12 @@ public class JudgesFragment extends BaseFragment implements LoadListener, OnHold
 
   @Override
   public void onHolderClicked(boolean enable, int position) {
+    Judge judge = mJudgeList.get(position);
+    replaceFragment(
+            JudgeFragment.newInstance(judge.getId()),
+            R.id.container,
+            true,
+            false,
+            CourtFragment.TAG);
   }
 }

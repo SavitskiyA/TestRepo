@@ -45,9 +45,9 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
     mInflater = LayoutInflater.from(context);
     mLoadable = loadListener;
     mListener = holderListener;
-    if (mListener instanceof JudgesFragment) {
-      setAllCommentsButtonShown(true);
-    }
+//    if (mListener instanceof JudgesFragment) {
+//      setAllCommentsButtonShown(true);
+//    }
   }
 
   @Override
@@ -63,7 +63,7 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
 
   private RecyclerView.ViewHolder createHolder(ViewGroup parent) {
     if (mListener instanceof JudgesFragment || mListener instanceof CourtFragment) {
-      return new JudgeHolder(mInflater.inflate(R.layout.item_judges_judge, parent, false));
+      return new JudgeHolder(mInflater.inflate(R.layout.item_judges_judge, parent, false), this);
     } else if (mListener instanceof CourtsFragment) {
       return new CourtHolder(mInflater.inflate(R.layout.item_courts_court, parent, false), this);
     } else if (mListener instanceof FiltersCityActivity
@@ -134,6 +134,7 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
   private void bindJudgeHolder(RecyclerView.ViewHolder viewHolder, int position) {
     JudgeHolder holder = (JudgeHolder) viewHolder;
     Judge judge = (Judge) mItems.get(position);
+    holder.setTag(position);
     holder.setName(StringUtils.getFullName(judge));
     if (judge.getCourt().getName() != null) {
       holder.setCourt(String.valueOf(judge.getCourt().getName()));
@@ -211,7 +212,6 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
   public void onHolderClicked(boolean enable, int position) {
     if (mListener instanceof JudgesFragment || mListener instanceof CourtFragment) {
       onJudgeHolderClicked(enable, position);
-//      onLoadMoreHolderClicked(enable, position);
     } else if (mListener instanceof CourtsFragment) {
       onCourtHolderClicked(enable, position);
     } else if (mListener instanceof FiltersCityActivity
@@ -233,7 +233,7 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
   }
 
   private void onJudgeHolderClicked(boolean enable, int position) {
-
+    mListener.onHolderClicked(enable, position);
   }
 
   private void onLoadMoreHolderClicked(boolean enable, int position) {

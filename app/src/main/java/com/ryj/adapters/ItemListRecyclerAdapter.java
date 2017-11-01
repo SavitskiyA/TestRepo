@@ -1,6 +1,7 @@
 package com.ryj.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -11,8 +12,13 @@ import com.ryj.activities.filters.FiltersCategoryActivity;
 import com.ryj.activities.filters.FiltersCourtTypeActivity;
 import com.ryj.adapters.viewholders.CategoryHolder;
 import com.ryj.adapters.viewholders.CourtTypeHolder;
+import com.ryj.adapters.viewholders.JudgeHolder;
 import com.ryj.adapters.viewholders.SignUpItemHolder;
+import com.ryj.fragments.CourtFragment;
 import com.ryj.interfaces.OnHolderListener;
+import com.ryj.models.response.Judge;
+import com.ryj.utils.DrawUtils;
+import com.ryj.utils.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +44,14 @@ public class ItemListRecyclerAdapter<T> extends ListRecyclerAdapter<T> implement
     this.mItemsSelected = itemsSelected;
   }
 
+  public ItemListRecyclerAdapter(
+          Context context,
+          OnHolderListener listener
+  ) {
+    this.mInflater = LayoutInflater.from(context);
+    this.mListener = listener;
+  }
+
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     if (mListener instanceof SignUpListActivity) {
@@ -46,6 +60,8 @@ public class ItemListRecyclerAdapter<T> extends ListRecyclerAdapter<T> implement
       return new CategoryHolder(mInflater.inflate(R.layout.item_signup_list, parent, false), this);
     } else if (mListener instanceof FiltersCourtTypeActivity) {
       return new CourtTypeHolder(mInflater.inflate(R.layout.item_option, parent, false), this);
+    } else if (mListener instanceof CourtFragment) {
+      return new JudgeHolder(mInflater.inflate(R.layout.item_judges_judge, parent, false), this);
     } else {
       throw new RuntimeException("this is not an instance of necessary parent");
     }
@@ -55,11 +71,13 @@ public class ItemListRecyclerAdapter<T> extends ListRecyclerAdapter<T> implement
   public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
     if (holder instanceof SignUpItemHolder) {
       bindSignUpItemHolder((SignUpItemHolder) holder, position);
-      mListener.onHolderClicked(mItemsSelected[position], 0);
+      mListener.onHolderClicked(mItemsSelected[position], position);
     } else if (holder instanceof CategoryHolder) {
       bindCategoryHolder((CategoryHolder) holder, position);
     } else if (holder instanceof CourtTypeHolder) {
       bindCourtTypeHolder((CourtTypeHolder) holder, position);
+    } else if (holder instanceof JudgeHolder) {
+      bindJudgeHolder(holder, position);
     } else {
       throw new RuntimeException("this is not an instance of necessary parent");
     }
@@ -86,6 +104,41 @@ public class ItemListRecyclerAdapter<T> extends ListRecyclerAdapter<T> implement
     holder.setChecked(mItemsSelected[position]);
   }
 
+  private void bindJudgeHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    JudgeHolder holder = (JudgeHolder) viewHolder;
+    Judge judge = (Judge) mItems.get(position);
+    holder.setTag(position);
+    holder.setName(StringUtils.getFullName(judge));
+    if (judge.getCourt() != null && judge.getCourt().getName() != null) {
+      holder.setCourt(String.valueOf(judge.getCourt().getName()));
+    } else {
+      holder.setCourt(StringUtils.EMPTY_STRING);
+    }
+    if (judge.getCommentsCount() != null) {
+      holder.setCommentsCount(String.valueOf(judge.getCommentsCount()));
+    } else {
+      holder.setCommentsCount(StringUtils.ZERO);
+    }
+    if (judge.getRating() != null) {
+      holder.setRating(judge.getRating() / 2);
+    } else {
+      holder.setRating(0f);
+    }
+    if (judge.getRatingCount() != null) {
+      holder.setMarksCount(String.valueOf(judge.getRatingCount()));
+    } else {
+      holder.setMarksCount(StringUtils.ZERO);
+    }
+
+    if (judge.getAvatar().getOrigin() != null) {
+      holder.setPhoto(Uri.parse(judge.getAvatar().getOrigin()));
+      holder.hideTextStub();
+    } else {
+      holder.setPlaceHolder(
+              DrawUtils.RESOURCES[StringUtils.getFullNameLength(judge) % DrawUtils.RESOURCES.length]);
+      holder.showTextStub(StringUtils.getAbbrFromFullName(judge));
+    }
+  }
 
   @Override
   public void onHolderClicked(boolean enable, int position) {
@@ -102,5 +155,10 @@ public class ItemListRecyclerAdapter<T> extends ListRecyclerAdapter<T> implement
   @Override
   public int getItemCount() {
     return mItems.size();
+  }
+
+  public void addItems(List<T> items) {
+    mItems.addAll(items);
+    notifyDataSetChanged();
   }
 }

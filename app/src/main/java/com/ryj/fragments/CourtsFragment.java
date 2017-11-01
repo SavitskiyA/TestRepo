@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.ryj.R;
 import com.ryj.activities.BottomBarContainerActivity;
-import com.ryj.adapters.ListRecyclerAdapter;
 import com.ryj.adapters.LoadableListRecyclerAdapter;
 import com.ryj.interfaces.LoadListener;
 import com.ryj.interfaces.OnHolderListener;
@@ -183,10 +182,10 @@ public class CourtsFragment extends BaseFragment implements LoadListener, OnHold
                       if (page == 1) {
                         mCourtList.clear();
                         mCourtList.addAll(response.getObjects());
-                        mAdapter.reloadItems(mCourtList);
+                        mAdapter.reloadItems(response.getObjects());
                       } else {
                         mCourtList.addAll(response.getObjects());
-                        mAdapter.addItems(mCourtList);
+                        mAdapter.addItems(response.getObjects());
                       }
                       if (mSearch.length() > 0) {
                         mFrameFoundCount.setVisibility(View.VISIBLE);

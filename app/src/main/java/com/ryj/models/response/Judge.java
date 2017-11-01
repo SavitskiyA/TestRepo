@@ -29,7 +29,7 @@ public class Judge {
   @Expose
   private Float mRating;
 
-  @SerializedName("rating_marks_count")
+  @SerializedName("ratings_count")
   @Expose
   private Integer mRatingCount;
 

@@ -9,15 +9,16 @@ import android.widget.Button;
 
 import com.ryj.R;
 import com.ryj.activities.BottomBarContainerActivity;
-import com.ryj.models.events.SignOutEvent;
-import com.ryj.rx.RxBus;
+import com.ryj.activities.settings.SettingsActivity;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/** Created by andrey on 8/24/17. */
+/**
+ * Created by andrey on 8/24/17.
+ */
 public class AnalyticsFragment extends BaseFragment {
   public static final String TAG = "AnalyticsFragment";
 
@@ -34,7 +35,7 @@ public class AnalyticsFragment extends BaseFragment {
   @Nullable
   @Override
   public View onCreateView(
-      LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+          LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_analytics, container, false);
     ButterKnife.bind(this, view);
     return view;
@@ -55,7 +56,7 @@ public class AnalyticsFragment extends BaseFragment {
   }
 
   @OnClick(R.id.logout)
-  public void logOut() {
-    RxBus.postEvent(new SignOutEvent());
+  public void onClick() {
+    SettingsActivity.start(this.getActivity());
   }
 }

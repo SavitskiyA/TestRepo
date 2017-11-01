@@ -1,21 +1,19 @@
 package com.ryj.storage.prefs;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 
 import com.ryj.Constants;
-import com.ryj.activities.BottomBarContainerActivity;
-import com.ryj.activities.auth.TutorialActivity;
-import com.ryj.activities.auth.signin.SignInActivity;
 import com.ryj.models.enums.UserType;
 
 public class PrefsImpl implements Prefs {
 
   public static final String KEY_IS_TUTORIAL_FIRST_LAUNCH =
-      Constants.PACKAGE_NAME + ".IS_FIRST_LAUNCH";
+          Constants.PACKAGE_NAME + ".IS_FIRST_LAUNCH";
   public static final String KEY_SESSION_TOKEN = Constants.PACKAGE_NAME + ".SESSION_TOKEN";
   public static final String KEY_USERTYPE = Constants.PACKAGE_NAME + ".USERTYPE";
+  public static final String KEY_USER_ID = Constants.PACKAGE_NAME + ".USER_ID";
+  public static final String KEY_MESSAGE_TO_EMAIL = Constants.PACKAGE_NAME + ".MESSAGE_TO_EMAIL";
 
   private SharedPreferences mSharedPreferences;
 
@@ -83,5 +81,27 @@ public class PrefsImpl implements Prefs {
   @Override
   public void setUserType(@Nullable UserType userType) {
     mSharedPreferences.edit().putInt(KEY_USERTYPE, userType.ordinal()).apply();
+  }
+
+  @Nullable
+  @Override
+  public Integer getCurrentUserId() {
+    return mSharedPreferences.getInt(KEY_USER_ID, 0);
+  }
+
+  @Override
+  public void setCurrentUserId(Integer id) {
+    saveInt(KEY_USER_ID, id == null ? 0 : id);
+  }
+
+  @Nullable
+  @Override
+  public boolean getIsMessageToEmail() {
+    return mSharedPreferences.getBoolean(KEY_MESSAGE_TO_EMAIL, true);
+  }
+
+  @Override
+  public void setIsMessageToEmail(boolean isActive) {
+    saveBoolean(KEY_MESSAGE_TO_EMAIL, isActive);
   }
 }

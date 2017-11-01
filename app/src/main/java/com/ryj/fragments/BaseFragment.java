@@ -9,6 +9,7 @@ import com.ryj.App;
 import com.ryj.activities.BaseActivity;
 import com.ryj.activities.SwitchActivity;
 import com.ryj.di.ApplicationComponent;
+import com.ryj.dialogs.SpinnerDialog;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.ButterKnife;
@@ -72,5 +73,9 @@ public abstract class BaseFragment extends RxFragment {
 
   protected void setCurrentFragmentTag(String tag) {
     getSwitchActivity().setCurrentFragmentTag(tag);
+  }
+
+  protected SpinnerDialog getSpinnerDialog() {
+    return getBaseActivity().getSpinnerDialog();
   }
 }

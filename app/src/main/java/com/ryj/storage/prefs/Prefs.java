@@ -20,4 +20,14 @@ public interface Prefs {
   UserType getUserType();
 
   void setUserType(@Nullable UserType userType);
+
+  @Nullable
+  Integer getCurrentUserId();
+
+  void setCurrentUserId(Integer id);
+
+  @Nullable
+  boolean getIsMessageToEmail();
+
+  void setIsMessageToEmail(boolean isActive);
 }

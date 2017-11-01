@@ -8,11 +8,15 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.ornolfr.ratingview.RatingView;
 import com.ryj.R;
+import com.ryj.interfaces.OnHolderListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-/** Created by andrey on 9/5/17. */
+/**
+ * Created by andrey on 9/5/17.
+ */
 public class JudgeHolder extends RecyclerView.ViewHolder {
 
   @BindView(R.id.photo)
@@ -33,12 +37,15 @@ public class JudgeHolder extends RecyclerView.ViewHolder {
   @BindView(R.id.comments_count)
   TextView mCommentsCount;
 
-  @BindView(R.id.text_stub)
+  @BindView(R.id.abbr)
   TextView mTextStub;
 
-  public JudgeHolder(View itemView) {
+  private OnHolderListener mListener;
+
+  public JudgeHolder(View itemView, OnHolderListener listener) {
     super(itemView);
     ButterKnife.bind(this, itemView);
+    mListener = listener;
   }
 
   public void setPlaceHolder(int resource) {
@@ -76,5 +83,14 @@ public class JudgeHolder extends RecyclerView.ViewHolder {
 
   public void hideTextStub() {
     mTextStub.setVisibility(View.GONE);
+  }
+
+  public void setTag(int tag) {
+    mName.setTag(tag);
+  }
+
+  @OnClick(R.id.frame_judge)
+  void onClick() {
+    mListener.onHolderClicked(false, (Integer) mName.getTag());
   }
 }

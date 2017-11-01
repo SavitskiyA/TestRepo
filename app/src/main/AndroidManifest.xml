@@ -127,6 +127,23 @@
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
+      android:name=".activities.settings.SettingsActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
+    <activity
+      android:name=".activities.settings.EditProfileJudgeActivity"
+      android:configChanges="orientation|keyboardHidden|screenSize"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
+    <activity
+      android:name=".activities.settings.EditProfileLawyerActivity"
+      android:configChanges="orientation|keyboardHidden|screenSize"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
+    <activity
       android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"

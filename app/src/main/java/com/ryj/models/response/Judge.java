@@ -41,6 +41,10 @@ public class Judge {
   @Expose
   private Integer mAccessStatus;
 
+  @SerializedName("avg_detail_ratings")
+  @Expose
+  private DetailRatings avgDetailRatings;
+
   public Integer getId() {
     return mId;
   }

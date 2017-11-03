@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.ryj.models.enums.Direction;
 import com.ryj.models.enums.Sort;
 import com.ryj.models.filters.Filters;
 import com.ryj.models.response.Judge;
+import com.ryj.storage.prefs.Prefs;
 import com.ryj.utils.RxUtils;
 import com.ryj.utils.StringUtils;
 import com.ryj.utils.handlers.ErrorHandler;
@@ -55,6 +57,8 @@ public class JudgesFragment extends BaseFragment implements LoadListener, OnHold
   ErrorHandler mErrorHandler;
   @Inject
   Filters mFilters;
+  @Inject
+  Prefs mPrefs;
 
   @BindString(R.string.text_judges)
   String mTitleJudges;
@@ -194,6 +198,7 @@ public class JudgesFragment extends BaseFragment implements LoadListener, OnHold
 
   @Override
   public void load(int page) {
+    Log.d("Session-token", mPrefs.getSessionToken());
     mApi.getJudges(
             mSearch.getText().toString(),
             mFilters.getCourtId(),

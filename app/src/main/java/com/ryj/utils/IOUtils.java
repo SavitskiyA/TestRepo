@@ -6,9 +6,12 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 import com.ryj.Constants;
 import com.ryj.models.Reflectable;
+import com.ryj.models.response.DetailRatings;
+import com.ryj.models.response.Mark;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,5 +84,25 @@ public class IOUtils {
                     MediaType.parse(Constants.MULTIPART_FORM_DATA), file);
 
     return MultipartBody.Part.createFormData(file.getName(), file.getName(), requestFile);
+  }
+
+  public static List<Mark> getListOfMarks(DetailRatings object) {
+    Field[] fields = object.getClass().getDeclaredFields();
+    List<Mark> marks = new ArrayList<>();
+    SerializedName serialName;
+    Class fieldType;
+    Object value;
+    for (Field field : fields) {
+      try {
+        field.setAccessible(true);
+        fieldType = field.getType();
+        serialName = field.getAnnotation(SerializedName.class);
+        value = field.get(object);
+        marks.add(new Mark(serialName.toString(), (Integer) value));
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
+    }
+    return marks;
   }
 }

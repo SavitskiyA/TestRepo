@@ -134,7 +134,7 @@ public final class HttpLoggingInterceptor implements Interceptor {
         String name = headers.name(i);
         // Skip headers from the request body as they are explicitly logged above.
         if (!"Content-Type".equalsIgnoreCase(name) && !"Content-Length".equalsIgnoreCase(name)) {
-          logger.log(name + ": " + headers.value(i));
+          logger.log("--->" + name + ": " + headers.value(i));
         }
       }
 
@@ -184,7 +184,7 @@ public final class HttpLoggingInterceptor implements Interceptor {
     if (logHeaders) {
       Headers headers = response.headers();
       for (int i = 0, count = headers.size(); i < count; i++) {
-        logger.log(headers.name(i) + ": " + headers.value(i));
+        logger.log("<---" + headers.name(i) + ": " + headers.value(i));
       }
 
       if (!logBody || !HttpHeaders.hasBody(response)) {

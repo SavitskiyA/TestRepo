@@ -45,4 +45,5 @@ public abstract class ListRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
   public void setAllCommentsButtonShown(boolean allCommentsButtonShown) {
     isAllCommentsButtonShown = allCommentsButtonShown;
   }
+
 }

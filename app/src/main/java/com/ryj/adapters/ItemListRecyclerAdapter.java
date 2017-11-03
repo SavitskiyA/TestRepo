@@ -12,6 +12,7 @@ import com.ryj.activities.filters.FiltersCategoryActivity;
 import com.ryj.activities.filters.FiltersCourtTypeActivity;
 import com.ryj.adapters.viewholders.CategoryHolder;
 import com.ryj.adapters.viewholders.CourtTypeHolder;
+import com.ryj.adapters.viewholders.DetailRatingHolder;
 import com.ryj.adapters.viewholders.JudgeHolder;
 import com.ryj.adapters.viewholders.SignUpItemHolder;
 import com.ryj.fragments.CourtFragment;
@@ -50,6 +51,11 @@ public class ItemListRecyclerAdapter<T> extends ListRecyclerAdapter<T> implement
   ) {
     this.mInflater = LayoutInflater.from(context);
     this.mListener = listener;
+  }
+
+  public ItemListRecyclerAdapter(
+          Context context) {
+    this.mInflater = LayoutInflater.from(context);
   }
 
   @Override
@@ -138,6 +144,10 @@ public class ItemListRecyclerAdapter<T> extends ListRecyclerAdapter<T> implement
               DrawUtils.RESOURCES[StringUtils.getFullNameLength(judge) % DrawUtils.RESOURCES.length]);
       holder.showTextStub(StringUtils.getAbbrFromFullName(judge));
     }
+  }
+
+  private void bindDetailRatingHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    DetailRatingHolder holder = (DetailRatingHolder) viewHolder;
   }
 
   @Override

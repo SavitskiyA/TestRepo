@@ -2,8 +2,10 @@ package com.ryj.web;
 
 import com.ryj.models.request.SignUpQuery;
 import com.ryj.models.response.Cities;
+import com.ryj.models.response.Comments;
 import com.ryj.models.response.Court;
 import com.ryj.models.response.Courts;
+import com.ryj.models.response.Judge;
 import com.ryj.models.response.Judges;
 import com.ryj.models.response.Message;
 import com.ryj.models.response.Regions;
@@ -92,4 +94,21 @@ public interface Api {
   @GET("cities")
   Observable<Cities> getCities(
           @Query("filter[by_region_id]") Integer regionId, @Query("page") Integer page);
+
+  @GET("judges/{id}")
+  Observable<Judge> getJudge(
+          @Path("id") Integer id);
+
+  @GET("comments")
+  Observable<Comments> getComments(
+          @Query("filter[for_judge_id]") Integer judgeId,
+          @Query("page") Integer page,
+          @Query("per_page") Integer perPage);
+
+  @GET("comments")
+  Observable<Comments> getCommentsForLawyer(
+          @Query("filter[by_lawyer_id]") Integer lawyerId,
+          @Query("page") Integer page,
+          @Query("per_page") Integer perPage);
+
 }

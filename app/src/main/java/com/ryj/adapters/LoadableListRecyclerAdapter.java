@@ -17,6 +17,7 @@ import com.ryj.adapters.viewholders.LoadMoreViewHolder;
 import com.ryj.adapters.viewholders.LoaderViewHolder;
 import com.ryj.fragments.CourtFragment;
 import com.ryj.fragments.CourtsFragment;
+import com.ryj.fragments.JudgeFragment;
 import com.ryj.fragments.JudgesFragment;
 import com.ryj.interfaces.LoadListener;
 import com.ryj.interfaces.Loadable;
@@ -45,9 +46,14 @@ public class LoadableListRecyclerAdapter<T> extends ListRecyclerAdapter<T>
     mInflater = LayoutInflater.from(context);
     mLoadable = loadListener;
     mListener = holderListener;
-//    if (mListener instanceof JudgesFragment) {
-//      setAllCommentsButtonShown(true);
-//    }
+  }
+
+  public LoadableListRecyclerAdapter(Context context, OnHolderListener holderListener) {
+    mInflater = LayoutInflater.from(context);
+    mListener = holderListener;
+    if (mListener instanceof JudgeFragment) {
+      setAllCommentsButtonShown(true);
+    }
   }
 
   @Override

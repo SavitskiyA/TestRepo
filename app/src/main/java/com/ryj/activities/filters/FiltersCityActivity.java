@@ -7,14 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
-import com.ryj.adapters.ListRecyclerAdapter;
-import com.ryj.adapters.LoadableListRecyclerAdapter;
-import com.ryj.interfaces.LoadListener;
-import com.ryj.interfaces.OnHolderListener;
+import com.ryj.adapters.RegionAdapter;
+import com.ryj.interfaces.OnHolderClickListener;
 import com.ryj.models.filters.Filters;
 import com.ryj.models.response.Area;
 import com.ryj.models.response.City;
@@ -29,10 +28,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /** Created by andrey on 9/19/17. */
-public class FiltersCityActivity extends BaseActivity implements LoadListener, OnHolderListener {
+public class FiltersCityActivity extends BaseActivity implements OnHolderClickListener {
   @Inject Api mApi;
   @Inject ErrorHandler mErrorHandler;
   @Inject Filters mFilters;
@@ -40,14 +39,7 @@ public class FiltersCityActivity extends BaseActivity implements LoadListener, O
   @BindView(R.id.cities)
   RecyclerView mCities;
 
-  @BindView(R.id.toolbar)
-  Toolbar mToolBar;
-
-  @BindView(R.id.title)
-  TextView mTitle;
-
-  private LoadableListRecyclerAdapter mAdapter;
-  private int mPage = 1;
+  private RegionAdapter<Area> mAdapter;
   private List<Area> mAreas = new ArrayList<>();
 
   public static void start(Context context) {
@@ -66,13 +58,13 @@ public class FiltersCityActivity extends BaseActivity implements LoadListener, O
   @Nullable
   @Override
   protected Toolbar getToolbar() {
-    return mToolBar;
+    return null;
   }
 
   @Nullable
   @Override
   protected TextView getToolbarTitle() {
-    return mTitle;
+    return null;
   }
 
   @Override
@@ -80,54 +72,26 @@ public class FiltersCityActivity extends BaseActivity implements LoadListener, O
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_filters_city);
     getComponent().inject(this);
-    ButterKnife.bind(this);
-    setSupportActionBar(mToolBar);
-    setToolbarBackArrowEnabled(true);
-    setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
-    mAdapter = new LoadableListRecyclerAdapter(this, this, this);
+    mAdapter = new RegionAdapter<Area>(this, this);
     mCities.setLayoutManager(new LinearLayoutManager(this));
     mCities.setAdapter(mAdapter);
-    reset();
+    load();
   }
 
-  @Override
-  public void load(int page) {
-    mApi.getCities(getRegionId(), page)
+  public void load() {
+    mApi.getCities(mFilters.getRegionId())
         .compose(bindUntilEvent(ActivityEvent.DESTROY))
         .compose(RxUtils.applySchedulers())
         .subscribe(
             response -> {
-              if (page == 1) {
-                mAdapter.reloadItems(getAreas(response.getCities()));
-              } else {
-                mAdapter.addItems(getAreas(response.getCities()));
-              }
               mAreas.addAll(getAreas(response.getCities()));
+              mAdapter.reloadItems(getAreas(response.getCities()));
               mAdapter.setCurrentCheckedItem(getLastCityIdPosition());
-              if (response.getNextPage() == null) {
-                mAdapter.setIsLoadable(false);
-              }
             },
             throwable -> {
               mErrorHandler.handleError(throwable, this);
             });
-  }
-
-  @Override
-  public int increment() {
-    return mPage++;
-  }
-
-  @Override
-  public void reset() {
-    mPage = 1;
-    mAdapter.setIsLoadable(true);
-    load(mPage);
-  }
-
-  private Integer getRegionId() {
-    return mFilters.getRegionId() == null ? null : mFilters.getRegionId();
   }
 
   private int getLastCityIdPosition() {
@@ -140,8 +104,21 @@ public class FiltersCityActivity extends BaseActivity implements LoadListener, O
   }
 
   @Override
-  public void onHolderClicked(boolean enable, int position) {
+  public void onHolderClick(boolean enable, int position) {
     mFilters.setCityId(mAreas.get(position).getId());
     mFilters.setCity(mAreas.get(position).getName());
+  }
+
+  @OnClick({R.id.back, R.id.check})
+  void onClick(View view) {
+    switch (view.getId()) {
+      case R.id.back:
+        mFilters.clearCity();
+        onBackPressed();
+        return;
+      case R.id.check:
+        onBackPressed();
+        return;
+    }
   }
 }

@@ -21,7 +21,6 @@ import com.ryj.activities.BaseActivity;
 import com.ryj.activities.BottomBarContainerActivity;
 import com.ryj.activities.auth.PasswordRecoveryActivity;
 import com.ryj.activities.auth.signup.SignUpActivity;
-import com.ryj.dialogs.SpinnerDialog;
 import com.ryj.storage.prefs.Prefs;
 import com.ryj.utils.FieldValidation;
 import com.ryj.utils.RxUtils;
@@ -34,22 +33,16 @@ import javax.inject.Inject;
 
 import butterknife.BindString;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 
-/**
- * Created by andrey on 7/7/17.
- */
+/** Created by andrey on 7/7/17. */
 public class SignInActivity extends BaseActivity {
   private static final String TAG = "SignInActivity";
-  @Inject
-  Prefs mPrefs;
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
+  @Inject Prefs mPrefs;
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
 
   @BindView(R.id.image)
   ImageView mImage;
@@ -112,7 +105,6 @@ public class SignInActivity extends BaseActivity {
   String mOk;
 
   private AlertDialog mDialog;
-  private SpinnerDialog mSpinnerDialog;
 
   public static void start(Context context) {
     Intent i = new Intent(context, SignInActivity.class);
@@ -130,23 +122,21 @@ public class SignInActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_signin);
     getComponent().inject(this);
-    ButterKnife.bind(this);
     mPrefs.setIsFirstTutorialLaunch(false);
     mForgotPassword.setPaintFlags(mForgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     mDialog = getDialog(mOk);
-    mSpinnerDialog = getSpinnerDialog();
   }
 
   @OnClick({
-          R.id.sign_in,
-          R.id.forgot_password,
-          R.id.sign_up,
-          R.id.img_judges,
-          R.id.img_analytics,
-          R.id.img_news,
-          R.id.txt_news,
-          R.id.txt_analytics,
-          R.id.txt_judges
+    R.id.sign_in,
+    R.id.forgot_password,
+    R.id.sign_up,
+    R.id.img_judges,
+    R.id.img_analytics,
+    R.id.img_news,
+    R.id.txt_news,
+    R.id.txt_analytics,
+    R.id.txt_judges
   })
   public void onClick(View view) {
     switch (view.getId()) {
@@ -222,27 +212,30 @@ public class SignInActivity extends BaseActivity {
     validateFields();
     if (isAllFieldsValid()) {
       executeSignInRequest(
-              mEmail.getText().toString().trim(), mPassword.getText().toString().trim());
+          mEmail.getText().toString().trim(), mPassword.getText().toString().trim());
     }
   }
 
   private void executeSignInRequest(String email, String password) {
-    mApi.signIn(email, password, Constants.PLATFORM, null)
+    doRequest(
+        mApi.signIn(email, password, Constants.PLATFORM, null)
             .compose(bindUntilEvent(ActivityEvent.DESTROY))
             .compose(RxUtils.applySchedulers())
             .compose(
-                    RxUtils.applyBeforeAndAfter(
-                            (disposable) ->
-                                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
-                            () -> mSpinnerDialog.dismiss()))
+                RxUtils.applyBeforeAndAfter(
+                    (disposable) ->
+                        getSpinnerDialog()
+                            .show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
+                    () -> getSpinnerDialog().dismiss()))
             .subscribe(
-                    response -> {
-                      mPrefs.setCurrentUserId(response.getId());
-                      BottomBarContainerActivity.start(this);
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable, this);
-                    });
+                response -> {
+                  mPrefs.setUserType(response.getType());
+                  mPrefs.setCurrentUserId(response.getId());
+                  BottomBarContainerActivity.start(this);
+                },
+                throwable -> {
+                  mErrorHandler.handleError(throwable, this);
+                }));
   }
 
   @Nullable

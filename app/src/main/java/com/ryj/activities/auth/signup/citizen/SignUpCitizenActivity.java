@@ -37,7 +37,6 @@ import javax.inject.Inject;
 
 import butterknife.BindString;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
@@ -61,7 +60,7 @@ public class SignUpCitizenActivity extends BaseActivity {
   @BindString(R.string.text_terms_cond_link)
   String mLink;
 
-  @BindView(R.id.fullname)
+  @BindView(R.id.lawyer_fullname)
   EditText mName;
 
   @BindView(R.id.surname)
@@ -125,7 +124,6 @@ public class SignUpCitizenActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_signup_citizen);
     getComponent().inject(this);
-    ButterKnife.bind(this);
     setSupportActionBar(mToolbar);
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
@@ -155,7 +153,7 @@ public class SignUpCitizenActivity extends BaseActivity {
     validateSignUpRequest();
   }
 
-  @OnTextChanged(R.id.fullname)
+  @OnTextChanged(R.id.lawyer_fullname)
   protected void handleNameChanged() {
     mNameLayout.setErrorEnabled(false);
   }
@@ -196,10 +194,10 @@ public class SignUpCitizenActivity extends BaseActivity {
     return isNameValid() && isSurnameValid() && isEmailValid();
   }
 
-  @OnFocusChange({R.id.fullname, R.id.surname, R.id.email})
+  @OnFocusChange({R.id.lawyer_fullname, R.id.surname, R.id.email})
   public void onFocusChanged(View v, boolean isFocused) {
     switch (v.getId()) {
-      case R.id.fullname:
+      case R.id.lawyer_fullname:
         if (!isFocused && mName.length() > 0 && !isNameValid()) {
           mNameLayout.setError(mNameValidationError);
         }
@@ -258,21 +256,22 @@ public class SignUpCitizenActivity extends BaseActivity {
   }
 
   private void executeSignUpRequest(User user, Account account, Session session) {
-    mApi.signUp(new SignUpQuery(user, account, session))
-        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .compose(RxUtils.applySchedulers())
-        .compose(
-            RxUtils.applyBeforeAndAfter(
-                (disposable) ->
-                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
-                () -> mSpinnerDialog.dismiss()))
-        .subscribe(
-            response -> {
-              ThankYouActivity.start(this);
-              finish();
-            },
-            throwable -> {
-              mErrorHandler.handleErrorByRequestType(throwable, this, RequestType.SIGN_UP_TEMP);
-            });
+    doRequest(
+        mApi.signUp(new SignUpQuery(user, account, session))
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .compose(RxUtils.applySchedulers())
+            .compose(
+                RxUtils.applyBeforeAndAfter(
+                    (disposable) ->
+                        getSpinnerDialog().show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
+                    () -> getSpinnerDialog().dismiss()))
+            .subscribe(
+                response -> {
+                  ThankYouActivity.start(this);
+                  finish();
+                },
+                throwable -> {
+                  mErrorHandler.handleErrorByRequestType(throwable, this, RequestType.SIGN_UP_TEMP);
+                }));
   }
 }

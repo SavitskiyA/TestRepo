@@ -5,49 +5,50 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by andrey on 11/2/17.
- */
-
+/** Created by andrey on 11/2/17. */
 public class Comments {
   @SerializedName("objects")
   @Expose
   private List<Comment> mComments;
+
   @SerializedName("total_entries")
   @Expose
-  private Integer totalEntries;
+  private Integer mTotalEntries;
+
   @SerializedName("previous_page")
   @Expose
-  private Object previousPage;
+  private Integer mPreviousPage;
+
   @SerializedName("current_page")
   @Expose
   private Integer currentPage;
+
   @SerializedName("next_page")
   @Expose
-  private Object nextPage;
+  private Integer mNextPage;
 
   public List<Comment> getComments() {
     return mComments;
   }
 
   public void setComments(List<Comment> comments) {
-    this.mComments = comments;
+    mComments = comments;
   }
 
   public Integer getTotalEntries() {
-    return totalEntries;
+    return mTotalEntries;
   }
 
   public void setTotalEntries(Integer totalEntries) {
-    this.totalEntries = totalEntries;
+    mTotalEntries = totalEntries;
   }
 
   public Object getPreviousPage() {
-    return previousPage;
+    return mPreviousPage;
   }
 
-  public void setPreviousPage(Object previousPage) {
-    this.previousPage = previousPage;
+  public void setPreviousPage(Integer previousPage) {
+    mPreviousPage = previousPage;
   }
 
   public Integer getCurrentPage() {
@@ -55,15 +56,14 @@ public class Comments {
   }
 
   public void setCurrentPage(Integer currentPage) {
-    this.currentPage = currentPage;
+    currentPage = currentPage;
   }
 
   public Object getNextPage() {
-    return nextPage;
+    return mNextPage;
   }
 
-  public void setNextPage(Object nextPage) {
-    this.nextPage = nextPage;
+  public void setNextPage(Integer nextPage) {
+    mNextPage = nextPage;
   }
-
 }

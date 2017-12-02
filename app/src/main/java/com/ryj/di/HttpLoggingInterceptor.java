@@ -40,9 +40,10 @@ import static okhttp3.internal.platform.Platform.INFO;
 /**
  * An OkHttp interceptor which logs request and response information. Can be applied as an
  * {@linkplain OkHttpClient#interceptors() application interceptor} or as a {@linkplain
- * OkHttpClient#networkInterceptors() network interceptor}. <p> The format of the logs created by
- * this class should not be considered stable and may change slightly between releases. If you need
- * a stable logging format, use your own interceptor.
+ * OkHttpClient#networkInterceptors() network interceptor}.
+ *
+ * <p>The format of the logs created by this class should not be considered stable and may change
+ * slightly between releases. If you need a stable logging format, use your own interceptor.
  */
 public final class HttpLoggingInterceptor implements Interceptor {
   private static final Charset UTF8 = Charset.forName("UTF-8");
@@ -85,9 +86,7 @@ public final class HttpLoggingInterceptor implements Interceptor {
     return level;
   }
 
-  /**
-   * Change the level at which this interceptor logs.
-   */
+  /** Change the level at which this interceptor logs. */
   public HttpLoggingInterceptor setLevel(Level level) {
     if (level == null) throw new NullPointerException("level == null. Use Level.NONE instead.");
     this.level = level;
@@ -155,11 +154,15 @@ public final class HttpLoggingInterceptor implements Interceptor {
         logger.log("");
         if (isPlaintext(buffer)) {
           logger.log(buffer.readString(charset));
-          logger.log("--> END " + request.method()
-                  + " (" + requestBody.contentLength() + "-byte body)");
+          logger.log(
+              "--> END " + request.method() + " (" + requestBody.contentLength() + "-byte body)");
         } else {
-          logger.log("--> END " + request.method() + " (binary "
-                  + requestBody.contentLength() + "-byte body omitted)");
+          logger.log(
+              "--> END "
+                  + request.method()
+                  + " (binary "
+                  + requestBody.contentLength()
+                  + "-byte body omitted)");
         }
       }
     }
@@ -177,14 +180,23 @@ public final class HttpLoggingInterceptor implements Interceptor {
     ResponseBody responseBody = response.body();
     long contentLength = responseBody.contentLength();
     String bodySize = contentLength != -1 ? contentLength + "-byte" : "unknown-length";
-    logger.log("<-- " + response.code() + ' ' + response.message() + ' '
-            + response.request().url() + " (" + tookMs + "ms" + (!logHeaders ? ", "
-            + bodySize + " body" : "") + ')');
+    logger.log(
+        "<-- "
+            + response.code()
+            + ' '
+            + response.message()
+            + ' '
+            + response.request().url()
+            + " ("
+            + tookMs
+            + "ms"
+            + (!logHeaders ? ", " + bodySize + " body" : "")
+            + ')');
 
     if (logHeaders) {
       Headers headers = response.headers();
       for (int i = 0, count = headers.size(); i < count; i++) {
-        logger.log("<---" + headers.name(i) + ": " + headers.value(i));
+        logger.log(headers.name(i) + ": " + headers.value(i));
       }
 
       if (!logBody || !HttpHeaders.hasBody(response)) {
@@ -226,14 +238,15 @@ public final class HttpLoggingInterceptor implements Interceptor {
   }
 
   public enum Level {
-    /**
-     * No logs.
-     */
+    /** No logs. */
     NONE,
     /**
      * Logs request and response lines.
+     *
      * <p>
+     *
      * <p>Example:
+     *
      * <pre>{@code
      * --> POST /greeting http/1.1 (3-byte body)
      *
@@ -243,8 +256,11 @@ public final class HttpLoggingInterceptor implements Interceptor {
     BASIC,
     /**
      * Logs request and response lines and their respective headers.
+     *
      * <p>
+     *
      * <p>Example:
+     *
      * <pre>{@code
      * --> POST /greeting http/1.1
      * Host: example.com
@@ -261,8 +277,11 @@ public final class HttpLoggingInterceptor implements Interceptor {
     HEADERS,
     /**
      * Logs request and response lines and their respective headers and bodies (if present).
+     *
      * <p>
+     *
      * <p>Example:
+     *
      * <pre>{@code
      * --> POST /greeting http/1.1
      * Host: example.com
@@ -284,15 +303,14 @@ public final class HttpLoggingInterceptor implements Interceptor {
   }
 
   public interface Logger {
-    /**
-     * A {@link Logger} defaults output appropriate for the current platform.
-     */
-    Logger DEFAULT = new Logger() {
-      @Override
-      public void log(String message) {
-        Platform.get().log(INFO, message, null);
-      }
-    };
+    /** A {@link Logger} defaults output appropriate for the current platform. */
+    Logger DEFAULT =
+        new Logger() {
+          @Override
+          public void log(String message) {
+            Platform.get().log(INFO, message, null);
+          }
+        };
 
     void log(String message);
   }

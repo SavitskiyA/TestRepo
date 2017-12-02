@@ -4,7 +4,6 @@
   <color name="colorPrimaryDark">#303F9F</color>
   <color name="colorAccent">#FF4081</color>
   <color name="colorBlueLight">#6ec1f8</color>
-  <color name="colorBlueLightSecond">#5eccfc</color>
   <color name="colorBlueLightTransp">#7F5eccfc</color>
   <color name="colorWhiteTransp">#29ffffff</color>
   <color name="colorDarkGradientStart">#8b94a3</color>
@@ -28,11 +27,15 @@
   <color name="colorGrayJudgesSeparatorUnderline">#f2f2f2</color>
   <color name="colorWhiteTransparentProgress">#b3ffffff</color>
   <color name="colorWhiteTranspOne">#d9ffffff</color>
-  <color name="colorTextDarkOne">#d92a2c2c</color>
+  <color name="colorBlueText">#1e97cb</color>
+  <color name="colorBlueLightSecond">#5eccfc</color>
   <color name="colorBackgroundDarkOne">#545a66</color>
   <color name="colorBlueLightOne">#5ac0ed</color>
+  <color name="colorGrayLightOne">#d1d1d1</color>
+  <color name="colorGrayLightTwo">#7e2a2c2c</color>
   <color name="colorGreenLike">#30bf9e</color>
   <color name="colorRedDislike">#fd6652</color>
   <color name="colorBlueDarkOne">#1e97cc</color>
-  <color name="colorGrayLightOne">#d1d1d1</color>
+  <color name="colorGrayDarkOne">#2a2c2c</color>
+  <color name="colorGrayLightThree">#802a2c2c</color>
 </resources>

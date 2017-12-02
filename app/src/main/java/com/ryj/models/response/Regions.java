@@ -32,7 +32,7 @@ public class Regions {
   }
 
   public void setRegions(List<Region> regions) {
-    this.mRegions = regions;
+    mRegions = regions;
   }
 
   public Integer getPreviousPage() {
@@ -40,7 +40,7 @@ public class Regions {
   }
 
   public void setPreviousPage(Integer previousPage) {
-    this.mPreviousPage = previousPage;
+    mPreviousPage = previousPage;
   }
 
   public Integer getCurrentPage() {
@@ -48,7 +48,7 @@ public class Regions {
   }
 
   public void setCurrentPage(Integer currentPage) {
-    this.mCurrentPage = currentPage;
+    mCurrentPage = currentPage;
   }
 
   public Object getNextPage() {
@@ -56,7 +56,7 @@ public class Regions {
   }
 
   public void setNextPage(Integer nextPage) {
-    this.mNextPage = nextPage;
+    mNextPage = nextPage;
   }
 
   public Integer getTotalEntries() {
@@ -64,6 +64,6 @@ public class Regions {
   }
 
   public void setTotalEntries(Integer totalEntries) {
-    this.mTotalEntries = totalEntries;
+    mTotalEntries = totalEntries;
   }
 }

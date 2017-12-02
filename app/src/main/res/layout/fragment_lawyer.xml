@@ -1,95 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:fresce="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/background_light">
 
-  <LinearLayout
+
+  <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_jp_b"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+
+    <android.support.design.widget.AppBarLayout
+      android:id="@+id/app_bar_layout"
       android:layout_width="match_parent"
-      android:layout_height="374dp">
+      android:layout_height="wrap_content"
+      app:collapsedTitleGravity="center_horizontal">
 
-      <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/photo"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="86dp"
-        android:background="@drawable/gradient_judge_four"
-        android:elevation="27dp"
-        fresce:roundAsCircle="true"/>
+      <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/collapsing_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_l_b"
+        app:contentScrim="@drawable/bg_jp_s"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+        <include layout="@layout/item_lawyer_profile"/>
+
+        <android.support.v7.widget.Toolbar
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          app:layout_collapseMode="pin"
+          app:title=" ">
+        </android.support.v7.widget.Toolbar>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="?attr/actionBarSize"
+          android:layout_gravity="center_horizontal"
+          android:fontFamily="sans-serif"
+          android:gravity="center_horizontal"
+          android:lineSpacingMultiplier="1.67"
+          android:paddingTop="14dp"
+          android:text="@string/text_lawyer"
+          android:textColor="@android:color/background_light"
+          android:textSize="@dimen/size_text_18sp"
+          android:textStyle="normal"
+          app:layout_collapseMode="pin"/>
+      </android.support.design.widget.CollapsingToolbarLayout>
 
       <TextView
-        android:id="@+id/first_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="250dp"
-        android:fontFamily="sans-serif-light"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorGrayJudgesSeparatorUnderline"
         android:gravity="center"
-        android:lineSpacingMultiplier="1.17"
-        android:text="Андрій"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"/>
+        android:text="@string/text_comments"
+        android:textColor="@color/colorBlackText"/>
+    </android.support.design.widget.AppBarLayout>
 
-      <TextView
-        android:id="@+id/last_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="278dp"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:lineSpacingMultiplier="1.17"
-        android:text="Храмов"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"/>
-
-      <TextView
-        android:id="@+id/company"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="318dp"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:lineSpacingMultiplier="1.17"
-        android:text="Юридична фірма «Elite Studio»"
-        android:textColor="@android:color/background_light"
-        android:textSize="16sp"/>
-
-      <ImageView
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/ic_arrow_backspace"/>
-
-      <TextView
-        android:id="@+id/abbr"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="86dp"
-        android:elevation="27dp"
-        android:gravity="center"
-        android:text="AX"
-        android:textColor="@android:color/background_light"
-        android:textSize="48sp"/>
-    </FrameLayout>
-
-
-    <android.support.v7.widget.RecyclerView
-      android:id="@+id/comments_recycler_view"
+    <android.support.v4.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@android:color/background_light"/>
-  </LinearLayout>
-</ScrollView>
+      app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+      <android.support.v7.widget.RecyclerView
+        android:id="@+id/comments_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light"/>
+    </android.support.v4.widget.NestedScrollView>
+  </android.support.design.widget.CoordinatorLayout>
+
+  <RelativeLayout
+    android:id="@+id/frame_no_comments"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center_horizontal"
+    android:layout_marginBottom="50dp">
+
+    <ImageView
+      android:id="@+id/dialog"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      android:layout_centerHorizontal="true"
+      android:src="@drawable/ic_dialog"/>
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/dialog"
+      android:fontFamily="sans-serif"
+      android:letterSpacing="0.03"
+      android:text="@string/text_no_comments"
+      android:textColor="@color/colorGrayLightTwo"
+      android:textSize="@dimen/size_text_16sp"
+      android:textStyle="normal"/>
+  </RelativeLayout>
+</FrameLayout>

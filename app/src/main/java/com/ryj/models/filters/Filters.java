@@ -1,13 +1,13 @@
 package com.ryj.models.filters;
 
+import android.support.annotation.Nullable;
+
 import com.ryj.models.enums.Direction;
 import com.ryj.models.enums.Sort;
 
 import java.util.List;
 
-/**
- * Created by andrey on 9/30/17.
- */
+/** Created by andrey on 9/30/17. */
 public class Filters {
   private String mJudgeFullName;
   private Integer mCourtId;
@@ -23,13 +23,19 @@ public class Filters {
   private boolean[] mCourtsBooleans;
   private Direction mDirection = Direction.ASC;
   private Sort mSorting = Sort.LAST_NAME;
+  private EditorState mState;
+
+  @Nullable
+  public EditorState getState() {
+    return mState;
+  }
 
   public String getCourtType() {
     return mCourtType;
   }
 
   public void setCourtType(String courtType) {
-    this.mCourtType = courtType;
+    mCourtType = courtType;
   }
 
   public Integer getCityId() {
@@ -37,7 +43,7 @@ public class Filters {
   }
 
   public void setCityId(Integer cityId) {
-    this.mCityId = cityId;
+    mCityId = cityId;
   }
 
   public Integer getRegionId() {
@@ -45,7 +51,7 @@ public class Filters {
   }
 
   public void setRegionId(Integer regionId) {
-    this.mRegionId = regionId;
+    mRegionId = regionId;
   }
 
   public List<String> getAffairs() {
@@ -53,7 +59,7 @@ public class Filters {
   }
 
   public void setAffairs(List<String> affairs) {
-    this.mAffairs = affairs;
+    mAffairs = affairs;
   }
 
   public String getRegion() {
@@ -61,7 +67,7 @@ public class Filters {
   }
 
   public void setRegion(String region) {
-    this.mRegion = region;
+    mRegion = region;
   }
 
   public String getCity() {
@@ -69,7 +75,7 @@ public class Filters {
   }
 
   public void setCity(String city) {
-    this.mCity = city;
+    mCity = city;
   }
 
   public boolean[] getAffairsBooleans() {
@@ -77,7 +83,7 @@ public class Filters {
   }
 
   public void setAffairsBooleans(boolean[] affairsBooleans) {
-    this.mAffairsBooleans = affairsBooleans;
+    mAffairsBooleans = affairsBooleans;
   }
 
   public boolean[] getCourtsBooleans() {
@@ -85,7 +91,7 @@ public class Filters {
   }
 
   public void setCourtsBooleans(boolean[] courtsBooleans) {
-    this.mCourtsBooleans = courtsBooleans;
+    mCourtsBooleans = courtsBooleans;
   }
 
   public String getCourtTypeClient() {
@@ -93,7 +99,7 @@ public class Filters {
   }
 
   public void setCourtTypeClient(String courtTypeClient) {
-    this.mCourtTypeClient = courtTypeClient;
+    mCourtTypeClient = courtTypeClient;
   }
 
   public String getJudgeFullName() {
@@ -101,7 +107,7 @@ public class Filters {
   }
 
   public void setJudgeFullName(String judgeFullName) {
-    this.mJudgeFullName = judgeFullName;
+    mJudgeFullName = judgeFullName;
   }
 
   public Integer getCourtId() {
@@ -109,7 +115,7 @@ public class Filters {
   }
 
   public void setCourtId(Integer courtId) {
-    this.mCourtId = courtId;
+    mCourtId = courtId;
   }
 
   public Direction getDirection() {
@@ -117,7 +123,7 @@ public class Filters {
   }
 
   public void setDirection(Direction direction) {
-    this.mDirection = direction;
+    mDirection = direction;
   }
 
   public Sort getSorting() {
@@ -125,7 +131,7 @@ public class Filters {
   }
 
   public void setSorting(Sort sorting) {
-    this.mSorting = sorting;
+    mSorting = sorting;
   }
 
   public String getCourtName() {
@@ -133,20 +139,20 @@ public class Filters {
   }
 
   public void setCourtName(String courtName) {
-    this.mCourtName = courtName;
+    mCourtName = courtName;
   }
 
   public void clear() {
-    this.setCityId(null);
-    this.setRegionId(null);
-    this.setAffairs(null);
-    this.setRegion(null);
-    this.setCity(null);
-    this.setAffairs(null);
-    this.setAffairsBooleans(null);
-    this.setCourtTypeClient(null);
-    this.setCourtType(null);
-    this.setCourtsBooleans(null);
+    setCityId(null);
+    setRegionId(null);
+    setAffairs(null);
+    setRegion(null);
+    setCity(null);
+    setAffairs(null);
+    setAffairsBooleans(null);
+    setCourtTypeClient(null);
+    setCourtType(null);
+    setCourtsBooleans(null);
   }
 
   public void clearCourtType() {
@@ -168,5 +174,97 @@ public class Filters {
   public void clearAffairs() {
     setAffairsBooleans(null);
     setAffairs(null);
+  }
+
+  public void saveState() {
+    mState =
+        new EditorState(
+            this,
+            mJudgeFullName,
+            mCourtId,
+            mCourtType,
+            mCourtTypeClient,
+            mCourtName,
+            mCityId,
+            mRegionId,
+            mAffairs,
+            mRegion,
+            mCity,
+            mAffairsBooleans,
+            mCourtsBooleans,
+            mDirection,
+            mSorting);
+  }
+
+  public void restore() {
+    mState.restore();
+  }
+
+  private final class EditorState {
+    private Filters mFilters;
+    private String mJudgeFullName;
+    private Integer mCourtId;
+    private String mCourtType;
+    private String mCourtTypeClient;
+    private String mCourtName;
+    private Integer mCityId;
+    private Integer mRegionId;
+    private List<String> mAffairs;
+    private String mRegion;
+    private String mCity;
+    private boolean[] mAffairsBooleans;
+    private boolean[] mCourtsBooleans;
+    private Direction mDirection = Direction.ASC;
+    private Sort mSorting = Sort.LAST_NAME;
+
+    private EditorState(
+        Filters filters,
+        String judgeFullName,
+        Integer courtId,
+        String courtType,
+        String courtTypeClient,
+        String courtName,
+        Integer cityId,
+        Integer regionId,
+        List<String> affairs,
+        String region,
+        String city,
+        boolean[] affairsBooleans,
+        boolean[] courtsBooleans,
+        Direction direction,
+        Sort sorting) {
+      mFilters = filters;
+      mJudgeFullName = judgeFullName;
+      mCourtId = courtId;
+      mCourtType = courtType;
+      mCourtTypeClient = courtTypeClient;
+      mCourtName = courtName;
+      mCityId = cityId;
+      mRegionId = regionId;
+      mAffairs = affairs;
+      mRegion = region;
+      mCity = city;
+      mAffairsBooleans = affairsBooleans;
+      mCourtsBooleans = courtsBooleans;
+      mDirection = direction;
+      mSorting = sorting;
+    }
+
+    private void restore() {
+      mFilters.setJudgeFullName(mJudgeFullName);
+      mFilters.setCourtId(mCourtId);
+      mFilters.setCourtType(mCourtType);
+      mFilters.setCourtTypeClient(mCourtTypeClient);
+      mFilters.setCourtName(mCourtName);
+      mFilters.setCityId(mCityId);
+      mFilters.setRegionId(mRegionId);
+      mFilters.setAffairs(mAffairs);
+      mFilters.setRegion(mRegion);
+      mFilters.setCity(mCity);
+      mFilters.setAffairsBooleans(mAffairsBooleans);
+      mFilters.setCourtsBooleans(mCourtsBooleans);
+      mFilters.setDirection(mDirection);
+      mFilters.setSorting(mSorting);
+    }
   }
 }

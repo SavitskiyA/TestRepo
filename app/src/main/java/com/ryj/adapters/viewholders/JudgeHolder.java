@@ -1,14 +1,13 @@
 package com.ryj.adapters.viewholders;
 
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.ornolfr.ratingview.RatingView;
 import com.ryj.R;
-import com.ryj.interfaces.OnHolderListener;
+import com.ryj.interfaces.OnHolderClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +16,7 @@ import butterknife.OnClick;
 /**
  * Created by andrey on 9/5/17.
  */
-public class JudgeHolder extends RecyclerView.ViewHolder {
+public class JudgeHolder extends BaseViewHolder {
 
   @BindView(R.id.photo)
   SimpleDraweeView mPhoto;
@@ -40,9 +39,9 @@ public class JudgeHolder extends RecyclerView.ViewHolder {
   @BindView(R.id.abbr)
   TextView mTextStub;
 
-  private OnHolderListener mListener;
+  private OnHolderClickListener mListener;
 
-  public JudgeHolder(View itemView, OnHolderListener listener) {
+  public JudgeHolder(View itemView, OnHolderClickListener listener) {
     super(itemView);
     ButterKnife.bind(this, itemView);
     mListener = listener;
@@ -91,6 +90,6 @@ public class JudgeHolder extends RecyclerView.ViewHolder {
 
   @OnClick(R.id.frame_judge)
   void onClick() {
-    mListener.onHolderClicked(false, (Integer) mName.getTag());
+    mListener.onHolderClick(false, (Integer) mName.getTag());
   }
 }

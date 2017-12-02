@@ -9,7 +9,7 @@ import java.util.List;
 public class Judges {
   @SerializedName("objects")
   @Expose
-  private List<Judge> mObjects = null;
+  private List<Judge> mObjects;
 
   @SerializedName("previous_page")
   @Expose
@@ -32,7 +32,7 @@ public class Judges {
   }
 
   public void setObjects(List<Judge> objects) {
-    this.mObjects = objects;
+    mObjects = objects;
   }
 
   public Integer getPreviousPage() {
@@ -40,7 +40,7 @@ public class Judges {
   }
 
   public void setPreviousPage(Integer previousPage) {
-    this.mPreviousPage = previousPage;
+    mPreviousPage = previousPage;
   }
 
   public Integer getCurrentPage() {
@@ -48,7 +48,7 @@ public class Judges {
   }
 
   public void setCurrentPage(Integer currentPage) {
-    this.mCurrentPage = currentPage;
+    mCurrentPage = currentPage;
   }
 
   public Integer getNextPage() {
@@ -56,7 +56,7 @@ public class Judges {
   }
 
   public void setNextPage(Integer nextPage) {
-    this.mNextPage = nextPage;
+    mNextPage = nextPage;
   }
 
   public Integer getTotalEntries() {
@@ -64,6 +64,6 @@ public class Judges {
   }
 
   public void setTotalEntries(Integer totalEntries) {
-    this.mTotalEntries = totalEntries;
+    mTotalEntries = totalEntries;
   }
 }

@@ -127,19 +127,27 @@
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
-      android:name=".activities.settings.SettingsActivity"
+      android:name=".activities.ChangePasswordActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
-      android:name=".activities.settings.EditProfileJudgeActivity"
-      android:configChanges="orientation|keyboardHidden|screenSize"
+      android:name=".activities.EditProfileJudgeActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.TranslucentedStatusBar"/>
     <activity
-      android:name=".activities.settings.EditProfileLawyerActivity"
-      android:configChanges="orientation|keyboardHidden|screenSize"
+      android:name=".activities.EditProfileLawyerActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
+    <activity
+      android:name=".activities.EditProfileCitizenActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.TranslucentedStatusBar"/>
+    <activity
+      android:name=".activities.EstimationActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.TranslucentedStatusBar"/>
@@ -153,5 +161,4 @@
       android:name="io.fabric.ApiKey"
       android:value="5653b0083b152fb66214b78a87bbf83ee2c7826d"/>
   </application>
-
 </manifest>

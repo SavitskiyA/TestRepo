@@ -1,12 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_dark"
+              android:orientation="vertical">
 
-  <TextView
-    android:layout_width="wrap_content"
+
+  <FrameLayout
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:fontFamily="sans-serif"
+      android:text="@string/text_settings"
+      android:textColor="@android:color/background_light"
+      android:textSize="@dimen/size_text_18sp"/>
+
+    <include layout="@layout/item_toolbar"/>
+  </FrameLayout>
+
+  <FrameLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:text="fragment_profile"/>
-</FrameLayout>
+    android:background="@android:color/background_light">
+
+    <TextView
+      style="@style/SettingsTextBlackStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/text_message_to_email"
+      />
+
+    <Switch
+      android:id="@+id/switcher"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="end"
+      android:layout_marginBottom="13dp"
+      android:layout_marginEnd="20dp"
+      android:layout_marginTop="14dp"
+      android:checked="false"
+      android:clickable="true"
+      android:thumb="@drawable/selector_thumb"
+      android:track="@drawable/selector_track"/>
+  </FrameLayout>
+
+  <com.balysv.materialripple.MaterialRippleLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true">
+
+    <TextView
+      android:id="@+id/edit"
+      style="@style/SettingsTextBlueStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/text_edit_user_data"/>
+  </com.balysv.materialripple.MaterialRippleLayout>
+
+  <com.balysv.materialripple.MaterialRippleLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true">
+
+    <TextView
+      android:id="@+id/change_password"
+      style="@style/SettingsTextBlueStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/text_change_password"/>
+  </com.balysv.materialripple.MaterialRippleLayout>
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="20dp"
+    android:background="@color/colorGrayLight"/>
+
+  <com.balysv.materialripple.MaterialRippleLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true">
+
+    <TextView
+      android:id="@+id/contact_us"
+      style="@style/SettingsTextBlueStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/text_contact_us"/>
+  </com.balysv.materialripple.MaterialRippleLayout>
+
+  <com.balysv.materialripple.MaterialRippleLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true">
+
+    <TextView
+      android:id="@+id/about"
+      style="@style/SettingsTextBlueStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/text_about"/>
+  </com.balysv.materialripple.MaterialRippleLayout>
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="20dp"
+    android:background="@color/colorGrayLight"/>
+
+  <com.balysv.materialripple.MaterialRippleLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true">
+
+    <TextView
+      android:id="@+id/logout"
+      style="@style/SettingsTextRedStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/text_log_out"/>
+
+  </com.balysv.materialripple.MaterialRippleLayout>
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:background="@color/colorGrayLight"/>
+
+</LinearLayout>

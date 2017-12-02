@@ -11,30 +11,39 @@ public class UserResponse {
   @SerializedName("id")
   @Expose
   private Integer mId;
+
   @SerializedName("first_name")
   @Expose
   private String mFirstName;
+
   @SerializedName("last_name")
   @Expose
   private String mLastName;
+
   @SerializedName("phone")
   @Expose
   private String mPhone;
+
   @SerializedName("affairs")
   @Expose
   private List<String> mAffairs;
+
   @SerializedName("specializations")
   @Expose
   private List<String> mSpecializations;
+
   @SerializedName("type")
   @Expose
-  private UserType mType;
+  private String mType;
+
   @SerializedName("certification_number")
   @Expose
   private String mCertificationNumber;
+
   @SerializedName("company")
   @Expose
   private String mCompany;
+
   @SerializedName("avatar_urls")
   @Expose
   private Avatar mAvatar;
@@ -44,7 +53,7 @@ public class UserResponse {
   }
 
   public void setId(Integer id) {
-    this.mId = id;
+    mId = id;
   }
 
   public String getFirstName() {
@@ -52,7 +61,7 @@ public class UserResponse {
   }
 
   public void setFirstName(String firstName) {
-    this.mFirstName = firstName;
+    mFirstName = firstName;
   }
 
   public String getLastName() {
@@ -60,7 +69,7 @@ public class UserResponse {
   }
 
   public void setLastName(String lastName) {
-    this.mLastName = lastName;
+    mLastName = lastName;
   }
 
   public String getPhone() {
@@ -68,7 +77,7 @@ public class UserResponse {
   }
 
   public void setPhone(String phone) {
-    this.mPhone = phone;
+    mPhone = phone;
   }
 
   public List<String> getAffairs() {
@@ -76,7 +85,7 @@ public class UserResponse {
   }
 
   public void setAffairs(List<String> affairs) {
-    this.mAffairs = affairs;
+    mAffairs = affairs;
   }
 
   public List<String> getSpecializations() {
@@ -88,11 +97,11 @@ public class UserResponse {
   }
 
   public UserType getType() {
-    return mType;
+    return UserType.valueOf(mType.toUpperCase());
   }
 
-  public void setType(UserType type) {
-    this.mType = type;
+  public void setType(String type) {
+    mType = type;
   }
 
   public String getCertificationNumber() {
@@ -100,7 +109,7 @@ public class UserResponse {
   }
 
   public void setCertificationNumber(String certificationNumber) {
-    this.mCertificationNumber = certificationNumber;
+    mCertificationNumber = certificationNumber;
   }
 
   public String getCompany() {
@@ -108,7 +117,7 @@ public class UserResponse {
   }
 
   public void setCompany(String company) {
-    this.mCompany = company;
+    mCompany = company;
   }
 
   public Avatar getAvatar() {
@@ -116,6 +125,6 @@ public class UserResponse {
   }
 
   public void setAvatar(Avatar avatar) {
-    this.mAvatar = avatar;
+    mAvatar = avatar;
   }
 }

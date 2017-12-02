@@ -12,8 +12,9 @@ import com.ryj.di.DaggerApplicationComponent;
 import com.ryj.di.GlobalModule;
 import com.ryj.di.NetworkModule;
 
-import io.fabric.sdk.android.Fabric;
 import net.danlew.android.joda.JodaTimeAndroid;
+
+import io.fabric.sdk.android.Fabric;
 
 public class App extends Application {
 
@@ -28,21 +29,21 @@ public class App extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
-//    Fabric.with(this, new Crashlytics());
+    Fabric.with(this, new Crashlytics());
     mInstance = this;
     JodaTimeAndroid.init(this);
     Fresco.initialize(
-            mInstance,
-            ImagePipelineConfig.newBuilder(mInstance)
-                    .setBitmapsConfig(Bitmap.Config.RGB_565)
-                    .setDownsampleEnabled(true)
-                    .build());
+        mInstance,
+        ImagePipelineConfig.newBuilder(mInstance)
+            .setBitmapsConfig(Bitmap.Config.RGB_565)
+            .setDownsampleEnabled(true)
+            .build());
     mComponent =
-            DaggerApplicationComponent.builder()
-                    .applicationModule(new ApplicationModule(mInstance))
-                    .networkModule(new NetworkModule(mInstance))
-                    .globalModule(new GlobalModule(mInstance))
-                    .build();
+        DaggerApplicationComponent.builder()
+            .applicationModule(new ApplicationModule(mInstance))
+            .networkModule(new NetworkModule(mInstance))
+            .globalModule(new GlobalModule(mInstance))
+            .build();
   }
 
   public ApplicationComponent getComponent() {

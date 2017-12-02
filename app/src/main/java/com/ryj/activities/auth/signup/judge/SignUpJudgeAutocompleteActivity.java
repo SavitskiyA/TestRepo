@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
-import com.ryj.adapters.AutocompleteListBaseAdapter;
+import com.ryj.adapters.AutocompleteAdapter;
 import com.ryj.interfaces.LoadListener;
 import com.ryj.models.User;
 import com.ryj.models.request.SignUpQuery;
@@ -29,7 +29,6 @@ import javax.inject.Inject;
 
 import butterknife.BindString;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /** Created by andrey on 8/17/17. */
@@ -44,13 +43,13 @@ public class SignUpJudgeAutocompleteActivity extends BaseActivity implements Loa
   @BindView(R.id.title)
   TextView mTitle;
 
-  @BindView(R.id.fullname)
+  @BindView(R.id.lawyer_fullname)
   AutoCompleteTextView mName;
 
   @BindString(R.string.text_user_is_already_registered)
   String mUserIsAlreadyRegistered;
 
-  private AutocompleteListBaseAdapter mAdapter;
+  private AutocompleteAdapter mAdapter;
   private int mPage = 1;
 
   public static void start(Context context) {
@@ -75,17 +74,16 @@ public class SignUpJudgeAutocompleteActivity extends BaseActivity implements Loa
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_signup_judge_autocomplete);
     getComponent().inject(this);
-    ButterKnife.bind(this);
     setSupportActionBar(mToolbar);
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
     onTextChanged();
-    mAdapter = new AutocompleteListBaseAdapter(this, this);
+    mAdapter = new AutocompleteAdapter(this, this);
     mName.setAdapter(mAdapter);
     mName.setOnItemClickListener(
         (parent, view, position, id) -> {
           Judge judge = (Judge) parent.getItemAtPosition(position);
-          if (judge.getAccessStatus() != null) {
+          if (judge.getAccessStatus() != 0) {
             ToastUtil.show(mUserIsAlreadyRegistered, false);
             mName.setText(StringUtils.EMPTY_STRING);
           } else {
@@ -101,23 +99,24 @@ public class SignUpJudgeAutocompleteActivity extends BaseActivity implements Loa
 
   @Override
   public void load(int page) {
-    mApi.getJudgesByName(mName.getText().toString().trim(), page)
-        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .compose(RxUtils.applySchedulers())
-        .subscribe(
-            response -> {
-              if (page > 1) {
-                mAdapter.addItems(response.getObjects());
-              } else {
-                mAdapter.reloadItems(response.getObjects());
-              }
-              if (response.getNextPage() == null) {
-                mAdapter.setIsLoadable(false);
-              }
-            },
-            throwable -> {
-              mErrorHandler.handleError(throwable, this);
-            });
+    doRequest(
+        mApi.getJudgesByName(mName.getText().toString().trim(), page)
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .compose(RxUtils.applySchedulers())
+            .subscribe(
+                response -> {
+                  if (page > 1) {
+                    mAdapter.addItems(response.getObjects());
+                  } else {
+                    mAdapter.reloadItems(response.getObjects());
+                  }
+                  if (response.getNextPage() == null) {
+                    mAdapter.setIsLoadable(false);
+                  }
+                },
+                throwable -> {
+                  mErrorHandler.handleError(throwable, this);
+                }));
   }
 
   @Override

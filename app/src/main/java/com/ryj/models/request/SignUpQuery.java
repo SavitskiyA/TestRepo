@@ -29,9 +29,9 @@ public class SignUpQuery implements Serializable {
   }
 
   public SignUpQuery(User user, Account account, Session session) {
-    this.mUser = user;
-    this.mAccount = account;
-    this.mSession = session;
+    mUser = user;
+    mAccount = account;
+    mSession = session;
   }
 
   public User getUser() {
@@ -39,7 +39,7 @@ public class SignUpQuery implements Serializable {
   }
 
   public void setUser(User user) {
-    this.mUser = user;
+    mUser = user;
   }
 
   public Account getAccount() {
@@ -47,7 +47,7 @@ public class SignUpQuery implements Serializable {
   }
 
   public void setAccount(Account account) {
-    this.mAccount = account;
+    mAccount = account;
   }
 
   public Session getSession() {
@@ -55,6 +55,6 @@ public class SignUpQuery implements Serializable {
   }
 
   public void setSession(Session session) {
-    this.mSession = session;
+    mSession = session;
   }
 }

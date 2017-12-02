@@ -2,9 +2,13 @@ package com.ryj.utils;
 
 import android.support.annotation.Nullable;
 import android.support.v4.util.LruCache;
+import android.text.TextUtils;
+import android.widget.TextView;
 
+import com.ryj.Constants;
 import com.ryj.models.User;
 import com.ryj.models.response.Judge;
+import com.ryj.models.response.Lawyer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +17,7 @@ public class StringUtils {
   public static final String ZERO = "0";
   public static final String SLASH = "/";
   public static final String COMA = ",";
+  public static final String DOT = ".";
   public static final String SPACE = " ";
   public static final String EMPTY_STRING = "";
   public static final String EMAIL_PATTERN =
@@ -30,8 +35,12 @@ public class StringUtils {
   public static final String ONLY_DIGITS_PATTERN = "^([ ]*)[0-9]+([ ]*)$";
   public static final String LETTERS_DIGITS_PATTERN = "^([ ]*)[A-Za-zА-Яа-яЁёІіҐґЇї0-9_ ]*([ ]*)$";
   public static final String JUDGES_WERE_FOUND = "judges were found";
+  public static final String DATE_TEMPLATE_CLIENT = "dd.MM.yyyy 'at' HH:mm";
+  public static final String DATE_TEMPLATE_CLIENT_TODAY = "'Today at' HH:mm";
+  public static final String DATE_TEMPLATE_SERVER = "yyyy-MM-dd'T'HH:mm:ss";
   private static final LruCache<Integer, String> CACHE_JUDGE = new LruCache<>(1000);
   private static final LruCache<Integer, String> CACHE_JUDGE_ABBR = new LruCache<>(1000);
+  private static final LruCache<Integer, String> CACHE_AUTHOR_ABBR = new LruCache<>(1000);
 
   public static String getStringFromList(List<String> list, String separator) {
     StringBuilder builder = new StringBuilder();
@@ -117,4 +126,59 @@ public class StringUtils {
     return cacheData;
   }
 
+  public static String getAbbrFromFullName(@Nullable Lawyer lawyer) {
+    if (lawyer == null) {
+      return EMPTY_STRING;
+    }
+    String cacheData = CACHE_AUTHOR_ABBR.get(lawyer.hashCode());
+    if (cacheData != null) {
+      return cacheData;
+    }
+    StringBuilder builder = new StringBuilder();
+    cacheData =
+        builder
+            .append(lawyer.getLastName().substring(0, 1))
+            .append(lawyer.getFirstName().substring(0, 1))
+            .toString();
+    CACHE_AUTHOR_ABBR.put(lawyer.hashCode(), cacheData);
+    return cacheData;
+  }
+
+  public static String toUpperCase(String value, int from, int to) {
+    if (from >= 0 && to > 0) {
+      if (from < to && to <= value.length()) {
+        return new StringBuilder()
+            .append(value.substring(from, to).toUpperCase())
+            .append(value.substring(to))
+            .toString();
+      } else {
+        throw new RuntimeException();
+      }
+    } else {
+      throw new RuntimeException();
+    }
+  }
+
+  public static String firstUpperCase(String value) {
+    return value.substring(0, 1).toUpperCase().concat(value.substring(1));
+  }
+
+  public static String getFullName(Lawyer lawyer) {
+    return lawyer.getLastName() + SPACE + lawyer.getFirstName();
+  }
+
+  public static int getFullNameLength(@Nullable Lawyer lawyer) {
+    return getFullName(lawyer).length();
+  }
+
+  public static boolean isPasswordValid(String password) {
+    return password.length() > Constants.MIN_PASSWORD_LENGTH && password.length() > 0;
+  }
+
+  public static boolean isFieldEmpty(TextView... views) {
+    for (TextView v : views) {
+      if (TextUtils.isEmpty(v.getText())) return false;
+    }
+    return true;
+  }
 }

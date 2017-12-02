@@ -12,16 +12,19 @@ import android.widget.TextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.activities.auth.signin.SignInActivity;
-import com.ryj.adapters.TutorialPagerAdapter;
+import com.ryj.adapters.TutorialAdapter;
+import com.ryj.storage.prefs.Prefs;
+
+import javax.inject.Inject;
 
 import butterknife.BindArray;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 
 public class TutorialActivity extends BaseActivity {
   private static final String TAG = "TutorialActivity";
+  @Inject Prefs mPrefs;
 
   @BindView(R.id.pager_container)
   ViewPager mPager;
@@ -47,13 +50,17 @@ public class TutorialActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_tutorial);
-    ButterKnife.bind(this);
-    mPager.setAdapter(new TutorialPagerAdapter(mTutorials, mImages, this));
+    getComponent().inject(this);
+    mPager.setAdapter(new TutorialAdapter(mTutorials, mImages, this));
     mIndicator.setViewPager(mPager);
   }
 
   @OnClick(R.id.skip)
   public void onSkipClick() {
+    if (mPrefs.getSessionToken() != null) {
+      onBackPressed();
+      return;
+    }
     SignInActivity.start(this);
     finish();
   }

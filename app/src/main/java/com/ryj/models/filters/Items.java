@@ -5,10 +5,6 @@ import com.ryj.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by andrey on 10/19/17.
- */
-
 public class Items<T> {
   private List<String> mItemsClient = new ArrayList<>();
   private List<T> mItemsServer = new ArrayList<>();
@@ -25,7 +21,7 @@ public class Items<T> {
   }
 
   public void setItemsClient(List<String> itemsClient) {
-    this.mItemsClient = itemsClient;
+    mItemsClient = itemsClient;
   }
 
   public List<T> getItemsServer() {
@@ -33,7 +29,7 @@ public class Items<T> {
   }
 
   public void setItemsServer(List<T> itemsServer) {
-    this.mItemsServer = itemsServer;
+    mItemsServer = itemsServer;
   }
 
   public boolean[] getBooleans() {
@@ -41,12 +37,12 @@ public class Items<T> {
   }
 
   public void setBoolean(boolean enable, int position) {
-    this.mBooleans[position] = enable;
+    mBooleans[position] = enable;
   }
 
   public String getResultClient() {
     return StringUtils.getStringFromList(
-            getItemsClient(), getBooleans(), StringUtils.DOT_COMMA_SPACE);
+        getItemsClient(), getBooleans(), StringUtils.DOT_COMMA_SPACE);
   }
 
   public List<T> getResultServer() {

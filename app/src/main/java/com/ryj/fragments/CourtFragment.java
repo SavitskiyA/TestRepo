@@ -12,9 +12,8 @@ import android.widget.TextView;
 import com.github.ornolfr.ratingview.RatingView;
 import com.ryj.R;
 import com.ryj.activities.BottomBarContainerActivity;
-import com.ryj.adapters.ItemListRecyclerAdapter;
-import com.ryj.dialogs.SpinnerDialog;
-import com.ryj.interfaces.OnHolderListener;
+import com.ryj.adapters.JudgeAdapter;
+import com.ryj.interfaces.OnHolderClickListener;
 import com.ryj.models.response.Court;
 import com.ryj.models.response.Judge;
 import com.ryj.utils.RxUtils;
@@ -30,12 +29,9 @@ import javax.inject.Inject;
 
 import butterknife.BindString;
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-/**
- * Created by andrey on 10/17/17.
- */
-public class CourtFragment extends BaseFragment implements OnHolderListener {
+public class CourtFragment extends BaseFragment implements OnHolderClickListener {
   public static final String TAG = "CourtFragment";
   public static final String EXTRA_COURT_ID = "court_id";
   public static final String EXTRA_COURT_NAME = "court_name";
@@ -45,10 +41,8 @@ public class CourtFragment extends BaseFragment implements OnHolderListener {
   @BindString(R.string.text_court)
   public String mTitle;
 
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
 
   @BindView(R.id.courts_found_count)
   TextView mFoundCount;
@@ -65,12 +59,12 @@ public class CourtFragment extends BaseFragment implements OnHolderListener {
   @BindView(R.id.recycler_view)
   RecyclerView mRecyclerView;
 
-  private ItemListRecyclerAdapter mAdapter;
+  private JudgeAdapter mAdapter;
+  private int mCourtId;
   private List<Judge> mJudgeList = new ArrayList<>();
-  private SpinnerDialog mSpinnerDialog;
 
   public static CourtFragment newInstance(
-          int courtId, String courtName, int courtMarksCount, float courtRating) {
+      int courtId, String courtName, int courtMarksCount, float courtRating) {
     Bundle bundle = new Bundle();
     bundle.putInt(EXTRA_COURT_ID, courtId);
     bundle.putString(EXTRA_COURT_NAME, courtName);
@@ -85,81 +79,74 @@ public class CourtFragment extends BaseFragment implements OnHolderListener {
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     getComponent().inject(this);
+    mCourtId = getArguments().getInt(EXTRA_COURT_ID);
   }
 
   @Override
   public void onResume() {
     super.onResume();
-    setActivityToolBarTitle(mTitle);
     switchActivityTab(BottomBarContainerActivity.getTabPosition(TAG), true);
-    setActivityOptionsMenuVisibility(false);
   }
 
   @Override
   public void onPause() {
     super.onPause();
     switchActivityTab(BottomBarContainerActivity.getTabPosition(TAG), false);
-    setActivityOptionsMenuVisibility(true);
   }
 
   @Nullable
   @Override
   public View onCreateView(
-          LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_court, container, false);
-    ButterKnife.bind(this, view);
-    mAdapter = new ItemListRecyclerAdapter<Judge>(inflater.getContext(), this);
+      LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View view = bindView(inflater.inflate(R.layout.fragment_court, container, false));
+    mAdapter = new JudgeAdapter<Judge>(inflater.getContext(), this);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
     mRecyclerView.setAdapter(mAdapter);
-    mSpinnerDialog = getSpinnerDialog();
-    mSpinnerDialog.setCancelable(false);
-    execute(getArguments().getInt(EXTRA_COURT_ID));
+    getCourt();
     return view;
   }
 
-  private void execute(int courtId) {
-    mApi.getCourt(courtId).compose(bindUntilEvent(FragmentEvent.STOP))
-            .compose(RxUtils.applySchedulers())
-            .compose(
-                    RxUtils.applyBeforeAndAfter(
-                            (disposable) ->
-                                    mSpinnerDialog.show(getActivity().getSupportFragmentManager(), StringUtils.EMPTY_STRING),
-                            () -> mSpinnerDialog.dismiss()))
-            .subscribe(
-                    response -> {
-                      mJudgeList.clear();
-                      mJudgeList.addAll(response.getJudges());
-                      mAdapter.addItems(response.getJudges());
-                      setView(response);
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable, this.getContext());
-                    });
+  private void setView(Court court) {
+    mCourt.setText(court.getName());
+    mCourtMarksCount.setText(String.valueOf(court.getRatingCount()));
+    mCourtRating.setRating(court.getRating());
   }
 
-  private void setView(Court court) {
-    if (court.getName() != null) {
-      mCourt.setText(court.getName());
-    } else {
-      mCourt.setText(StringUtils.EMPTY_STRING);
-    }
-    if (court.getRatingCount() != null) {
-      mCourtMarksCount.setText(court.getRatingCount());
-    } else {
-      mCourtMarksCount.setText(StringUtils.EMPTY_STRING);
-    }
-    if (court.getAvgRating() != null) {
-      mCourtRating.setRating(court.getAvgRating());
-    } else {
-      mCourtRating.setRating(0f);
-    }
-    mFoundCount.setText(
-            String.valueOf(court.getJudges().size())
-                    + StringUtils.SPACE
-                    + StringUtils.JUDGES_WERE_FOUND);
+  public void getCourt() {
+    doRequest(
+        mApi.getCourt(mCourtId)
+            .compose(bindUntilEvent(FragmentEvent.STOP))
+            .compose(RxUtils.applySchedulers())
+            .subscribe(
+                response -> {
+                  mFoundCount.setText(
+                      new StringBuilder()
+                          .append(response.getJudges().size())
+                          .append(StringUtils.SPACE)
+                          .append(StringUtils.JUDGES_WERE_FOUND));
+                  setView(response);
+                  mJudgeList.clear();
+                  mJudgeList.addAll(response.getJudges());
+                  mAdapter.reloadItems(response.getJudges());
+                },
+                throwable -> {
+                  mErrorHandler.handleError(throwable, this.getContext());
+                }));
   }
 
   @Override
-  public void onHolderClicked(boolean enable, int position) {
+  public void onHolderClick(boolean enable, int position) {
+    Judge judge = mJudgeList.get(position);
+    replaceFragment(
+        JudgeFragment.newInstance(judge.getId()), R.id.container, true, false, JudgeFragment.TAG);
+  }
+
+  @OnClick(R.id.back)
+  void onClick(View v) {
+    switch (v.getId()) {
+      case R.id.back:
+        getActivity().onBackPressed();
+        break;
+    }
   }
 }

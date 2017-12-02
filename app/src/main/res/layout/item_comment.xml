@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:fresce="http://schemas.android.com/tools"
+                android:id="@+id/frame_comment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp">
 
   <com.facebook.drawee.view.SimpleDraweeView
     android:id="@+id/photo"
@@ -25,9 +27,8 @@
     android:textColor="@android:color/background_light"
     android:textSize="@dimen/size_bottom_text_20sp"/>
 
-
   <TextView
-    android:id="@+id/fullname"
+    android:id="@+id/lawyer_fullname"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="100dp"
@@ -35,8 +36,8 @@
     android:layout_marginTop="24dp"
     android:fontFamily="sans-serif-medium"
     android:letterSpacing="0.03"
-    android:lines="2"
-    android:text="Петро Кіт Петро Кіт Петро Кіт Петро Кіт Петро Кіт"
+    android:maxLines="2"
+    android:text="Петро Кіт Петро Кіт Петро Кіт Петро Кіт Петро Кіт //    mDisposable.clear();"
     android:textColor="@color/colorBlackText"
     android:textSize="@dimen/size_text_16sp"
     android:textStyle="normal"/>
@@ -59,13 +60,12 @@
     android:id="@+id/body"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/fullname"
+    android:layout_below="@+id/lawyer_fullname"
     android:layout_marginEnd="20dp"
     android:layout_marginStart="100dp"
     android:layout_marginTop="6dp"
     android:fontFamily="sans-serif"
     android:letterSpacing="0.03"
-    android:lines="5"
     android:text="Чудовий хлопчина, невимовно радий знайомству і можливості працювати разом."
     android:textColor="@color/colorBlackTextTranspGray"
     android:textStyle="normal"/>

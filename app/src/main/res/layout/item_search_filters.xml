@@ -3,6 +3,7 @@
              xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
+             android:paddingBottom="8dp"
              app:layout_scrollFlags="scroll|enterAlways">
 
   <FrameLayout
@@ -21,7 +22,7 @@
       android:drawableLeft="@drawable/ic_search_gray"
       android:drawablePadding="8dp"
       android:fontFamily="sans-serif"
-      android:hint="@string/text_judge_search"
+      android:hint="@string/text_court_search"
       android:imeOptions="actionDone"
       android:inputType="text"
       android:paddingLeft="8dp"
@@ -39,7 +40,7 @@
   </FrameLayout>
 
   <TextView
-    android:id="@+id/best_rated"
+    android:id="@+id/rated"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginLeft="16dp"

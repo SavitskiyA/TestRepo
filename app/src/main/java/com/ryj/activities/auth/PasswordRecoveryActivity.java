@@ -26,7 +26,6 @@ import javax.inject.Inject;
 
 import butterknife.BindString;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
@@ -66,7 +65,6 @@ public class PasswordRecoveryActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_password_recovery);
     getComponent().inject(this);
-    ButterKnife.bind(this);
     setSupportActionBar(mToolbar);
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
@@ -109,21 +107,22 @@ public class PasswordRecoveryActivity extends BaseActivity {
   }
 
   private void executeRestorePasswordRequest(String email) {
-    mApi.restorePassword(email)
-        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .compose(RxUtils.applySchedulers())
-        .compose(
-            RxUtils.applyBeforeAndAfter(
-                (disposable) ->
-                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
-                () -> mSpinnerDialog.dismiss()))
-        .subscribe(
-            response -> {
-              PasswordRecoveryFinishActivity.start(this);
-            },
-            throwable -> {
-              mErrorHandler.handleErrorByRequestType(
-                  throwable, this, RequestType.PASSWORD_RECOVERY);
-            });
+    doRequest(
+        mApi.restorePassword(email)
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .compose(RxUtils.applySchedulers())
+            .compose(
+                RxUtils.applyBeforeAndAfter(
+                    (disposable) ->
+                        mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
+                    () -> mSpinnerDialog.dismiss()))
+            .subscribe(
+                response -> {
+                  PasswordRecoveryFinishActivity.start(this);
+                },
+                throwable -> {
+                  mErrorHandler.handleErrorByRequestType(
+                      throwable, this, RequestType.PASSWORD_RECOVERY);
+                }));
   }
 }

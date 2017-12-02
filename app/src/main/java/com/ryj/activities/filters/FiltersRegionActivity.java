@@ -7,14 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
-import com.ryj.adapters.ListRecyclerAdapter;
-import com.ryj.adapters.LoadableListRecyclerAdapter;
-import com.ryj.interfaces.LoadListener;
-import com.ryj.interfaces.OnHolderListener;
+import com.ryj.adapters.RegionAdapter;
+import com.ryj.interfaces.OnHolderClickListener;
 import com.ryj.models.filters.Filters;
 import com.ryj.models.response.Area;
 import com.ryj.models.response.Region;
@@ -29,30 +28,18 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-/**
- * Created by andrey on 9/19/17.
- */
-public class FiltersRegionActivity extends BaseActivity implements LoadListener, OnHolderListener {
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
-  @Inject
-  Filters mFilters;
+/** Created by andrey on 9/19/17. */
+public class FiltersRegionActivity extends BaseActivity implements OnHolderClickListener {
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
+  @Inject Filters mFilters;
 
-  @BindView(R.id.recycler_view_list)
+  @BindView(R.id.regions)
   RecyclerView mRegions;
 
-  @BindView(R.id.toolbar)
-  Toolbar mToolBar;
-
-  @BindView(R.id.title)
-  TextView mTitle;
-
-  private LoadableListRecyclerAdapter mAdapter;
-  private int mPage = 1;
+  private RegionAdapter<Area> mAdapter;
   private List<Area> mAreas = new ArrayList<>();
 
   public static void start(Context context) {
@@ -63,13 +50,13 @@ public class FiltersRegionActivity extends BaseActivity implements LoadListener,
   @Nullable
   @Override
   protected Toolbar getToolbar() {
-    return mToolBar;
+    return null;
   }
 
   @Nullable
   @Override
   protected TextView getToolbarTitle() {
-    return mTitle;
+    return null;
   }
 
   @Override
@@ -77,50 +64,26 @@ public class FiltersRegionActivity extends BaseActivity implements LoadListener,
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_filters_regions);
     getComponent().inject(this);
-    ButterKnife.bind(this);
-    setSupportActionBar(mToolBar);
-    setToolbarBackArrowEnabled(true);
-    setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
-    mAdapter = new LoadableListRecyclerAdapter(this, this, this);
+    mAdapter = new RegionAdapter<Area>(this, this);
     mRegions.setLayoutManager(new LinearLayoutManager(this));
     mRegions.setAdapter(mAdapter);
-    reset();
+    load();
   }
 
-  @Override
-  public void load(int page) {
-    mApi.getRegions(page)
-            .compose(bindUntilEvent(ActivityEvent.DESTROY))
-            .compose(RxUtils.applySchedulers())
-            .subscribe(
-                    response -> {
-                      if (page == 1) {
-                        mAdapter.reloadItems(getAreas(response.getRegions()));
-                      } else {
-                        mAdapter.addItems(getAreas(response.getRegions()));
-                      }
-                      mAreas.addAll(getAreas(response.getRegions()));
-                      mAdapter.setCurrentCheckedItem(getLastRegionIdPosition());
-                      if (response.getNextPage() == null) {
-                        mAdapter.setIsLoadable(false);
-                      }
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable, this);
-                    });
-  }
-
-  @Override
-  public int increment() {
-    return mPage++;
-  }
-
-  @Override
-  public void reset() {
-    mPage = 1;
-    mAdapter.setIsLoadable(true);
-    load(mPage);
+  public void load() {
+    mApi.getRegions()
+        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+        .compose(RxUtils.applySchedulers())
+        .subscribe(
+            response -> {
+              mAreas.addAll(getAreas(response.getRegions()));
+              mAdapter.reloadItems(getAreas(response.getRegions()));
+              mAdapter.setCurrentCheckedItem(getLastRegionIdPosition());
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this);
+            });
   }
 
   private List<Area> getAreas(List<Region> regions) {
@@ -141,10 +104,23 @@ public class FiltersRegionActivity extends BaseActivity implements LoadListener,
   }
 
   @Override
-  public void onHolderClicked(boolean enable, int position) {
+  public void onHolderClick(boolean enable, int position) {
     mFilters.setRegionId(mAreas.get(position).getId());
     mFilters.setRegion(mAreas.get(position).getName());
     mFilters.setCityId(null);
     mFilters.setCity(null);
+  }
+
+  @OnClick({R.id.back, R.id.check})
+  void onClick(View view) {
+    switch (view.getId()) {
+      case R.id.back:
+        mFilters.clearRegion();
+        onBackPressed();
+        return;
+      case R.id.check:
+        onBackPressed();
+        return;
+    }
   }
 }

@@ -3,20 +3,26 @@ package com.ryj.adapters.viewholders;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.ryj.interfaces.OnHolderListener;
+import com.ryj.interfaces.OnLoadMoreClickListener;
 
-/**
- * Created by andrey on 10/25/17.
- */
+/** Created by andrey on 11/30/17. */
+public class BaseViewHolder extends RecyclerView.ViewHolder {
+  private int mTag;
+  protected OnLoadMoreClickListener mOnLoadMoreClickListener;
 
-public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
-  protected OnHolderListener mListener;
-
-  public BaseViewHolder(View itemView, OnHolderListener listener) {
+  public BaseViewHolder(View itemView) {
     super(itemView);
-    mListener = listener;
   }
 
-  public abstract void setTag(int position);
+  public int getTag() {
+    return mTag;
+  }
 
+  public void setTag(int tag) {
+    mTag = tag;
+  }
+
+  public void setOnLoadMoreClickListener(OnLoadMoreClickListener onLoadMoreClickListener) {
+    mOnLoadMoreClickListener = onLoadMoreClickListener;
+  }
 }

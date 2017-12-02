@@ -23,7 +23,7 @@ public class Session implements Reflectable {
   }
 
   public Session(String token) {
-    this.mToken = token;
+    mToken = token;
   }
 
   public String getPlatform() {
@@ -35,7 +35,7 @@ public class Session implements Reflectable {
   }
 
   public void setToken(String token) {
-    this.mToken = token;
+    mToken = token;
   }
 
   @NonNull

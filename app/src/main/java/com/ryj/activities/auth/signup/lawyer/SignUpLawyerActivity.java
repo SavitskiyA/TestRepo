@@ -68,7 +68,7 @@ public class SignUpLawyerActivity extends BaseActivity {
   @BindView(R.id.certificate_number)
   EditText mCertificateNumber;
 
-  @BindView(R.id.fullname)
+  @BindView(R.id.lawyer_fullname)
   EditText mName;
 
   @BindView(R.id.surname)
@@ -225,7 +225,7 @@ public class SignUpLawyerActivity extends BaseActivity {
     mCertificateNumberLayout.setErrorEnabled(false);
   }
 
-  @OnTextChanged(R.id.fullname)
+  @OnTextChanged(R.id.lawyer_fullname)
   protected void handleNameChanged() {
     mNameLayout.setErrorEnabled(false);
   }
@@ -292,7 +292,7 @@ public class SignUpLawyerActivity extends BaseActivity {
 
   @OnFocusChange({
           R.id.certificate_number,
-          R.id.fullname,
+          R.id.lawyer_fullname,
           R.id.surname,
           R.id.email,
           R.id.phone,
@@ -306,7 +306,7 @@ public class SignUpLawyerActivity extends BaseActivity {
           mCertificateNumberLayout.setError(mCertificationNumberValidationError);
         }
         break;
-      case R.id.fullname:
+      case R.id.lawyer_fullname:
         if (!isFocused && mName.length() > 0 && !isNameValid()) {
           mNameLayout.setError(mNameValidationError);
         }

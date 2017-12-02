@@ -19,7 +19,6 @@ import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.activities.auth.signup.SignUpListActivity;
 import com.ryj.activities.auth.signup.ThankYouActivity;
-import com.ryj.dialogs.SpinnerDialog;
 import com.ryj.models.Account;
 import com.ryj.models.Session;
 import com.ryj.models.enums.Affairs;
@@ -42,27 +41,20 @@ import javax.inject.Inject;
 import butterknife.BindArray;
 import butterknife.BindString;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 
-/**
- * Created by andrey on 7/11/17.
- */
+/** Created by andrey on 7/11/17. */
 public class SignUpJudgeActivity extends BaseActivity {
   private static final String TAG = "SignUpJudgeActivity";
   private static String EXTRA_LIST_STRING = "list_string";
   private static String EXTRA_LIST_BOOLEANS = "list_booleans";
   private static int REQUEST_CODE = 1;
-  @Inject
-  Api mApi;
-  @Inject
-  ErrorHandler mErrorHandler;
-  @Inject
-  SignUpQuery mQuery;
-  @Inject
-  Items mItems;
+  @Inject Api mApi;
+  @Inject ErrorHandler mErrorHandler;
+  @Inject SignUpQuery mQuery;
+  @Inject Items mItems;
 
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
@@ -82,7 +74,7 @@ public class SignUpJudgeActivity extends BaseActivity {
   @BindView(R.id.category)
   EditText mCategory;
 
-  @BindView(R.id.fullname)
+  @BindView(R.id.lawyer_fullname)
   EditText mFullName;
 
   @BindView(R.id.phone)
@@ -131,14 +123,13 @@ public class SignUpJudgeActivity extends BaseActivity {
   String mEmailEmpty;
 
   private AlertDialog mDialog;
-  private SpinnerDialog mSpinnerDialog;
   private Affairs[] mAffairsServer = {
-          Affairs.ADMIN_VIOLATION,
-          Affairs.ADMINISTRATIVE,
-          Affairs.CIVIL,
-          Affairs.CRIMINAL,
-          Affairs.ECONOMIC,
-          Affairs.URGENT_LAWSUITS
+    Affairs.ADMIN_VIOLATION,
+    Affairs.ADMINISTRATIVE,
+    Affairs.CIVIL,
+    Affairs.CRIMINAL,
+    Affairs.ECONOMIC,
+    Affairs.URGENT_LAWSUITS
   };
 
   public static void start(Context context) {
@@ -151,7 +142,6 @@ public class SignUpJudgeActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_signup_judge);
     getComponent().inject(this);
-    ButterKnife.bind(this);
     setSupportActionBar(mToolbar);
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
@@ -160,8 +150,6 @@ public class SignUpJudgeActivity extends BaseActivity {
     mTerms.setMovementMethod(LinkMovementMethod.getInstance());
     URLSpanNoUnderline.removeUnderlines((Spannable) mTerms.getText());
     mDialog = getDialog(mOk);
-    mSpinnerDialog = getSpinnerDialog();
-    mSpinnerDialog.setCancelable(false);
     mFullName.setText(StringUtils.getFullName(mQuery.getUser()));
     mItems.init(Arrays.asList(mAffairsClient), Arrays.asList(mAffairsServer));
   }
@@ -197,7 +185,7 @@ public class SignUpJudgeActivity extends BaseActivity {
     }
   }
 
-  @OnTextChanged(R.id.fullname)
+  @OnTextChanged(R.id.lawyer_fullname)
   protected void handleNameChanged() {
     mFullNameLayout.setErrorEnabled(false);
   }
@@ -294,21 +282,22 @@ public class SignUpJudgeActivity extends BaseActivity {
   }
 
   private void executeSignUpRequest(SignUpQuery query) {
-    mApi.signUp(query)
+    doRequest(
+        mApi.signUp(query)
             .compose(bindUntilEvent(ActivityEvent.DESTROY))
             .compose(RxUtils.applySchedulers())
             .compose(
-                    RxUtils.applyBeforeAndAfter(
-                            (disposable) ->
-                                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
-                            () -> mSpinnerDialog.dismiss()))
+                RxUtils.applyBeforeAndAfter(
+                    (disposable) ->
+                        getSpinnerDialog().show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
+                    () -> getSpinnerDialog().dismiss()))
             .subscribe(
-                    response -> {
-                      ThankYouActivity.start(this);
-                      finish();
-                    },
-                    throwable -> {
-                      mErrorHandler.handleErrorByRequestType(throwable, this, RequestType.SIGN_UP_TEMP);
-                    });
+                response -> {
+                  ThankYouActivity.start(this);
+                  finish();
+                },
+                throwable -> {
+                  mErrorHandler.handleErrorByRequestType(throwable, this, RequestType.SIGN_UP_TEMP);
+                }));
   }
 }

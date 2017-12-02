@@ -8,12 +8,16 @@ import com.ryj.models.enums.UserType;
 
 public class PrefsImpl implements Prefs {
 
-  public static final String KEY_IS_TUTORIAL_FIRST_LAUNCH =
-          Constants.PACKAGE_NAME + ".IS_FIRST_LAUNCH";
-  public static final String KEY_SESSION_TOKEN = Constants.PACKAGE_NAME + ".SESSION_TOKEN";
-  public static final String KEY_USERTYPE = Constants.PACKAGE_NAME + ".USERTYPE";
-  public static final String KEY_USER_ID = Constants.PACKAGE_NAME + ".USER_ID";
-  public static final String KEY_MESSAGE_TO_EMAIL = Constants.PACKAGE_NAME + ".MESSAGE_TO_EMAIL";
+  private static final String KEY_IS_TUTORIAL_FIRST_LAUNCH =
+      Constants.PACKAGE_NAME + ".IS_FIRST_LAUNCH";
+  private static final String KEY_SESSION_TOKEN = Constants.PACKAGE_NAME + ".SESSION_TOKEN";
+  private static final String KEY_USERTYPE = Constants.PACKAGE_NAME + ".USERTYPE";
+  private static final String KEY_USER_ID = Constants.PACKAGE_NAME + ".USER_ID";
+  private static final String KEY_MESSAGE_TO_EMAIL = Constants.PACKAGE_NAME + ".MESSAGE_TO_EMAIL";
+  private static final String KEY_USER_CATEGORIES = Constants.PACKAGE_NAME + ".USER_CATEGORIES";
+  private static final String KEY_USER_EMAIL = Constants.PACKAGE_NAME + ".USER_EMAIL";
+  private static final String KEY_USER_PHONE = Constants.PACKAGE_NAME + ".USER_PHONE";
+  private static final String KEY_USER_PHOTO = Constants.PACKAGE_NAME + ".USER_PHOTO";
 
   private SharedPreferences mSharedPreferences;
 
@@ -94,14 +98,54 @@ public class PrefsImpl implements Prefs {
     saveInt(KEY_USER_ID, id == null ? 0 : id);
   }
 
-  @Nullable
   @Override
   public boolean getIsMessageToEmail() {
-    return mSharedPreferences.getBoolean(KEY_MESSAGE_TO_EMAIL, true);
+    return mSharedPreferences.getBoolean(KEY_MESSAGE_TO_EMAIL, false);
   }
 
   @Override
   public void setIsMessageToEmail(boolean isActive) {
     saveBoolean(KEY_MESSAGE_TO_EMAIL, isActive);
+  }
+
+  @Nullable
+  @Override
+  public String getCategories() {
+    return mSharedPreferences.getString(KEY_USER_CATEGORIES, null);
+  }
+
+  public void setCategoriest(String categories) {
+    saveString(KEY_USER_CATEGORIES, categories);
+  }
+
+  @Nullable
+  @Override
+  public String getEmail() {
+    return mSharedPreferences.getString(KEY_USER_EMAIL, null);
+  }
+
+  public void setEmail(String email) {
+    saveString(KEY_USER_EMAIL, email);
+  }
+
+  @Nullable
+  @Override
+  public String getPhone() {
+    return mSharedPreferences.getString(KEY_USER_PHONE, null);
+  }
+
+  public void setPhone(String phone) {
+    saveString(KEY_USER_PHONE, phone);
+  }
+
+  @Nullable
+  @Override
+  public String getPhoto() {
+    return mSharedPreferences.getString(KEY_USER_PHOTO, null);
+  }
+
+  @Override
+  public void setPhoto(String photo) {
+    saveString(KEY_USER_PHOTO, photo);
   }
 }

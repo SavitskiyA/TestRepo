@@ -1,28 +1,35 @@
 package com.ryj.models.response;
 
+import javax.annotation.Nullable;
+
 /**
  * Created by andrey on 11/2/17.
  */
 
 public class Mark {
-  private String mName;
-  private int mValue;
+  private String mMarkNameClient;
+  private double mValue;
   private int mDenominator = 10;
 
-  public Mark(String mName, int mValue) {
-    this.mName = mName;
-    this.mValue = mValue;
+  public Mark(String mName, @Nullable Double value) {
+    this.mMarkNameClient = mName;
+    if (value != null) {
+      this.mValue = mValue;
+    } else {
+      this.mValue = 0;
+    }
+
   }
 
-  public String getName() {
-    return mName;
+  public String getMarkNameClient() {
+    return mMarkNameClient;
   }
 
-  public void setName(String name) {
-    this.mName = mName;
+  public void setMarkNameClient(String name) {
+    this.mMarkNameClient = name;
   }
 
-  public int getValue() {
+  public double getValue() {
     return mValue;
   }
 

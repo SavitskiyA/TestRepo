@@ -1,6 +1,5 @@
 package com.ryj.adapters.viewholders;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -15,7 +14,7 @@ import butterknife.ButterKnife;
  * Created by andrey on 10/5/17.
  */
 
-public class LoaderViewHolder extends RecyclerView.ViewHolder {
+public class LoaderViewHolder extends BaseViewHolder {
   @BindView(R.id.load_frame)
   FrameLayout mFrame;
 
@@ -25,7 +24,6 @@ public class LoaderViewHolder extends RecyclerView.ViewHolder {
   public LoaderViewHolder(View itemView) {
     super(itemView);
     ButterKnife.bind(this, itemView);
-
   }
 
   public void setLoadSpinnerVisible(int visible) {

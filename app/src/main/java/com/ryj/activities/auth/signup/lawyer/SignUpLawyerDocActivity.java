@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,7 +18,6 @@ import com.ryj.Constants;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.activities.auth.signup.ThankYouActivity;
-import com.ryj.dialogs.SpinnerDialog;
 import com.ryj.models.Document;
 import com.ryj.models.enums.RequestType;
 import com.ryj.models.request.SignUpQuery;
@@ -83,8 +81,6 @@ public class SignUpLawyerDocActivity extends BaseActivity {
   @BindString(R.string.text_camera_permissions)
   String mPermissions;
 
-  private SpinnerDialog mSpinnerDialog;
-
   public static void start(Context context) {
     Intent i = new Intent(context, SignUpLawyerDocActivity.class);
     context.startActivity(i);
@@ -105,8 +101,6 @@ public class SignUpLawyerDocActivity extends BaseActivity {
     setSupportActionBar(mToolbar);
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
-    mSpinnerDialog = getSpinnerDialog();
-    mSpinnerDialog.setCancelable(false);
   }
 
   @Nullable
@@ -195,11 +189,11 @@ public class SignUpLawyerDocActivity extends BaseActivity {
   }
 
   private MultipartBody.Part getAvatarAttachment() {
-    return IOUtils.toPart(new File(mQuery.getUser().getAvatarUri().getPath()));
+    return IOUtils.toPart(Constants.PARAM_NAME_AVATAR_PHOTO, new File(mQuery.getUser().getAvatarUri().getPath()));
   }
 
   private MultipartBody.Part getDocAttachment() {
-    return IOUtils.toPart(new File(mQuery.getUser().getDoc().getFileUri().getPath()));
+    return IOUtils.toPart(Constants.PARAM_NAME_DOC_PHOTO, new File(mQuery.getUser().getDoc().getFileUri().getPath()));
   }
 
   private Map<String, RequestBody> getUserPartMap() {
@@ -215,26 +209,28 @@ public class SignUpLawyerDocActivity extends BaseActivity {
   }
 
   private void executeSignUp() {
-    mApi.signUpLawyer(
-            getUserPartMap(),
-            getAccountPartMap(),
-            getSessionPartMap(),
-            getAvatarAttachment(),
-            getDocAttachment())
-        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-        .compose(RxUtils.applySchedulers())
-        .compose(
-            RxUtils.applyBeforeAndAfter(
-                (disposable) ->
-                    mSpinnerDialog.show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
-                () -> mSpinnerDialog.dismiss()))
-        .subscribe(
-            response -> {
-              ThankYouActivity.start(this);
-              finish();
-            },
-            throwable -> {
-              mErrorHandler.handleErrorByRequestType(throwable, this, RequestType.SIGN_UP_TEMP);
-            });
+    doRequest(
+        mApi.signUpLawyer(
+                getUserPartMap(),
+                getAccountPartMap(),
+                getSessionPartMap(),
+                getAvatarAttachment(),
+                getDocAttachment())
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .compose(RxUtils.applySchedulers())
+            .compose(
+                RxUtils.applyBeforeAndAfter(
+                    (disposable) ->
+                        getSpinnerDialog()
+                            .show(getSupportFragmentManager(), StringUtils.EMPTY_STRING),
+                    () -> getSpinnerDialog().dismiss()))
+            .subscribe(
+                response -> {
+                  ThankYouActivity.start(this);
+                  finish();
+                },
+                throwable -> {
+                  mErrorHandler.handleErrorByRequestType(throwable, this, RequestType.SIGN_UP_TEMP);
+                }));
   }
 }

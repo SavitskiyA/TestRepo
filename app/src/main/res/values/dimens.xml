@@ -17,6 +17,8 @@
   <dimen name="margin_sign_up_judge_small">16dp</dimen>
   <dimen name="margin_sign_up_judge_large">32dp</dimen>
 
+  <dimen name="margin_estim_dialog_24dp">24dp</dimen>
+
   <dimen name="padding_sign_up_judge_small">10dp</dimen>
   <dimen name="padding_sign_up_judge_large">30dp</dimen>
 

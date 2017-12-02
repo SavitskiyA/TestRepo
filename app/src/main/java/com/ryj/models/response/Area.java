@@ -1,13 +1,15 @@
 package com.ryj.models.response;
 
+import com.ryj.utils.StringUtils;
+
 /** Created by andrey on 9/18/17. */
 public class Area {
   private int mId;
   private String mName;
 
   public Area(int id, String name) {
-    this.mId = id;
-    this.mName = name;
+    mId = id;
+    mName = name;
   }
 
   public int getId() {
@@ -15,14 +17,14 @@ public class Area {
   }
 
   public void setId(int id) {
-    this.mId = id;
+    mId = id;
   }
 
   public String getName() {
-    return mName;
+    return mName == null ? StringUtils.EMPTY_STRING : mName;
   }
 
   public void setName(String name) {
-    this.mName = name;
+    mName = name;
   }
 }

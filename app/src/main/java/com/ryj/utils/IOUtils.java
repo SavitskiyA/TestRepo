@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 import com.ryj.Constants;
 import com.ryj.models.Reflectable;
-import com.ryj.models.response.DetailRatings;
 import com.ryj.models.response.Mark;
 
 import java.io.File;
@@ -20,17 +19,15 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-/**
- * Created by andrey on 8/11/17.
- */
-
+/** Created by andrey on 8/11/17. */
 public class IOUtils {
-  private final static String MAP_BRACKETS = "[]";
-  private final static String MAP_POSTFIX = "]";
+  private static final String MAP_BRACKETS = "[]";
+  private static final String MAP_POSTFIX = "]";
 
-  public static Map<String, RequestBody> getDataAsMap(Reflectable object,
-                                                      @Nullable String parentPrefix) {
-    final String prefix = parentPrefix == null
+  public static Map<String, RequestBody> getDataAsMap(
+      Reflectable object, @Nullable String parentPrefix) {
+    final String prefix =
+        parentPrefix == null
             ? object.getFieldMapPrefix()
             : parentPrefix + object.getFieldMapPrefix();
     Field[] fields = object.getClass().getDeclaredFields();
@@ -49,8 +46,7 @@ public class IOUtils {
         } else if (value instanceof Reflectable) {
           map.putAll(getDataAsMap((Reflectable) value, prefix));
         } else if (fieldType.isEnum()) {
-          map.put(prefix + serialName.value() + MAP_POSTFIX,
-                  toBody(value.toString()));
+          map.put(prefix + serialName.value() + MAP_POSTFIX, toBody(value.toString()));
         } else if (List.class.isAssignableFrom(fieldType)) {
           mapList(map, (List) value, prefix + serialName.value() + MAP_POSTFIX);
         } else {
@@ -63,9 +59,8 @@ public class IOUtils {
     return map;
   }
 
-
-  private static void mapList(@NonNull Map<String, RequestBody> map, @Nullable List list,
-                              @NonNull String prefix) {
+  private static void mapList(
+      @NonNull Map<String, RequestBody> map, @Nullable List list, @NonNull String prefix) {
     if (list == null || list.size() == 0) {
       return;
     }
@@ -78,31 +73,10 @@ public class IOUtils {
     return RequestBody.create(MediaType.parse(Constants.TEXT_PLAIN), value.toString());
   }
 
-  public static MultipartBody.Part toPart(File file) {
+  public static MultipartBody.Part toPart(String partName, File file) {
     RequestBody requestFile =
-            RequestBody.create(
-                    MediaType.parse(Constants.MULTIPART_FORM_DATA), file);
+        RequestBody.create(MediaType.parse(Constants.MULTIPART_FORM_DATA), file);
 
-    return MultipartBody.Part.createFormData(file.getName(), file.getName(), requestFile);
-  }
-
-  public static List<Mark> getListOfMarks(DetailRatings object) {
-    Field[] fields = object.getClass().getDeclaredFields();
-    List<Mark> marks = new ArrayList<>();
-    SerializedName serialName;
-    Class fieldType;
-    Object value;
-    for (Field field : fields) {
-      try {
-        field.setAccessible(true);
-        fieldType = field.getType();
-        serialName = field.getAnnotation(SerializedName.class);
-        value = field.get(object);
-        marks.add(new Mark(serialName.toString(), (Integer) value));
-      } catch (IllegalAccessException e) {
-        e.printStackTrace();
-      }
-    }
-    return marks;
+    return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
   }
 }

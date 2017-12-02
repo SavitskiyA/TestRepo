@@ -6,29 +6,12 @@
   android:layout_height="match_parent"
   android:background="@drawable/bg_dark">
 
-  <android.support.v7.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/size_statusbar_hight">
-
-    <TextView
-      android:id="@+id/title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:fontFamily="sans-serif"
-      android:text="@string/text_judges"
-      android:textColor="@android:color/background_light"
-      android:textSize="@dimen/size_text_18sp"/>
-  </android.support.v7.widget.Toolbar>
-
   <FrameLayout
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_above="@+id/border_line"
-    android:layout_below="@+id/toolbar"/>
+    android:layout_marginTop="24dp"/>
 
   <ImageView
     android:id="@+id/border_line"

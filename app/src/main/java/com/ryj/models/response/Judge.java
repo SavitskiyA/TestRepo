@@ -2,6 +2,9 @@ package com.ryj.models.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ryj.utils.StringUtils;
+
+import java.util.List;
 
 /** Created by andrey on 8/17/17. */
 public class Judge {
@@ -27,46 +30,50 @@ public class Judge {
 
   @SerializedName("avg_rating")
   @Expose
-  private Float mRating;
+  private float mRating;
 
   @SerializedName("ratings_count")
   @Expose
-  private Integer mRatingCount;
+  private int mRatingCount;
 
   @SerializedName("comments_count")
   @Expose
-  private Integer mCommentsCount;
+  private int mCommentsCount;
 
   @SerializedName("access_status")
   @Expose
-  private Integer mAccessStatus;
+  private int mAccessStatus;
 
-  @SerializedName("avg_detail_ratings")
+  @SerializedName("rating_criteria")
   @Expose
-  private DetailRatings avgDetailRatings;
+  private List<Rating> mRatingCriteria;
+
+  @SerializedName("is_favorite")
+  @Expose
+  private boolean mIsFavourite;
 
   public Integer getId() {
     return mId;
   }
 
   public void setId(Integer id) {
-    this.mId = id;
+    mId = id;
   }
 
   public String getFirstName() {
-    return mFirstName;
+    return mFirstName == null ? StringUtils.EMPTY_STRING : mFirstName;
   }
 
   public void setFirstName(String firstName) {
-    this.mFirstName = firstName;
+    mFirstName = firstName;
   }
 
   public String getLastName() {
-    return mLastName;
+    return mLastName == null ? StringUtils.EMPTY_STRING : mLastName;
   }
 
   public void setLastName(String lastName) {
-    this.mLastName = lastName;
+    mLastName = lastName;
   }
 
   public Avatar getAvatar() {
@@ -74,7 +81,7 @@ public class Judge {
   }
 
   public void setAvatar(Avatar avatar) {
-    this.mAvatar = avatar;
+    mAvatar = avatar;
   }
 
   public Court getCourt() {
@@ -82,38 +89,54 @@ public class Judge {
   }
 
   public void setCourt(Court court) {
-    this.mCourt = court;
+    mCourt = court;
   }
 
-  public Float getRating() {
+  public float getRating() {
     return mRating;
   }
 
-  public void setRating(Float rating) {
-    this.mRating = rating;
+  public void setRating(float rating) {
+    mRating = rating;
   }
 
-  public Integer getRatingCount() {
+  public int getRatingCount() {
     return mRatingCount;
   }
 
-  public void setRatingCount(Integer ratingCount) {
-    this.mRatingCount = ratingCount;
+  public void setRatingCount(int ratingCount) {
+    mRatingCount = ratingCount;
   }
 
-  public Integer getCommentsCount() {
+  public int getCommentsCount() {
     return mCommentsCount;
   }
 
-  public void setCommentsCount(Integer commentsCount) {
-    this.mCommentsCount = commentsCount;
+  public void setCommentsCount(int commentsCount) {
+    mCommentsCount = commentsCount;
   }
 
-  public Integer getAccessStatus() {
+  public int getAccessStatus() {
     return mAccessStatus;
   }
 
-  public void setAccessStatus(Integer accessStatus) {
-    this.mAccessStatus = accessStatus;
+  public void setAccessStatus(int accessStatus) {
+    mAccessStatus = accessStatus;
+  }
+
+  public boolean isFavourite() {
+    return mIsFavourite;
+  }
+
+  public void setIsFavourite(boolean isFavourite) {
+    mIsFavourite = isFavourite;
+  }
+
+  public List<Rating> getRatingCriteria() {
+    return mRatingCriteria;
+  }
+
+  public void setRatingCriteria(List<Rating> ratingCriteria) {
+    this.mRatingCriteria = ratingCriteria;
   }
 }

@@ -30,7 +30,6 @@ public class MainActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     getComponent().inject(this);
-    ButterKnife.bind(this);
   }
 
   @Nullable

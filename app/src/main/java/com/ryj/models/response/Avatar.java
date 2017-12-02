@@ -20,7 +20,7 @@ public class Avatar {
   }
 
   public void setOrigin(String origin) {
-    this.mOrigin = origin;
+    mOrigin = origin;
   }
 
   public String getSmall() {
@@ -28,6 +28,6 @@ public class Avatar {
   }
 
   public void setSmall(String small) {
-    this.mSmall = small;
+    mSmall = small;
   }
 }

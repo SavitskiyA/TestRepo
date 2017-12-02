@@ -20,9 +20,6 @@ android {
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//    jackOptions {
-//      enabled true
-//    }
   }
   buildTypes {
     release {
@@ -30,10 +27,6 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
-//  compileOptions {
-//    sourceCompatibility JavaVersion.VERSION_1_8
-//    targetCompatibility JavaVersion.VERSION_1_8
-//  }
   compileOptions {
     targetCompatibility 1.8
     sourceCompatibility 1.8
@@ -43,6 +36,7 @@ android {
 repositories {
   maven { url 'https://maven.fabric.io/public' }
   maven { url "https://jitpack.io" }
+  maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
@@ -99,4 +93,8 @@ dependencies {
   compile 'com.github.ornolfr:rating-view:0.1.2@aar'
 
   compile 'com.balysv:material-ripple:1.0.2'
+
+  compile 'com.hannesdorfmann:adapterdelegates3:3.0.1'
+
+  compile "com.daimajia.swipelayout:library:1.2.0@aar"
 }

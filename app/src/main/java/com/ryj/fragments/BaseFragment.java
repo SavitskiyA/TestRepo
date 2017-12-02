@@ -3,6 +3,7 @@ package com.ryj.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.ryj.App;
@@ -14,9 +15,16 @@ import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public abstract class BaseFragment extends RxFragment {
+  protected CompositeDisposable mDisposable = new CompositeDisposable();
   private Unbinder mButterKnifeUnbinder;
+
+  protected static SpinnerDialog getSpinnerDialog() {
+    return BaseActivity.getSpinnerDialog();
+  }
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -28,6 +36,11 @@ public abstract class BaseFragment extends RxFragment {
   public void onDestroyView() {
     super.onDestroyView();
     mButterKnifeUnbinder.unbind();
+  }
+
+  protected View bindView(View view) {
+    ButterKnife.bind(this, view);
+    return view;
   }
 
   private SwitchActivity getSwitchActivity() {
@@ -46,24 +59,12 @@ public abstract class BaseFragment extends RxFragment {
     }
   }
 
-  protected void setActivityToolBarTitle(String title) {
-    getSwitchActivity().setToolBarTitle(title);
-  }
-
   protected void switchActivityTab(int tagId, boolean isChecked) {
     getSwitchActivity().switchTab(tagId, isChecked);
   }
 
-  protected void setActivityToolbarVisibility(int visible) {
-    getSwitchActivity().setToolbarVisibility(visible);
-  }
-
-  protected void setActivityOptionsMenuVisibility(boolean isVisible) {
-    getSwitchActivity().setOptionsMenuVisibility(isVisible);
-  }
-
   protected void replaceFragment(
-          Fragment fragment, int resContainer, boolean stack, boolean animate, String tag) {
+      Fragment fragment, int resContainer, boolean stack, boolean animate, String tag) {
     getBaseActivity().replaceFragment(fragment, resContainer, stack, animate, tag);
   }
 
@@ -75,7 +76,30 @@ public abstract class BaseFragment extends RxFragment {
     getSwitchActivity().setCurrentFragmentTag(tag);
   }
 
-  protected SpinnerDialog getSpinnerDialog() {
-    return getBaseActivity().getSpinnerDialog();
+  protected void setToolbarBackArrowEnabled(boolean enabled) {
+    getSwitchActivity().setToolbarBackArrowEnabled(enabled);
+  }
+
+  protected void setToolbar(Toolbar toolbar) {
+    getSwitchActivity().setSupportActionBar(toolbar);
+  }
+
+  protected void onBackPressed() {
+    getBaseActivity().onBackPressed();
+  }
+
+  protected void doRequest(Disposable disposable) {
+    if (mDisposable != null) {
+      mDisposable.add(disposable);
+    } else {
+      mDisposable = new CompositeDisposable();
+      mDisposable.add(disposable);
+    }
+  }
+
+  @Override
+  public void onPause() {
+    mDisposable.clear();
+    super.onPause();
   }
 }

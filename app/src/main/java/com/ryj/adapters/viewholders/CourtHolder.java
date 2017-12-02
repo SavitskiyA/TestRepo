@@ -1,12 +1,11 @@
 package com.ryj.adapters.viewholders;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.github.ornolfr.ratingview.RatingView;
 import com.ryj.R;
-import com.ryj.interfaces.OnHolderListener;
+import com.ryj.interfaces.OnHolderClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,7 +14,7 @@ import butterknife.OnClick;
 /**
  * Created by andrey on 9/5/17.
  */
-public class CourtHolder extends RecyclerView.ViewHolder {
+public class CourtHolder extends BaseViewHolder {
 
   @BindView(R.id.court)
   TextView mCourt;
@@ -26,12 +25,12 @@ public class CourtHolder extends RecyclerView.ViewHolder {
   @BindView(R.id.marks_count)
   TextView mMarksCount;
 
-  private OnHolderListener mClickedListener;
+  private OnHolderClickListener mOnHolderClickListener;
 
-  public CourtHolder(View itemView, OnHolderListener listener) {
+  public CourtHolder(View itemView, OnHolderClickListener onHolderClickListener) {
     super(itemView);
     ButterKnife.bind(this, itemView);
-    mClickedListener = listener;
+    mOnHolderClickListener = onHolderClickListener;
   }
 
   public void setCourt(String court) {
@@ -46,12 +45,8 @@ public class CourtHolder extends RecyclerView.ViewHolder {
     mMarksCount.setText(count);
   }
 
-  public void setTag(int tag) {
-    mCourt.setTag(tag);
-  }
-
   @OnClick(R.id.frame_court)
   void onClick() {
-    mClickedListener.onHolderClicked(false, (Integer) mCourt.getTag());
+    mOnHolderClickListener.onHolderClick(false,getTag());
   }
 }

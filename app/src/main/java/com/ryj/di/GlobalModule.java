@@ -60,4 +60,5 @@ public class GlobalModule {
   Items provideCategories() {
     return new Items();
   }
+
 }

@@ -2,6 +2,8 @@ package com.ryj;
 
 import org.junit.Test;
 
+import java.util.Stack;
+
 import static org.junit.Assert.assertEquals;
 
 /**

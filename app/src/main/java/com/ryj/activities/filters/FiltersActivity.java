@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,9 +17,9 @@ import com.ryj.models.filters.Filters;
 
 import javax.inject.Inject;
 
+import butterknife.BindColor;
 import butterknife.BindString;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /** Created by andrey on 9/6/17. */
@@ -29,12 +28,6 @@ public class FiltersActivity extends BaseActivity {
   public static final int PARENT_JUDGES = 0;
   public static final int PARENT_COURTS = 1;
   @Inject Filters mFilters;
-
-  @BindView(R.id.toolbar)
-  Toolbar mToolBar;
-
-  @BindView(R.id.title)
-  TextView mTitle;
 
   @BindView(R.id.frame_court)
   View mFrameCourt;
@@ -96,6 +89,15 @@ public class FiltersActivity extends BaseActivity {
   @BindView(R.id.affairs_right_arrow)
   ImageView mAffairsArrow;
 
+  @BindColor(R.color.colorBlueText)
+  int mBlueText;
+
+  @BindColor(R.color.colorBlackTextTranspGray)
+  int mGrayTranspText;
+
+  @BindView(R.id.apply)
+  Button mApply;
+
   public static void start(Context context, int parent) {
     Intent i = new Intent(context, FiltersActivity.class);
     i.putExtra(EXTRA_PARENT, parent);
@@ -105,13 +107,13 @@ public class FiltersActivity extends BaseActivity {
   @Nullable
   @Override
   protected Toolbar getToolbar() {
-    return mToolBar;
+    return null;
   }
 
   @Nullable
   @Override
   protected TextView getToolbarTitle() {
-    return mTitle;
+    return null;
   }
 
   @Override
@@ -125,42 +127,15 @@ public class FiltersActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_filters);
     getComponent().inject(this);
-    ButterKnife.bind(this);
-    setSupportActionBar(mToolBar);
-    setToolbarBackArrowEnabled(true);
-    setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
-    if (getIntent().getExtras().getInt(EXTRA_PARENT) == PARENT_COURTS) {
-      setCasesVisible(View.GONE);
-    } else {
-      setCasesVisible(View.VISIBLE);
-    }
+    setCasesVisible(
+        getIntent().getExtras().getInt(EXTRA_PARENT) == PARENT_COURTS ? View.GONE : View.VISIBLE);
+    mFilters.saveState();
   }
 
   private void setCasesVisible(int visible) {
     mFrameCases.setVisibility(visible);
     mFrameCasesTitle.setVisibility(visible);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        onBackPressed();
-        return true;
-      case R.id.action_reset:
-        mFilters.clear();
-        setFilterView();
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
-    }
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_reset_filters, menu);
-    return true;
   }
 
   @OnClick({
@@ -171,7 +146,10 @@ public class FiltersActivity extends BaseActivity {
     R.id.cancel_type_of_court,
     R.id.cancel_region,
     R.id.cancel_city,
-    R.id.cancel_affair
+    R.id.cancel_affair,
+    R.id.back,
+    R.id.reset_filters,
+    R.id.apply
   })
   public void onClick(View v) {
     switch (v.getId()) {
@@ -203,7 +181,26 @@ public class FiltersActivity extends BaseActivity {
         mFilters.clearAffairs();
         setAffairsView();
         return;
+      case R.id.back:
+        back();
+        break;
+      case R.id.reset_filters:
+        mFilters.clear();
+        setFilterView();
+        break;
+      case R.id.apply:
+        apply();
+        break;
     }
+  }
+
+  private void apply() {
+    onBackPressed();
+  }
+
+  private void back() {
+    mFilters.restore();
+    onBackPressed();
   }
 
   private void setFilterView() {
@@ -216,10 +213,12 @@ public class FiltersActivity extends BaseActivity {
   private void setCourtTypeView() {
     if (mFilters.getCourtType() != null) {
       mCourt.setText(mFilters.getCourtTypeClient());
+      mCourt.setTextColor(mBlueText);
       mCourtTypeArrow.setVisibility(View.GONE);
       mCourtTypeCancel.setVisibility(View.VISIBLE);
     } else {
       mCourt.setText(mNotSelected);
+      mCourt.setTextColor(mGrayTranspText);
       mCourtTypeArrow.setVisibility(View.VISIBLE);
       mCourtTypeCancel.setVisibility(View.GONE);
     }
@@ -228,10 +227,12 @@ public class FiltersActivity extends BaseActivity {
   private void setRegionView() {
     if (mFilters.getRegionId() != null) {
       mRegion.setText(mFilters.getRegion());
+      mRegion.setTextColor(mBlueText);
       mRegionArrow.setVisibility(View.GONE);
       mRegionCancel.setVisibility(View.VISIBLE);
     } else {
       mRegion.setText(mNotSelected);
+      mRegion.setTextColor(mGrayTranspText);
       mRegionArrow.setVisibility(View.VISIBLE);
       mRegionCancel.setVisibility(View.GONE);
     }
@@ -240,10 +241,12 @@ public class FiltersActivity extends BaseActivity {
   private void setCityView() {
     if (mFilters.getCityId() != null) {
       mCity.setText(mFilters.getCity());
+      mCity.setTextColor(mBlueText);
       mCityArrow.setVisibility(View.GONE);
       mCityCancel.setVisibility(View.VISIBLE);
     } else {
       mCity.setText(mNotSelected);
+      mCity.setTextColor(mGrayTranspText);
       mCityArrow.setVisibility(View.VISIBLE);
       mCityCancel.setVisibility(View.GONE);
     }

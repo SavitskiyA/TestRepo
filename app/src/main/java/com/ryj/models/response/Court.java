@@ -2,17 +2,12 @@ package com.ryj.models.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ryj.utils.StringUtils;
 
 import java.util.List;
 
-/**
- * Created by andrey on 8/17/17.
- */
+/** Created by andrey on 8/17/17. */
 public class Court {
-
-  @SerializedName("title")
-  @Expose
-  private String mTitle;
 
   @SerializedName("id")
   @Expose
@@ -28,54 +23,54 @@ public class Court {
 
   @SerializedName("avg_rating")
   @Expose
-  private Float mAvgRating;
+  private float mRating;
+
+  @SerializedName("ratings_count")
+  @Expose
+  private int mRatingCount;
 
   @SerializedName("judges")
   @Expose
   private List<Judge> mJudges;
-
-  @SerializedName("ratings_count")
-  @Expose
-  private Integer mRatingCount;
-
-  public String getTitle() {
-    return mTitle;
-  }
-
-  public void setTitle(String title) {
-    this.mTitle = title;
-  }
 
   public Integer getId() {
     return mId;
   }
 
   public void setId(Integer id) {
-    this.mId = id;
+    mId = id;
   }
 
   public String getName() {
-    return mName;
+    return mName == null ? StringUtils.EMPTY_STRING : mName;
   }
 
   public void setName(String name) {
-    this.mName = name;
+    mName = name;
   }
 
   public String getKind() {
-    return mKind;
+    return mKind == null ? StringUtils.EMPTY_STRING : mKind;
   }
 
   public void setKind(String kind) {
-    this.mKind = kind;
+    mKind = kind;
   }
 
-  public Float getAvgRating() {
-    return mAvgRating;
+  public float getRating() {
+    return mRating;
   }
 
-  public void setAvgRating(Float avgRating) {
-    this.mAvgRating = avgRating;
+  public void setRating(float rating) {
+    mRating = rating;
+  }
+
+  public int getRatingCount() {
+    return mRatingCount;
+  }
+
+  public void setRatingCount(int ratingCount) {
+    mRatingCount = ratingCount;
   }
 
   public List<Judge> getJudges() {
@@ -83,14 +78,6 @@ public class Court {
   }
 
   public void setJudges(List<Judge> judges) {
-    this.mJudges = judges;
-  }
-
-  public Integer getRatingCount() {
-    return mRatingCount;
-  }
-
-  public void setRatingCount(Integer ratingCount) {
-    this.mRatingCount = ratingCount;
+    mJudges = judges;
   }
 }

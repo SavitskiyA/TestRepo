@@ -4,43 +4,35 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.roughike.bottombar.BottomBar;
 import com.ryj.R;
-import com.ryj.activities.filters.FiltersActivity;
 import com.ryj.fragments.AnalyticsFragment;
+import com.ryj.fragments.CommentsFragment;
 import com.ryj.fragments.CourtFragment;
 import com.ryj.fragments.CourtsFragment;
+import com.ryj.fragments.FavouritesFragment;
+import com.ryj.fragments.JudgeChooseSectionFragment;
 import com.ryj.fragments.JudgeFragment;
-import com.ryj.fragments.JudgesChooseSectionFragment;
 import com.ryj.fragments.JudgesFragment;
+import com.ryj.fragments.LawyerChooseSectionFragment;
+import com.ryj.fragments.LawyerFragment;
 import com.ryj.fragments.NewsFragment;
-import com.ryj.fragments.ProfileFragment;
+import com.ryj.fragments.SettingsFragment;
+import com.ryj.interfaces.IBottomBarsTabs;
 import com.ryj.interfaces.Switchable;
+import com.ryj.models.enums.UserType;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-/**
- * Created by andrey on 8/24/17.
- */
+/** Created by andrey on 8/24/17. */
 public class BottomBarContainerActivity extends SwitchActivity implements Switchable {
   public static final Map<String, Integer> mBottomBarTabsMap = new HashMap<>();
-
-  @BindView(R.id.toolbar)
-  Toolbar mToolbar;
-
-  @BindView(R.id.title)
-  TextView mTitle;
 
   @BindView(R.id.bottomBar)
   BottomBar mBorromBar;
@@ -57,30 +49,22 @@ public class BottomBarContainerActivity extends SwitchActivity implements Switch
   }
 
   private static void fillBottomBarTabsMap() {
-    mBottomBarTabsMap.put(JudgesChooseSectionFragment.TAG, 0);
-    mBottomBarTabsMap.put(JudgesFragment.TAG, 0);
-    mBottomBarTabsMap.put(AnalyticsFragment.TAG, 1);
-    mBottomBarTabsMap.put(NewsFragment.TAG, 2);
-    mBottomBarTabsMap.put(ProfileFragment.TAG, 3);
-    mBottomBarTabsMap.put(CourtsFragment.TAG, 0);
-    mBottomBarTabsMap.put(CourtFragment.TAG, 0);
-    mBottomBarTabsMap.put(JudgeFragment.TAG, 0);
+    mBottomBarTabsMap.put(JudgeChooseSectionFragment.TAG, IBottomBarsTabs.TAB_JUDGE);
+    mBottomBarTabsMap.put(LawyerChooseSectionFragment.TAG, IBottomBarsTabs.TAB_JUDGE);
+    mBottomBarTabsMap.put(JudgesFragment.TAG, IBottomBarsTabs.TAB_JUDGE);
+    mBottomBarTabsMap.put(AnalyticsFragment.TAG, IBottomBarsTabs.TAB_ANALYTICS);
+    mBottomBarTabsMap.put(NewsFragment.TAG, IBottomBarsTabs.TAB_NEWS);
+    mBottomBarTabsMap.put(SettingsFragment.TAG, IBottomBarsTabs.TAB_PROFILE);
+    mBottomBarTabsMap.put(CourtsFragment.TAG, IBottomBarsTabs.TAB_JUDGE);
+    mBottomBarTabsMap.put(CourtFragment.TAG, IBottomBarsTabs.TAB_JUDGE);
+    mBottomBarTabsMap.put(JudgeFragment.TAG, IBottomBarsTabs.TAB_JUDGE);
+    mBottomBarTabsMap.put(CommentsFragment.TAG, IBottomBarsTabs.TAB_JUDGE);
+    mBottomBarTabsMap.put(LawyerFragment.TAG, IBottomBarsTabs.TAB_JUDGE);
+    mBottomBarTabsMap.put(FavouritesFragment.TAG, IBottomBarsTabs.TAB_JUDGE);
   }
 
   public static int getTabPosition(String tag) {
     return mBottomBarTabsMap.get(tag);
-  }
-
-  @Nullable
-  @Override
-  protected Toolbar getToolbar() {
-    return mToolbar;
-  }
-
-  @Nullable
-  @Override
-  protected TextView getToolbarTitle() {
-    return mTitle;
   }
 
   @Override
@@ -88,91 +72,46 @@ public class BottomBarContainerActivity extends SwitchActivity implements Switch
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_bottombar_container);
     getComponent().inject(this);
-    ButterKnife.bind(this);
-    setSupportActionBar(mToolbar);
-    setToolbarBackArrowEnabled(true);
-    setDefaultDisplayShowTitleEnabled(false);
     setSoftInputMode();
     setBottomBarSwitcher();
     fillBottomBarTabsMap();
   }
 
+  @Override
+  protected void onResume() {
+    super.onResume();
+  }
+
   private void setBottomBarSwitcher() {
     mBorromBar.setOnTabSelectListener(
-            tabId -> {
-              if (!mIsClick) {
-                switch (tabId) {
-                  case R.id.tab_judges:
-                    replaceFragment(
-                            JudgesChooseSectionFragment.newInstance(),
-                            R.id.container,
-                            true,
-                            false,
-                            JudgesChooseSectionFragment.TAG);
-                    return;
-                  case R.id.tab_analytics:
-                    replaceFragment(
-                            AnalyticsFragment.newInstance(),
-                            R.id.container,
-                            true,
-                            false,
-                            AnalyticsFragment.TAG);
-                    return;
-                  case R.id.tab_news:
-                    replaceFragment(
-                            NewsFragment.newInstance(), R.id.container, true, false, NewsFragment.TAG);
-                    return;
-                  case R.id.tab_profile:
-                    replaceFragment(
-                            ProfileFragment.newInstance(),
-                            R.id.container,
-                            true,
-                            false,
-                            ProfileFragment.TAG);
-                    return;
+        tabId -> {
+          if (!mIsClick) {
+            switch (tabId) {
+              case R.id.tab_judges:
+                if (mPrefs.getUserType() == UserType.LAWYER) {
+                  toJudgesAsLawyer();
+                  return;
+                } else {
+                  toJudges();
+                  return;
                 }
-              }
-            });
-  }
-
-  @Override
-  public void setToolbarVisibility(int visibility) {
-    mToolbar.setVisibility(visibility);
-  }
-
-  @Override
-  public void setOptionsMenuVisibility(boolean isVisible) {
-    mToolbar.getMenu().findItem(R.id.action_filters).setVisible(isVisible);
+              case R.id.tab_analytics:
+                toAnalytics();
+                return;
+              case R.id.tab_news:
+                toNews();
+                return;
+              case R.id.tab_profile:
+                toProfile();
+                return;
+            }
+          }
+        });
   }
 
   @Override
   public void setCurrentFragmentTag(String tag) {
     mCurrentFragmentTag = tag;
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_filters, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        onBackPressed();
-        return true;
-      case R.id.action_filters:
-        if (mCurrentFragmentTag.equals(CourtsFragment.TAG)) {
-          FiltersActivity.start(this, FiltersActivity.PARENT_COURTS);
-          return true;
-        } else if (mCurrentFragmentTag.equals(JudgesFragment.TAG)) {
-          FiltersActivity.start(this, FiltersActivity.PARENT_JUDGES);
-          return true;
-        }
-      default:
-        return super.onOptionsItemSelected(item);
-    }
   }
 
   @Override
@@ -191,8 +130,56 @@ public class BottomBarContainerActivity extends SwitchActivity implements Switch
     mIsClick = false;
   }
 
-  @Override
-  public void setToolBarTitle(String title) {
-    mTitle.setText(title);
+  private void toProfile() {
+    switch (mPrefs.getUserType()) {
+      case JUDGE:
+        replaceFragment(
+                JudgeFragment.newInstance(mPrefs.getCurrentUserId()),
+                R.id.container,
+                true,
+                false,
+                JudgeFragment.TAG);
+        return;
+      case LAWYER:
+        replaceFragment(
+                LawyerFragment.newInstance(mPrefs.getCurrentUserId()),
+                R.id.container,
+                true,
+                false,
+                LawyerFragment.TAG);
+        return;
+      case CITIZEN:
+        replaceFragment(
+                SettingsFragment.newInstance(), R.id.container, true, false, SettingsFragment.TAG);
+        return;
+    }
   }
+
+  private void toJudgesAsLawyer() {
+    replaceFragment(
+        LawyerChooseSectionFragment.newInstance(),
+        R.id.container,
+        true,
+        false,
+        LawyerChooseSectionFragment.TAG);
+  }
+
+  private void toJudges() {
+    replaceFragment(
+        JudgeChooseSectionFragment.newInstance(),
+        R.id.container,
+        true,
+        false,
+        JudgeChooseSectionFragment.TAG);
+  }
+
+  private void toAnalytics() {
+    replaceFragment(
+        AnalyticsFragment.newInstance(), R.id.container, true, false, AnalyticsFragment.TAG);
+  }
+
+  private void toNews() {
+    replaceFragment(NewsFragment.newInstance(), R.id.container, true, false, NewsFragment.TAG);
+  }
+
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@drawable/bg_dark"
@@ -19,26 +18,17 @@
     android:textSize="21sp"
     android:textStyle="normal"/>
 
-  <com.balysv.materialripple.MaterialRippleLayout
+  <Button
+    android:id="@+id/ok"
+    style="?android:borderlessButtonStyle"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/size_height_button"
     android:layout_gravity="bottom"
-    app:mrl_rippleAlpha="0.1"
-    app:mrl_rippleColor="@android:color/black"
-    app:mrl_rippleOverlay="true">
-
-    <Button
-      android:id="@+id/ok"
-      style="?android:borderlessButtonStyle"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/size_height_button"
-      android:layout_gravity="bottom"
-      android:background="@drawable/selector_button"
-      android:letterSpacing="0.5"
-      android:text="@string/text_ok"
-      android:textColor="@android:color/background_light"
-      android:textSize="@dimen/size_text_14sp"/>
-  </com.balysv.materialripple.MaterialRippleLayout>
+    android:background="@drawable/selector_button"
+    android:letterSpacing="0.5"
+    android:text="@string/text_ok"
+    android:textColor="@android:color/background_light"
+    android:textSize="@dimen/size_text_14sp"/>
 
   <TextView
     android:id="@+id/text"

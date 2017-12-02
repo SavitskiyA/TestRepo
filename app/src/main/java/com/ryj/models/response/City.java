@@ -2,6 +2,7 @@ package com.ryj.models.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ryj.utils.StringUtils;
 
 /** Created by andrey on 9/18/17. */
 public class City {
@@ -22,15 +23,15 @@ public class City {
   }
 
   public void setId(Integer id) {
-    this.mId = id;
+    mId = id;
   }
 
   public String getName() {
-    return mName;
+    return mName == null ? StringUtils.EMPTY_STRING : mName;
   }
 
   public void setName(String name) {
-    this.mName = name;
+    mName = name;
   }
 
   public Integer getRegionId() {
@@ -38,6 +39,6 @@ public class City {
   }
 
   public void setRegionId(Integer regionId) {
-    this.mRegionId = regionId;
+    mRegionId = regionId;
   }
 }

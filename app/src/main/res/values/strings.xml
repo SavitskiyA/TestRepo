@@ -29,7 +29,7 @@
   <string name="text_sign_up_judge_use_email">Use your official \nemail of judge</string>
   <string name="text_name">Name</string>
   <string name="text_surname">Surname</string>
-  <string name="text_specialization">Specialization</string>
+  <string name="text_specialization">Specializations</string>
   <string name="text_category">Category of case</string>
   <string name="text_phone">Phone</string>
   <string name="text_next">Next</string>
@@ -115,6 +115,7 @@
   <string name="text_most_discussed">The most\ndiscussed</string>
   <string name="text_most_discussed_1line">The most discussed</string>
   <string name="text_best_rated">Best rated</string>
+  <string name="text_lowest_rated">Lowest rated</string>
   <string name="text_found">Found</string>
   <string name="text_settings">Settings</string>
   <string name="text_court">Court</string>
@@ -127,16 +128,50 @@
   <string name="text_judge_search">Judge search</string>
   <string name="text_please_wait">Please, wait</string>
   <string name="text_user_is_already_registered">User is already registered</string>
-  <string name="text_marks_count">Marks</string>
-  <string name="text_comments">Comments</string>
   <string name="text_all_comments">All comments</string>
   <string name="text_estimate">estimate</string>
   <string name="text_comment">comment</string>
+  <string name="text_comments">Comments</string>
+  <string name="text_marks_count">Marks</string>
+  <string-array name="text_detail_rating">
+    <item>@string/text_rating_conscientiousness</item>
+    <item>@string/text_rating_attitude_with_respect</item>
+    <item>@string/text_rating_absence_of_prejudice</item>
+    <item>@string/text_rating_fair_behavior</item>
+    <item>@string/text_rating_knowledge_of_procedural</item>
+    <item>@string/text_rating_proper_execution</item>
+    <item>@string/text_rating_knowledge_of_material_law</item>
+    <item>@string/text_rating_legal_justification</item>
+  </string-array>
+  <string name="text_rating_conscientiousness">Сonscientiousness</string>
+  <string name="text_rating_attitude_with_respect">Attitude to all people with respect and dignity</string>
+  <string name="text_rating_absence_of_prejudice">Absence of prejudice and individual approach</string>
+  <string name="text_rating_fair_behavior">Fair behavior and individual approach</string>
+  <string name="text_rating_knowledge_of_procedural">Knowledge of procedural norms and evidence</string>
+  <string name="text_rating_proper_execution">Proper execution of court rules, orders, observance of terms</string>
+  <string name="text_rating_knowledge_of_material_law">Knowledge of material law</string>
+  <string name="text_rating_legal_justification">Legal justification</string>
+  <string name="text_apply">apply</string>
+  <string name="text_leave_comment">Leave comment...</string>
+  <string name="text_lawyer">Lawyer</string>
+  <string name="text_no_comments">No comments</string>
   <string name="text_message_to_email">Message to e-mail</string>
   <string name="text_edit_user_data">Edit user data</string>
-  <string name="text_change_password">Change password</string>
   <string name="text_contact_us">Contact us</string>
   <string name="text_about">About</string>
   <string name="text_log_out">Log out</string>
   <string name="text_your_profile">Your profile</string>
+  <string name="text_current_password">Current password</string>
+  <string name="text_new_password">New password</string>
+  <string name="text_repeat_password">Repeat password</string>
+  <string name="text_save">Save</string>
+  <string name="text_court_search">Court search</string>
+  <string name="text_change_password">Change password</string>
+  <string name="text_case_number">Case number</string>
+  <string name="text_information_is_disclosed">Information is not disclosed and is required only to confirm your objectivity</string>
+  <string name="text_case_number_hint">№ of case</string>
+  <string name="text_send">send</string>
+  <string name="text_number_of_case_must_not_be_blank">Number of case must not be blank</string>
+  <string name="text_on_the">on the</string>
+  <string name="text_selected_judges">Selected judges</string>
 </resources>

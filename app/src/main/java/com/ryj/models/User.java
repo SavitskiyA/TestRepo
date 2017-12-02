@@ -63,8 +63,8 @@ public class User implements Reflectable {
   public User() {}
 
   public User(CharSequence firstName, CharSequence lastName) {
-    this.mFirstName = firstName.toString().trim();
-    this.mLastName = lastName.toString().trim();
+    mFirstName = firstName.toString().trim();
+    mLastName = lastName.toString().trim();
   }
 
   public Integer getId() {
@@ -72,7 +72,7 @@ public class User implements Reflectable {
   }
 
   public void setId(Integer id) {
-    this.mId = id;
+    mId = id;
   }
 
   public String getFirstName() {
@@ -80,7 +80,7 @@ public class User implements Reflectable {
   }
 
   public void setFirstName(CharSequence firstName) {
-    this.mFirstName = firstName.toString().trim();
+    mFirstName = firstName.toString().trim();
   }
 
   public String getLastName() {
@@ -88,7 +88,7 @@ public class User implements Reflectable {
   }
 
   public void setLastName(CharSequence lastName) {
-    this.mLastName = lastName.toString().trim();
+    mLastName = lastName.toString().trim();
   }
 
   public String getPhone() {
@@ -96,7 +96,7 @@ public class User implements Reflectable {
   }
 
   public void setPhone(CharSequence phone) {
-    this.mPhone = phone.toString().trim();
+    mPhone = phone.toString().trim();
   }
 
   public UserType getType() {
@@ -104,7 +104,7 @@ public class User implements Reflectable {
   }
 
   public void setType(UserType type) {
-    this.mType = type;
+    mType = type;
   }
 
   public List<Affairs> getAffairs() {
@@ -112,7 +112,7 @@ public class User implements Reflectable {
   }
 
   public void setAffairs(List<Affairs> affairs) {
-    this.mAffairs = affairs;
+    mAffairs = affairs;
   }
 
   public List<Specializations> getSpecializations() {
@@ -120,7 +120,7 @@ public class User implements Reflectable {
   }
 
   public void setSpecializations(List<Specializations> specializations) {
-    this.mSpecializations = specializations;
+    mSpecializations = specializations;
   }
 
   public String getCertNumber() {
@@ -128,7 +128,7 @@ public class User implements Reflectable {
   }
 
   public void setCertNumber(CharSequence certNumber) {
-    this.mCertNumber = certNumber.toString().trim();
+    mCertNumber = certNumber.toString().trim();
   }
 
   public String getCompany() {
@@ -136,7 +136,7 @@ public class User implements Reflectable {
   }
 
   public void setCompany(CharSequence company) {
-    this.mCompany = company.toString().trim();
+    mCompany = company.toString().trim();
   }
 
   public String getAvatar() {
@@ -144,7 +144,7 @@ public class User implements Reflectable {
   }
 
   public void setAvatar(String avatar) {
-    this.mAvatar = avatar;
+    mAvatar = avatar;
   }
 
   public Document getDoc() {
@@ -152,7 +152,7 @@ public class User implements Reflectable {
   }
 
   public void setDoc(Document docPhoto) {
-    this.mDoc = docPhoto;
+    mDoc = docPhoto;
   }
 
   public Uri getAvatarUri() {
@@ -160,7 +160,7 @@ public class User implements Reflectable {
   }
 
   public void setAvatarUri(Uri avatarUri) {
-    this.mAvatarUri = avatarUri;
+    mAvatarUri = avatarUri;
   }
 
   @NonNull

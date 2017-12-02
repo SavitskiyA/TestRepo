@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
-    android:id="@+id/action_check"
-    android:icon="@drawable/ic_check"
+    android:id="@+id/action_favourites"
+    android:icon="@drawable/selector_favourite"
     android:title=""
     app:showAsAction="ifRoom">
   </item>

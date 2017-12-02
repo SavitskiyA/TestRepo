@@ -13,21 +13,20 @@ import android.widget.TextView;
 import com.ryj.R;
 import com.ryj.activities.BaseActivity;
 import com.ryj.activities.auth.signup.judge.SignUpJudgeActivity;
-import com.ryj.adapters.ItemListRecyclerAdapter;
-import com.ryj.adapters.ListRecyclerAdapter;
-import com.ryj.interfaces.OnHolderListener;
+import com.ryj.adapters.CategoryAdapter;
+import com.ryj.interfaces.OnHolderClickListener;
 import com.ryj.models.filters.Items;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /** Created by andrey on 7/22/17. */
-public class SignUpListActivity extends BaseActivity implements OnHolderListener {
+public class SignUpListActivity extends BaseActivity implements OnHolderClickListener {
   private static String EXTRA_LIST_TITLE = "list_title";
   private static boolean mIsButtonResponsive;
+
   @Inject Items mItems;
 
   @BindView(R.id.toolbar)
@@ -40,15 +39,21 @@ public class SignUpListActivity extends BaseActivity implements OnHolderListener
   RecyclerView mRecyclerView;
 
   @BindView(R.id.ok)
-  Button mOk;
+  Button mButtonOk;
 
-  private ItemListRecyclerAdapter<String> mAdapter;
+  private CategoryAdapter<String> mAdapter;
 
   public static void start(Context context, String title) {
     Intent i = new Intent(context, SignUpListActivity.class);
     i.putExtra(EXTRA_LIST_TITLE, title);
     mIsButtonResponsive = context instanceof SignUpJudgeActivity ? true : false;
     context.startActivity(i);
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    boolean[] booleans = mItems.getBooleans();
   }
 
   @Nullable
@@ -68,18 +73,16 @@ public class SignUpListActivity extends BaseActivity implements OnHolderListener
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_signup_list);
     getComponent().inject(this);
-    ButterKnife.bind(this);
     setSupportActionBar(mToolbar);
     setToolbarBackArrowEnabled(true);
     setDefaultDisplayShowTitleEnabled(false);
     Bundle extras = getIntent().getExtras();
     mTitle.setText(extras.getString(EXTRA_LIST_TITLE));
     mAdapter =
-        new ItemListRecyclerAdapter<String>(
-            this, this, mItems.getItemsClient(), mItems.getBooleans());
+        new CategoryAdapter<String>(this, this, mItems.getItemsClient(), mItems.getBooleans());
     mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     mRecyclerView.setAdapter(mAdapter);
-    mOk.setEnabled(!mIsButtonResponsive);
+    mButtonOk.setEnabled(!mIsButtonResponsive);
   }
 
   @OnClick(R.id.ok)
@@ -88,9 +91,9 @@ public class SignUpListActivity extends BaseActivity implements OnHolderListener
   }
 
   @Override
-  public void onHolderClicked(boolean enable, int position) {
+  public void onHolderClick(boolean enable, int position) {
     if (mIsButtonResponsive) {
-      mOk.setEnabled(enable);
+      mButtonOk.setEnabled(enable);
     }
     mItems.setBoolean(enable, position);
   }

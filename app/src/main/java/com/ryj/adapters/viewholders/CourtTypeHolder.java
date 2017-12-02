@@ -1,40 +1,36 @@
 package com.ryj.adapters.viewholders;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RadioButton;
 
 import com.ryj.R;
-import com.ryj.interfaces.OnHolderListener;
+import com.ryj.interfaces.OnHolderClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /** Created by andrey on 9/29/17. */
-public class CourtTypeHolder extends RecyclerView.ViewHolder {
+public class CourtTypeHolder extends BaseViewHolder {
   @BindView(R.id.region)
   RadioButton mCourt;
 
-  private OnHolderListener mHolderCheckedListener;
+  private OnHolderClickListener mOnHolderClickListener;
 
-  public CourtTypeHolder(View itemView, OnHolderListener holderCheckedListener) {
+  public CourtTypeHolder(
+      View itemView, OnHolderClickListener onHolderClickListener) {
     super(itemView);
     ButterKnife.bind(this, itemView);
-    mHolderCheckedListener = holderCheckedListener;
+    mOnHolderClickListener = onHolderClickListener;
   }
 
   public void setCourtType(String area) {
     mCourt.setText(area);
   }
 
-  public void setTag(int tag) {
-    mCourt.setTag(tag);
-  }
-
   @OnClick(R.id.region)
   void onClick() {
-    mHolderCheckedListener.onHolderClicked(mCourt.isChecked(), (Integer) mCourt.getTag());
+    mOnHolderClickListener.onHolderClick(mCourt.isChecked(), getTag());
   }
 
   public void setChecked(boolean isChecked) {

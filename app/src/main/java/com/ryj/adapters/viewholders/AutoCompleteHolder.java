@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 
 /** Created by andrey on 8/17/17. */
 public class AutoCompleteHolder extends RecyclerView.ViewHolder {
-  @BindView(R.id.fullname)
+  @BindView(R.id.lawyer_fullname)
   TextView mName;
 
   @BindView(R.id.court)

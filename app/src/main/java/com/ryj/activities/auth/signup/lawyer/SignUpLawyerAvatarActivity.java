@@ -39,7 +39,8 @@ import pl.aprilapps.easyphotopicker.EasyImage;
 public class SignUpLawyerAvatarActivity extends BaseActivity {
   private static final String TAG = "SignUpLawyerAvatarActivity";
   private static final int REQUEST_PERMISSION_STORAGE = 1;
-  @Inject SignUpQuery mQuery;
+  @Inject
+  SignUpQuery mQuery;
 
   @BindView(R.id.toolbar)
   Toolbar mToolbar;

@@ -30,4 +30,24 @@ public interface Prefs {
   boolean getIsMessageToEmail();
 
   void setIsMessageToEmail(boolean isActive);
+
+  @Nullable
+  String getCategories();
+
+  void setCategoriest(String categories);
+
+  @Nullable
+  String getEmail();
+
+  void setEmail(String email);
+
+  @Nullable
+  String getPhone();
+
+  void setPhone(String phone);
+
+  @Nullable
+  String getPhoto();
+
+  void setPhoto(String photo);
 }

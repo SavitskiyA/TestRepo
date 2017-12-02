@@ -1,6 +1,5 @@
 package com.ryj.activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,12 +7,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.balysv.materialripple.MaterialRippleLayout;
 import com.ryj.App;
 import com.ryj.R;
 import com.ryj.activities.auth.signin.SignInActivity;
@@ -32,17 +29,18 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import javax.inject.Inject;
 
 import butterknife.BindString;
+import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseActivity extends RxAppCompatActivity {
-  @Inject
-  Api mApi;
-  @Inject
-  Prefs mPrefs;
-  @Inject
-  ErrorHandler mErrorHandler;
-
+  private static SpinnerDialog mSpinnerDialog;
+  protected CompositeDisposable mDisposable = new CompositeDisposable();
+  @Inject Api mApi;
+  @Inject Prefs mPrefs;
+  @Inject ErrorHandler mErrorHandler;
   @BindString(R.string.text_not_authorized)
   String mUnauthorized;
 
@@ -52,6 +50,14 @@ public abstract class BaseActivity extends RxAppCompatActivity {
   @BindString(R.string.text_cancel)
   String mCancel;
 
+  public static synchronized SpinnerDialog getSpinnerDialog() {
+    if (mSpinnerDialog == null) {
+      mSpinnerDialog = new SpinnerDialog();
+      mSpinnerDialog.setCancelable(false);
+    }
+    return mSpinnerDialog;
+  }
+
   public ApplicationComponent getComponent() {
     return App.get().getComponent();
   }
@@ -59,32 +65,28 @@ public abstract class BaseActivity extends RxAppCompatActivity {
   public AlertDialog getDialog(CharSequence neutralButtonTitle) {
     AlertDialog alertDialog = new AlertDialog.Builder(this).create();
     alertDialog.setButton(
-            AlertDialog.BUTTON_NEUTRAL,
-            neutralButtonTitle,
-            (dialog, which) -> {
-              dialog.dismiss();
-            });
+        AlertDialog.BUTTON_NEUTRAL,
+        neutralButtonTitle,
+        (dialog, which) -> {
+          dialog.dismiss();
+        });
     return alertDialog;
-  }
-
-  public SpinnerDialog getSpinnerDialog() {
-    return new SpinnerDialog();
   }
 
   public AlertDialog getDialog(CharSequence negativeButtonTitle, CharSequence positiveButtonTitle) {
     AlertDialog alertDialog = new AlertDialog.Builder(this).create();
     alertDialog.setButton(
-            AlertDialog.BUTTON_NEUTRAL,
-            negativeButtonTitle,
-            (dialog, which) -> {
-              alertDialog.dismiss();
-            });
+        AlertDialog.BUTTON_NEUTRAL,
+        negativeButtonTitle,
+        (dialog, which) -> {
+          alertDialog.dismiss();
+        });
     alertDialog.setButton(
-            AlertDialog.BUTTON_POSITIVE,
-            positiveButtonTitle,
-            (dialog, which) -> {
-              logout();
-            });
+        AlertDialog.BUTTON_POSITIVE,
+        positiveButtonTitle,
+        (dialog, which) -> {
+          logout();
+        });
     return alertDialog;
   }
 
@@ -113,8 +115,12 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
   public void hideStatusBar() {
     getWindow()
-            .setFlags(
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        .setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+  }
+
+  public void showToast(String message) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
   }
 
   @Override
@@ -140,35 +146,41 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     subscribeOnEvent();
   }
 
+  @Override
+  public void setContentView(int layoutResID) {
+    super.setContentView(layoutResID);
+    ButterKnife.bind(this);
+  }
+
   protected void subscribeOnEvent() {
     RxBus.receiveEvent()
-            .compose(bindUntilEvent(ActivityEvent.DESTROY))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .filter(event -> event instanceof UnauthorizedEvent)
-            .subscribe(
-                    event -> {
-                      AlertDialog dialog = getDialog(mOk);
-                      dialog.setMessage(((UnauthorizedEvent) event).getMessage());
-                      dialog.show();
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable, this);
-                      ToastUtil.show(throwable.getMessage(), false);
-                    });
+        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .filter(event -> event instanceof UnauthorizedEvent)
+        .subscribe(
+            event -> {
+              AlertDialog dialog = getDialog(mOk);
+              dialog.setMessage(((UnauthorizedEvent) event).getMessage());
+              dialog.show();
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this);
+              ToastUtil.show(throwable.getMessage(), false);
+            });
     RxBus.receiveEvent()
-            .compose(bindUntilEvent(ActivityEvent.DESTROY))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .filter(event -> event instanceof SignOutEvent)
-            .subscribe(
-                    event -> {
-                      logout();
-                    },
-                    throwable -> {
-                      mErrorHandler.handleError(throwable, this);
-                      ToastUtil.show(throwable.getMessage(), false);
-                    });
+        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .filter(event -> event instanceof SignOutEvent)
+        .subscribe(
+            event -> {
+              logout();
+            },
+            throwable -> {
+              mErrorHandler.handleError(throwable, this);
+              ToastUtil.show(throwable.getMessage(), false);
+            });
   }
 
   protected void logout() {
@@ -177,15 +189,15 @@ public abstract class BaseActivity extends RxAppCompatActivity {
   }
 
   public void replaceFragment(
-          Fragment fragment, int resContainer, boolean stack, boolean animate, String tag) {
+      Fragment fragment, int resContainer, boolean stack, boolean animate, String tag) {
 
     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
     if (animate) {
       transaction.setCustomAnimations(
-              R.anim.slide_in_right,
-              R.anim.slide_out_left,
-              R.anim.slide_in_left,
-              R.anim.slide_out_right);
+          R.anim.slide_in_right,
+          R.anim.slide_out_left,
+          R.anim.slide_in_left,
+          R.anim.slide_out_right);
     }
 
     transaction.replace(resContainer, fragment, tag);
@@ -199,11 +211,13 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     return getSupportFragmentManager().getBackStackEntryCount();
   }
 
-  protected void wrapWithMaterialRippleLayout(View view) {
-    MaterialRippleLayout.on(view)
-            .rippleColor(Color.BLACK)
-            .rippleAlpha(0.1f)
-            .rippleHover(true)
-            .create();
+  @Override
+  protected void onPause() {
+    mDisposable.clear();
+    super.onPause();
+  }
+
+  protected void doRequest(Disposable disposable) {
+    mDisposable.add(disposable);
   }
 }

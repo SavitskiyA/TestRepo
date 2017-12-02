@@ -44,7 +44,6 @@ public class PasswordRecoveryFinishActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_password_recovery_finish);
-    ButterKnife.bind(this);
   }
 
   @OnClick(R.id.ok)

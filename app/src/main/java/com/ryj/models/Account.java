@@ -19,7 +19,7 @@ public class Account implements Reflectable {
   }
 
   public Account(CharSequence email) {
-    this.mEmail = email.toString().trim();
+    mEmail = email.toString().trim();
   }
 
   public String getEmail() {
@@ -27,7 +27,7 @@ public class Account implements Reflectable {
   }
 
   public void setEmail(CharSequence email) {
-    this.mEmail = email.toString().trim();
+    mEmail = email.toString().trim();
   }
 
   @NonNull

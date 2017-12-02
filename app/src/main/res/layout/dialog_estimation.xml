@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/background_rectangle_case_number">
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="32dp"
+    android:fontFamily="sans-serif"
+    android:text="@string/text_case_number"
+    android:textColor="@color/colorBlackText"
+    android:textSize="@dimen/size_text_18sp"
+    android:textStyle="normal"/>
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/margin_estim_dialog_24dp"
+    android:layout_marginStart="@dimen/margin_estim_dialog_24dp"
+    android:layout_marginTop="72dp"
+    android:fontFamily="sans-serif"
+    android:gravity="center_horizontal"
+    android:lineSpacingMultiplier="1.38"
+    android:text="@string/text_information_is_disclosed"
+    android:textColor="@color/colorGrayLightTwo"
+    android:textSize="@dimen/size_text_16sp"
+    android:textStyle="normal"
+    />
+
+  <EditText
+    android:id="@+id/case_number"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:layout_marginEnd="@dimen/margin_estim_dialog_24dp"
+    android:layout_marginStart="@dimen/margin_estim_dialog_24dp"
+    android:layout_marginTop="170dp"
+    android:background="@drawable/background_rectangle_case_number_edt"
+    android:hint="@string/text_case_number_hint"
+    android:inputType="number"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:textSize="@dimen/size_text_16sp"
+    />
+
+  <com.balysv.materialripple.MaterialRippleLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="30dp"
+    android:layout_marginEnd="@dimen/margin_estim_dialog_24dp"
+    android:layout_marginStart="@dimen/margin_estim_dialog_24dp"
+    android:layout_marginTop="238dp"
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true">
+
+    <Button
+      android:id="@+id/send"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:background="@color/colorBlueLightSecond"
+      android:letterSpacing="0.14"
+      android:text="@string/text_send"
+      android:textAllCaps="true"
+      android:textColor="@android:color/background_light"
+      android:textSize="@dimen/size_text_14sp"
+      />
+  </com.balysv.materialripple.MaterialRippleLayout>
+
+  <com.balysv.materialripple.MaterialRippleLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end|top"
+    android:layout_marginEnd="17dp"
+    android:layout_marginTop="17dp"
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true"
+    app:mrl_rippleRoundedCorners="120dp">
+
+    <ImageView
+      android:id="@+id/cancel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:src="@drawable/ic_cancel_b"/>
+  </com.balysv.materialripple.MaterialRippleLayout>
+</FrameLayout>

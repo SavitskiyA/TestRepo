@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_dark">
+
+  <FrameLayout
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true">
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:fontFamily="sans-serif"
+      android:textColor="@android:color/background_light"
+      android:textSize="@dimen/size_text_18sp"/>
+
+    <include layout="@layout/item_toolbar"/>
+  </FrameLayout>
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/comments_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@+id/frame_leave_comment"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:background="@android:color/background_light"/>
+
+  <FrameLayout
+    android:id="@+id/frame_leave_comment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:elevation="5dp"
+    app:layout_scrollFlags="scroll|enterAlways">
+
+    <EditText
+      android:id="@+id/leave_comment"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/background_leave_comment_edt"
+      android:fontFamily="sans-serif"
+      android:hint="@string/text_leave_comment"
+      android:maxLength="500"
+      android:paddingBottom="15dp"
+      android:paddingEnd="16dp"
+      android:paddingStart="16dp"
+      android:paddingTop="14dp"
+      android:textColor="@color/colorBlackText"
+      android:textSize="@dimen/size_text_16sp"
+      android:textStyle="normal"/>
+
+    <ImageButton
+      android:id="@+id/send_comment"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|end"
+      android:layout_marginBottom="12dp"
+      android:layout_marginEnd="12dp"
+      android:background="@drawable/selector_send_comment"
+      android:enabled="false"/>
+
+    <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_gravity="top"
+      android:background="@color/colorGrayLightOne"/>
+  </FrameLayout>
+</RelativeLayout>

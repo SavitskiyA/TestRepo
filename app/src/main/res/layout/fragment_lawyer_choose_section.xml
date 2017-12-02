@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginTop="24dp"
+              android:background="@drawable/bg_dark"
+              android:orientation="vertical">
+
+  <com.balysv.materialripple.MaterialRippleLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true">
+
+    <FrameLayout
+      android:id="@+id/judges"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginStart="40dp"
+        android:background="@drawable/img_judges_lawyer"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="140dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/text_judges"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"/>
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="@dimen/margin_sign_up_horizontal"
+        android:background="@drawable/ic_right_arrow"/>
+    </FrameLayout>
+  </com.balysv.materialripple.MaterialRippleLayout>
+
+  <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginLeft="@dimen/margin_sign_up_horizontal"
+    android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+    android:alpha="0.1"
+    android:background="@android:color/background_light"/>
+
+  <com.balysv.materialripple.MaterialRippleLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true">
+
+    <FrameLayout
+      android:id="@+id/most_discussed"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginStart="40dp"
+        android:background="@drawable/img_most_discussed_lawyer"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="140dp"
+        android:fontFamily="sans-serif"
+        android:maxLines="2"
+        android:text="@string/text_most_discussed"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"/>
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="@dimen/margin_sign_up_horizontal"
+        android:background="@drawable/ic_right_arrow"/>
+    </FrameLayout>
+  </com.balysv.materialripple.MaterialRippleLayout>
+
+  <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginLeft="@dimen/margin_sign_up_horizontal"
+    android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+    android:alpha="0.1"
+    android:background="@android:color/background_light"/>
+
+  <com.balysv.materialripple.MaterialRippleLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true">
+
+    <FrameLayout
+      android:id="@+id/courts"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginStart="40dp"
+        android:background="@drawable/img_courts_lawyer"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="140dp"
+        android:fontFamily="sans-serif"
+        android:maxLines="2"
+        android:text="@string/text_courts"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"/>
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="@dimen/margin_sign_up_horizontal"
+        android:background="@drawable/ic_right_arrow"/>
+    </FrameLayout>
+  </com.balysv.materialripple.MaterialRippleLayout>
+
+  <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginLeft="@dimen/margin_sign_up_horizontal"
+    android:layout_marginRight="@dimen/margin_sign_up_horizontal"
+    android:alpha="0.1"
+    android:background="@android:color/background_light"/>
+
+  <com.balysv.materialripple.MaterialRippleLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    app:mrl_rippleAlpha="0.1"
+    app:mrl_rippleColor="@android:color/black"
+    app:mrl_rippleOverlay="true">
+
+    <FrameLayout
+      android:id="@+id/favourites"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginStart="40dp"
+        android:background="@drawable/img_favourites_lawyer"/>
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="@dimen/margin_sign_up_horizontal"
+        android:background="@drawable/ic_right_arrow"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="140dp"
+        android:fontFamily="sans-serif"
+        android:maxLines="2"
+        android:text="@string/text_selected_judges"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"/>
+    </FrameLayout>
+  </com.balysv.materialripple.MaterialRippleLayout>
+
+</LinearLayout>
